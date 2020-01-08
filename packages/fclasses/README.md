@@ -159,54 +159,77 @@ const Tout: FC<{}> = () => {
   );
 )
 ```
+
 With the Design API, rather than providing classes which a consumer can style
 using CSS, we provide a way for consumers to replace or modify the individual
 components of which the Tout is composed:
 
 ```javascript
-const getToutComponents = applyDesign({
-  Wrapper: stylable<HTMLProps<HTMLDivElement>>('div'),
-  Title: stylable<HTMLProps<HTMLHeadingElement>>('h2'),
-  Body: stylable<HTMLProps<HTMLDivElement>>('div'),
-  Cta: stylable<HTMLProps<HTMLAnchorElement>>('a'),
-});
+export type ToutComponents = {
+  Wrapper: ComponentType<StylableProps>,
+  ImageWrapper: ComponentType<StylableProps>,
+  ImageLink: ComponentType<StylableProps>,
+  Image: ComponentType<StylableProps>,
+  ContentWrapper: ComponentType<StylableProps>,
+  Title: ComponentType<StylableProps>,
+  Body: ComponentType<StylableProps>,
+  Link: ComponentType<StylableProps>,
+};
+const toutComponentStart:ToutComponents = {
+  Wrapper: Div,
+  ImageWrapper: Div,
+  ImageLink: A,
+  Image: Img,
+  ContentWrapper: Div,
+  Title: H2,
+  Body: Div,
+  Link: A,
+};
 
-const Tout: FC<DesignableComponentsProps> = ({ design }) => {
-  const { Wrapper, Title, Body, Cta } = getToutComponents(design);
+type Props = DesignableComponentsProps<ToutComponents> & { };
+
+const ToutBase: FC<Props> = ({ components }) => {
+  const {
+    Wrapper,
+    ImageWrapper,
+    Image,
+    ImageLink,
+    ContentWrapper,
+    Title,
+    Body,
+    Link,
+  } = components;
+
   return (
     <Wrapper>
-      <Title>This is the title</Title>
-      <Body>This is the body</Body>
-      <Cta href="https://foo.com">This is the CTA</Cta>
+      <ImageWrapper>
+        <ImageLink>
+          <Image />
+        </ImageLink>
+      </ImageWrapper>
+      <ContentWrapper>
+        <Title />
+        <Body />
+        <Link />
+      </ContentWrapper>
     </Wrapper>
   );
 };
 ```
-Here we define a function, `getToutComponents()` which takes the provided design, applies
-it to a set of default elements, and returns a set of components which are used to
-compose the tout.
 
-`getToutComponents()` mmakes use of the Design API method `applyDesign()`, which
-takes a set of default elements or components, and returns a function which can
-be used to apply a `Design` to those elements (we will explore the nature of a
-`Design` a bit later).  Note that any of the defaults could also be a component:
+Here we have defined a type of the components that we need, a starting point for those components and then we have create a componant that accepts those compoents.  Next we will combine the Start point as well as the ToutBase to make a designable tout that can take a Design prop.
 
-```javascript
-const Wrapper: FC<HTMLProps<HTMLDivElement>> = ({ className, ...rest }) => (
-  <div className={`${className} tout__wrapper`}} {...rest} />
-);
-const getToutComponents = (design: Design) => applyDesign({
-  Wrapper,
-  ...
-});
+``` js
+const ToutDesignable = designable(toutComponentStart)(ToutBase);
 ```
 
-## Consuming the Design API.
+## Consuming the Design API
 
 A consumer can now style our Tout by employing the `withDesign()` API method to
 pass a `Design` object as a prop value. This is simply a set of higher-order
 components which will be applied to each element. For example:
-```typescript
+
+```js
 const asBasicTout = withDesign({
   Wrapper: addClasses('font-sans'),
   Title: addClasses('text-sm text-green'),
@@ -218,7 +241,8 @@ const BasicTout = asBasicTout(Tout);
 ```
 
 In ths example, we could simply have provided our design directly as a prop:
-```
+
+```js
 const BasicTout: FC = () => <Tout design={{
   Wrapper: addClasses('font-sans'),
   Title: addClasses('text-sm text-green'),
@@ -226,6 +250,7 @@ const BasicTout: FC = () => <Tout design={{
   Cta: addClasses('block w-full bg-blue text-yellow py-1'),
 }} />
 ```
+
 However, by using `withDesign()` instead, our component itself will expose its own
 design prop, allowing other consumers to further extend it:
 
@@ -252,7 +277,7 @@ const StandardTout = withDesign({
 As with FClasses, HOC's created via `withDesign()` are themselves reusable, so
 we can write:
 
-```
+``` js
 const asStandardTout = withDesign({
   Title: replaceWith(StandardH2), // same as () => StandardH2
 });
@@ -262,7 +287,8 @@ const StandardRedTout = asStandardTout(RedTout);
 ```
 
 And, also as with FClasses, the HOC's can be composed:
-```
+
+``` js
 const StandardPinkAndGreenTout = flowRight(
   withGreenCtaText,
   asStandardTout,
@@ -280,7 +306,7 @@ Imagine we have a button which has different variants depending on whether it
 is active and/or whether it is the first in a list of buttons.  We can use
 the `flowIf()`, `withoutProps()` and `hasProp()` helpers to accomplish this:
 
-```
+``` js
 type VariantProps = {
   isActive?: boolean,
   isFirst?: boolean,

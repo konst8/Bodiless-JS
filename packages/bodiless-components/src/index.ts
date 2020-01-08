@@ -18,9 +18,17 @@ import Image, { asBodilessImage } from './Image';
 import NodeViewer from './NodeViewer';
 import withLinkToggle from './LinkToggle';
 import List from './List';
-import { FinalProps as ListProps, TitleProps as ListTitleProps } from './List/types';
+import {
+  FinalProps as ListProps,
+  TitleProps as ListTitleProps,
+  ListDesignableComponents,
+} from './List/types';
+import withListTitle from './List/withListTitle';
 import asEditableList from './List/asEditableList';
 import withSublist from './List/withSublist';
+import {
+  withMeta, withMetaTitle, withMetaHtml, asBodilessHelmet,
+} from './Meta/Meta';
 import { withToggle, withToggleTo, withToggleButton } from './Toggle';
 
 export {
@@ -32,13 +40,19 @@ export {
   NodeViewer,
   withLinkToggle,
   List,
+  ListDesignableComponents,
   asEditableList,
   withSublist,
   ListProps,
   ListTitleProps,
+  withListTitle,
   withToggle,
   withToggleTo,
   withToggleButton,
   withPlaceholder,
   asEditable,
+  withMeta,
+  withMetaTitle,
+  withMetaHtml,
+  asBodilessHelmet,
 };

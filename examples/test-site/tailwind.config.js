@@ -300,6 +300,8 @@ module.exports = {
     minWidth: {
       1: '1rem',
       5: '5rem',
+      // Used by main menu items to match the UI wireframes
+      100: '100px',
     },
 
     /*
@@ -349,7 +351,10 @@ module.exports = {
     |
     */
 
-    // maxHeight: {},
+    maxHeight: {
+      // Used to limit the maximum height of menu
+      'menu-row': '1.75rem',
+    },
 
     /*
     |---------------------------------------------------------------------------

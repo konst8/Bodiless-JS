@@ -1,0 +1,8 @@
+{
+  "Organisms": {
+    "index.md" : "./README.md",
+    "slider.md": "./README.md",
+    "touts.md": "./README.md",
+    "MainMenu.md" : "./doc/MainMenu.md"
+  }
+}

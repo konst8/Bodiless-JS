@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import ContextWrapper from '../src/components/ContextWrapper';
 import PageEditContext from '../src/PageEditContext';
 
@@ -46,7 +46,7 @@ describe('ContextWrapper', () => {
   it('passes additional props to the inner div', () => {
     const className = Math.random().toString();
     const id = Math.random().toString();
-    const wrapper = shallow(
+    const wrapper = mount(
       <ContextWrapper className={className} id={id}>
         <span>This is the wrapped text.</span>
       </ContextWrapper>,
@@ -61,12 +61,12 @@ describe('ContextWrapper', () => {
       preventDefault: jest.fn(),
       stopPropagation: jest.fn(),
     };
-    const wrapper = shallow(
+    const wrapper = mount(
       <ContextWrapper onClick={onClick}>
         <span>This is the wrapped text.</span>
       </ContextWrapper>,
     );
-    wrapper.simulate('click', event);
+    wrapper.find('div').simulate('click', event);
     expect(onClick).toHaveBeenCalled();
   });
 
@@ -76,12 +76,12 @@ describe('ContextWrapper', () => {
       preventDefault: jest.fn(),
       stopPropagation: jest.fn(),
     };
-    const wrapper1 = shallow(
+    const wrapper1 = mount(
       <ContextWrapper onClick={onClick} clickable>
         <span>This is the wrapped text.</span>
       </ContextWrapper>,
     );
-    wrapper1.simulate('click', event);
+    wrapper1.find('div').simulate('click', event);
     expect(onClick).toHaveBeenCalled();
   });
 
@@ -95,7 +95,7 @@ describe('ContextWrapper', () => {
   // });
 
   it('activates the current context on click', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ContextWrapper clickable>
         <span>This is the wrapped text.</span>
       </ContextWrapper>,
@@ -105,12 +105,12 @@ describe('ContextWrapper', () => {
       preventDefault: jest.fn(),
       stopPropagation: jest.fn(),
     };
-    wrapper.simulate('click', event);
+    wrapper.find('div').simulate('click', event);
     expect(PageEditContext.prototype.activate).toHaveBeenCalledTimes(1);
   });
 
   it('does not activate the current context if not clickable', () => {
-    const wrapper = shallow(
+    const wrapper = mount(
       <ContextWrapper>
         <span>This is the wrapped text.</span>
       </ContextWrapper>,
@@ -120,7 +120,7 @@ describe('ContextWrapper', () => {
       preventDefault: jest.fn(),
       stopPropagation: jest.fn(),
     };
-    wrapper.simulate('click', event);
+    wrapper.find('div').simulate('click', event);
     expect(PageEditContext.prototype.activate).not.toHaveBeenCalled();
   });
 

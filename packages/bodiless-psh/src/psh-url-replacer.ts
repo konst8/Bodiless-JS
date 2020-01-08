@@ -18,12 +18,12 @@ enum Stage {
   Deploy = 'deploy',
 }
 
-const srcFile = process.env.ROBOTSTXT_SRC_FILE;
-const tmpFile = process.env.ROBOTSTXT_TMP_FILE;
-const targetFile = process.env.ROBOTSTXT_TARGET_FILE;
-const srcUrl = process.env.ROBOTSTXT_SRC_URL;
-const targetUrl = process.env.ROBOTSTXT_TARGET_URL;
-const isProdEnv = process.env.ROBOTSTXT_PROD_ENV === '1';
+const srcFile = process.env.PSH_URL_REPLACER_SRC_FILE;
+const tmpFile = process.env.PSH_URL_REPLACER_TMP_FILE;
+const targetFile = process.env.PSH_URL_REPLACER_TARGET_FILE;
+const srcUrl = process.env.PSH_URL_REPLACER_SRC_URL;
+const targetUrl = process.env.PSH_URL_REPLACER_TARGET_URL;
+const isProdEnv = process.env.PSH_URL_REPLACER_PROD_ENV === '1';
 
 const handleError = (err: any) => {
   throw new Error(err);
@@ -36,19 +36,19 @@ const handleNotice = (msg: string) => {
 
 const build = () => {
   if (srcFile === undefined) {
-    handleError('Invalid input. ROBOTSTXT_SRC_FILE environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_SRC_FILE environment variable is not set.');
     return;
   }
   if (tmpFile === undefined) {
-    handleError('Invalid input. ROBOTSTXT_TMP_FILE environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_TMP_FILE environment variable is not set.');
     return;
   }
   if (targetFile === undefined) {
-    handleError('Invalid input. ROBOTSTXT_TARGET_FILE environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_TARGET_FILE environment variable is not set.');
     return;
   }
   if (!fs.existsSync(srcFile)) {
-    handleNotice('skipping robots.txt processing since source file does not exist');
+    handleNotice('skipping file processing since source file does not exist');
     return;
   }
   fs.rename(srcFile, tmpFile, err => {
@@ -66,23 +66,23 @@ const build = () => {
 
 const deploy = () => {
   if (srcUrl === undefined) {
-    handleError('Invalid input. ROBOTSTXT_SRC_URL environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_SRC_URL environment variable is not set.');
     return;
   }
   if (targetUrl === undefined) {
-    handleError('Invalid input. ROBOTSTXT_TARGET_URL environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_TARGET_URL environment variable is not set.');
     return;
   }
   if (tmpFile === undefined) {
-    handleError('Invalid input. ROBOTSTXT_TMP_FILE environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_TMP_FILE environment variable is not set.');
     return;
   }
   if (targetFile === undefined) {
-    handleError('Invalid input. ROBOTSTXT_TARGET_FILE environment variable is not set.');
+    handleError('Invalid input. PSH_URL_REPLACER_TARGET_FILE environment variable is not set.');
     return;
   }
   if (!fs.existsSync(tmpFile)) {
-    handleNotice('skipping robots.txt processing since source file does not exist');
+    handleNotice('skipping file processing since source file does not exist');
     return;
   }
   fs.readFile(tmpFile, 'utf8', (err, data) => {
@@ -92,7 +92,8 @@ const deploy = () => {
     }
     let result = data;
     if (!isProdEnv && srcUrl !== '' && targetUrl !== '') {
-      result = data.replace(srcUrl, targetUrl);
+      // we need global flag to replace all occurrences
+      result = data.replace(new RegExp(srcUrl, 'g'), targetUrl);
     }
     fs.writeFile(targetFile, result, 'utf8', err$ => {
       if (err$) {

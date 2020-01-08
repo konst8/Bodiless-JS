@@ -145,25 +145,22 @@ const getMenuOptions = (client: Client = defaultClient): TMenuOption[] => {
     {
       name: 'listCommits',
       icon: 'list',
-      isActive: () => true,
       handler: () => formGetCommitsList(client),
     },
     {
       name: 'savechanges',
       icon: 'cloud_upload',
-      isActive: () => canCommit,
+      isDisabled: () => !canCommit,
       handler: () => saveChanges,
     },
     {
       name: 'pullchanges',
       icon: 'cloud_download',
-      isActive: () => true,
       handler: () => formGitPull(client),
     },
     {
       name: 'resetchanges',
       icon: 'first_page',
-      isActive: () => true,
       handler: () => formGitReset(client),
     },
   ];

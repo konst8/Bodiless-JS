@@ -89,7 +89,7 @@ export const ui: ComponentSelectorUI = {
 
   AccordionLabel: addClasses(
     'bl-inline-block',
-  )(Div),
+  )(Label),
 
   AccordionIconContract: () => (
     <MaterialIcon className="bl-mr-2" icon="expand_less" />

@@ -118,7 +118,6 @@ const SortableChild = (props: SortableChildProps) => {
         {
           name: 'delete',
           icon: 'delete',
-          isActive: () => true,
           handler: onDeleteWrapper,
         },
       ]}

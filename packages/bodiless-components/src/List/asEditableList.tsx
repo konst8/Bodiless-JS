@@ -38,7 +38,6 @@ const useGetMenuOptions = (props: TitleProps) => {
       name: 'Add',
       icon: 'add',
       handler: asHandler(onAdd),
-      isActive: () => true,
       global: false,
       local: true,
     });
@@ -48,7 +47,6 @@ const useGetMenuOptions = (props: TitleProps) => {
         name: 'Remove',
         icon: 'delete',
         handler: asHandler(onDelete),
-        isActive: () => true,
         global: false,
         local: true,
       });

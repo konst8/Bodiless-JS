@@ -15,6 +15,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
+import { BVRatingsSummary, BVReviews } from '@bodiless/bv';
 import Layout from '../components/Layout';
 import {
   ProductTitle,
@@ -38,7 +39,7 @@ export default (props: any) => (
         </div>
       </SectionMargin>
       <SectionMargin>
-        <p>Placeholder for BV Ratings Summary</p>
+        <BVRatingsSummary />
       </SectionMargin>
       <SectionMargin>
         <div className="flex flex-wrap">
@@ -51,7 +52,7 @@ export default (props: any) => (
         </div>
       </SectionMargin>
       <SectionMargin>
-        <p>Placeholder for BV Reviews</p>
+        <BVReviews />
       </SectionMargin>
       <SectionNegXMargin>
         <FlexBoxDefault

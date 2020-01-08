@@ -32,15 +32,15 @@ const defaultButton = {
 type requiredProps = {
   className?: string,
   children?: any,
-}
+};
 type Opts = {
   toggle(options: ToggleProps): void;
   isActive(value: Value): boolean;
   icon: string;
-}
+};
 type uiIndexType = {
   [index: string]:any;
-}
+};
 const withToggle = <P extends requiredProps> (opts:Opts) => (
   (Component:any) => (props:P) => {
     const { toggle, isActive, icon } = opts;

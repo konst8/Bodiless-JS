@@ -69,7 +69,6 @@ const withToggleButton = (options? : ToggleMenuOptions) => {
         icon: icon || 'toggle_off',
         name: 'Toggle',
         handler: asHandler(() => setOn(true)),
-        isActive: () => true,
         global: false,
         local: true,
       }]
@@ -88,7 +87,7 @@ export const withToggleOnSubmit = <P extends object>(Component: ComponentType<P>
 
 type OnSubmitProps = {
   onSubmit?: (values: any) => void;
-}
+};
 
 type Props<P> = {
   wrap: (values: any) => void;

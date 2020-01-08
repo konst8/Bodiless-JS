@@ -71,8 +71,11 @@ const PageEditor: FC<Props> = ({ children, ui }) => {
       icon: 'edit',
       label: 'Edit',
       isActive: () => context.isEdit,
-      isHighlighted: () => context.isEdit,
       handler: () => {
+        // Force page reload after switching back to edit.
+        if (!context.isEdit) {
+          window.location.reload();
+        }
         // Set edit mode on/off.
         context.toggleEdit();
         context.refresh();

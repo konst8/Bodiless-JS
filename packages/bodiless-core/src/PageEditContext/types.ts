@@ -20,7 +20,7 @@ export type TMenuOption = {
   icon?: string;
   label?: string;
   isActive?: () => boolean;
-  isHighlighted?: () => boolean;
+  isDisabled?: () => boolean;
   handler?: (event: React.MouseEvent) => any;
   local?: boolean;
   global?: boolean;

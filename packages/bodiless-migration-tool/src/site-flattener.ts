@@ -81,9 +81,9 @@ export interface SiteFlattenerParams {
 }
 
 export class SiteFlattener {
-  params: SiteFlattenerParams
+  params: SiteFlattenerParams;
 
-  canvasX: CanvasX
+  canvasX: CanvasX;
 
   constructor(params: SiteFlattenerParams) {
     this.params = {

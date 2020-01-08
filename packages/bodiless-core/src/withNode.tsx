@@ -32,13 +32,16 @@ const withNode = <P extends object, D extends object>(Component: CT<P>) => {
   };
   return WithNode;
 };
-const withNodeKey = <P extends object> (nodeKey?: string) => (Component:CT<P> | string) => {
-  const WithNodeKey = (props: P) => (
-    nodeKey
-      ? <Component nodeKey={nodeKey} {...props} />
-      : <Component {...props} />
-  );
-  return WithNodeKey;
-};
+const withNodeKey = <P extends object>(
+  nodeKey?: string,
+  nodeCollection?: string,
+) => (Component: CT<P> | string) => {
+    const WithNodeKey = (props: P) => (nodeKey ? (
+      <Component nodeKey={nodeKey} nodeCollection={nodeCollection} {...props} />
+    ) : (
+      <Component {...props} />
+    ));
+    return WithNodeKey;
+  };
 export default withNode;
 export { withNodeKey };

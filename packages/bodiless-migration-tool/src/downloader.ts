@@ -40,9 +40,9 @@ import {
 import debug from './debug';
 
 export default class Downloader {
-  pageUrl: string
+  pageUrl: string;
 
-  downloadPath: string
+  downloadPath: string;
 
   constructor(pageUrl: string, downloadPath: string) {
     this.pageUrl = pageUrl;

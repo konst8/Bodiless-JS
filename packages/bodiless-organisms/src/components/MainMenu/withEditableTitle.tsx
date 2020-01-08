@@ -11,18 +11,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { flow } from 'lodash';
+import { withDesign } from '@bodiless/fclasses';
+import { asBodilessLink, asEditable, withLinkToggle } from '@bodiless/components';
+import { withNode, withNodeKey } from '@bodiless/core';
 
-import React from 'react';
-import { Link } from 'gatsby';
+/**
+ * HOC, that injects editable link toggle component into component design (usually Menu or Submenu)
+ */
+const withEditableTitle = withDesign({
+  Title: flow(
+    asBodilessLink('title-link'),
+    withLinkToggle,
+    withNode,
+    withNodeKey('title'),
+    asEditable('text', 'Menu Item'),
+  ),
+});
 
-import Layout from '../components/Layout';
-
-const SecondPage = () => (
-  <Layout>
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
-  </Layout>
-);
-
-export default SecondPage;
+export default withEditableTitle;

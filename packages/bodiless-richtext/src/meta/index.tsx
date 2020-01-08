@@ -15,17 +15,17 @@
 /* tslint:disable:max-line-length */
 import { flow } from 'lodash';
 import {
+  asBlock,
   asMark,
   withKey,
   withButton,
   asInline,
-  asBlock,
   withId,
   asVoid,
 } from '../RichTextItemSetters';
 
 export const withBoldMeta = flow(withId('Bold'), asMark, withKey('b'), withButton('format_bold'));
-export const withSuperScriptMeta = flow(withId('SuperScript'), asMark, withKey('s'), withButton('arrow_drop_up'));
+export const withSuperScriptMeta = flow(withId('SuperScript'), asMark, withKey('s'), withButton('format_size'));
 export const withItalicMeta = flow(withId('Italic'), asMark, withKey('i'), withButton('format_italic'));
 export const withLinkMeta = flow(withId('Link'), asInline, withKey('k'), withButton('link'));
 export const withStrikeThroughMeta = flow(withId('Strikethrough'), asMark, withKey('s'), withButton('format_strikethrough'));
@@ -36,4 +36,5 @@ export const withAlignCenterMeta = flow(withId('AlignCenter'), asBlock, withButt
 export const withAlignJustifyMeta = flow(withId('AlignJustify'), asBlock, withButton('format_align_justify'));
 export const withHeader1Meta = flow(withId('H1'), asBlock, withKey('1'), withButton('looks_one'));
 export const withHeader2Meta = flow(withId('H2'), asBlock, withKey('2'), withButton('looks_two'));
-export const withImageMeta = flow(withId('Image'), asVoid, asBlock, withId('image'), withButton('add_photo_alternate'));
+export const withHeader3Meta = flow(withId('H3'), asBlock, withKey('3'), withButton('looks_3'));
+export const withImageMeta = flow(withId('Image'), asVoid, asMark, withId('image'), withButton('image'));

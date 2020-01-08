@@ -56,7 +56,7 @@ export interface ScraperParams {
 }
 
 export class Scraper extends EE<Events> {
-  params: ScraperParams
+  params: ScraperParams;
 
   constructor(params: ScraperParams) {
     super();

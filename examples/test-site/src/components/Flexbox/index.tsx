@@ -15,10 +15,16 @@ import { flow } from 'lodash';
 import { FlexboxGrid } from '@bodiless/layouts-ui';
 import withToutVariations from './withToutVariations';
 
+import withRichTextVariations from './withRichTextVariations';
+import withSingleAccordionVariations from './withSingleAccordionVariations';
+
 // Typically we would also import variations of other types of component.
 // const variations = extendDesign(toutVariations, sliderVariations, ...);
 const FlexBoxDefault = flow(
   withToutVariations,
+  withRichTextVariations,
+  withSingleAccordionVariations,
 )(FlexboxGrid);
+
 // eslint-disable-next-line import/prefer-default-export
 export { FlexBoxDefault };

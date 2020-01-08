@@ -19,6 +19,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const { spawn } = require('child_process');
 const formidable = require('formidable');
+const tmp = require('tmp');
 const path = require('path');
 const Page = require('./page');
 const Logger = require('./logger');
@@ -476,14 +477,16 @@ class Backend {
       // specify that we want to allow the user to upload multiple files in a single request
       form.multiples = true;
 
-      // store all uploads in the /uploads directory
-      form.uploadDir = backendStaticPath;
+      // store all uploads in a temporary directory
+      const tmpDir = tmp.dirSync({ mode: '0755', unsafeCleanup: true, prefix: 'backendTmpDir_' });
+      form.uploadDir = tmpDir.name;
 
       // every time a file has been uploaded successfully,
-      // rename it to it's orignal name
+      // copy to static path with orignal name
       form.on('file', (field, file) => {
-        fs.rename(file.path, path.join(form.uploadDir, file.name), err => {
+        fs.copyFile(file.path, path.join(backendStaticPath, file.name), err => {
           if (err) throw err;
+          fs.unlinkSync(file.path);
         });
       });
 

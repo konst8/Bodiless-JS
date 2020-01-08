@@ -12,14 +12,18 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import Layout from '../components/Layout';
+const fs = require('fs');
 
-const NotFoundPage = () => (
-  <Layout>
-    <h1>NOT FOUND</h1>
-    <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-  </Layout>
-);
+const defaultSSIConfPath = 'ssi/ssi_conf.json';
 
-export default NotFoundPage;
+const getSSIEntities = ssiConfPath => {
+  const confPath = ssiConfPath || defaultSSIConfPath;
+  try {
+    return JSON.parse(fs.readFileSync(confPath));
+  } catch (error) {
+    // we need to log the error
+    return {};
+  }
+};
+
+module.exports = getSSIEntities;

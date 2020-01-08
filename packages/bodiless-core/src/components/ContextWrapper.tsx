@@ -12,10 +12,13 @@
  * limitations under the License.
  */
 
-import React, { FC } from 'react';
+import React, { FC, HTMLProps } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useContextActivator, useEditContext } from '../hooks';
 import { Props } from '../Types/ContextWrapperTypes';
+import { withoutProps } from '../hoc';
+
+const DefaultDiv = withoutProps<HTMLProps<HTMLDivElement>>(['isActive'])('div');
 
 const ContextWrapper: FC<Props> = ({
   ui,
@@ -24,7 +27,7 @@ const ContextWrapper: FC<Props> = ({
   onClick,
   ...rest
 }) => {
-  const Div = (ui && ui.ContextWrapper) || 'div';
+  const Div = (ui && ui.ContextWrapper) || DefaultDiv;
   // @TODO - Determine why isActive is not getting stripped from the contextwrpper div.
   const { isActive } = useEditContext();
   const isActiveFinal = typeof Div === 'string' ? undefined : isActive;

@@ -24,6 +24,7 @@ import {
   withAlignCenterMeta,
   withAlignJustifyMeta,
   withAlignLeftMeta,
+  withHeader3Meta,
   withHeader2Meta,
   withHeader1Meta,
   withSuperScriptMeta,
@@ -31,6 +32,7 @@ import {
 } from '@bodiless/richtext';
 import {
   H2,
+  H3,
   Div,
   Strong,
   Em,
@@ -48,6 +50,7 @@ import {
   asAlignRight,
   asAlignCenter,
   asAlignJustify,
+  asHeader3,
   asHeader2,
   asHeader1,
   asSuperScript,
@@ -71,14 +74,15 @@ const itemsBasic = [
   ...itemsSimple,
   flow(withComponent(asAlignLeft(Div)), withAlignLeftMeta),
   flow(withComponent(asAlignRight(Div)), withAlignRightMeta),
-  flow(withComponent(asAlignCenter(Div)), withAlignCenterMeta),
   flow(withComponent(asAlignJustify(Div)), withAlignJustifyMeta),
+  flow(withComponent(asAlignCenter(Div)), withAlignCenterMeta),
 ];
 
 const itemsFullFeatured = [
   ...itemsBasic,
   flow(withComponent(asHeader1(H1)), withHeader1Meta),
   flow(withComponent(asHeader2(H2)), withHeader2Meta),
+  flow(withComponent(asHeader3(H3)), withHeader3Meta),
 ];
 const EditorSimple = withItems(itemsSimple)(RichText);
 const EditorBasic = withItems(itemsBasic)(RichText);

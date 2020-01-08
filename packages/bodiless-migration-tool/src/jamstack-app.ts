@@ -40,7 +40,7 @@ export interface JamStackApp {
 }
 
 export class CanvasX implements JamStackApp {
-  params: JamStackAppParams
+  params: JamStackAppParams;
 
   constructor(params: JamStackAppParams) {
     this.params = params;

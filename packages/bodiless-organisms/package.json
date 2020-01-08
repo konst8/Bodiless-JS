@@ -15,10 +15,11 @@
     "url": "https://github.com/johnsonandjohnson/bodiless-js.git"
   },
   "scripts": {
-    "build": "tsc -p ./tsconfig.json ",
+    "build": "npm run copy && tsc -p ./tsconfig.json",
     "build:watch": "npm run build -- --watch",
     "lint": "tslint ./src/**/*.ts?x",
-    "clean": "rimraf \"lib/*\" && rimraf tsconfig.tsbuildinfo"
+    "clean": "rimraf \"lib/*\" && rimraf tsconfig.tsbuildinfo",
+    "copy": "copyfiles -u 3 \"./src/components/MainMenu/*.css\" \"./lib/components/MainMenu/\""
   },
   "dependencies": {
     "@bodiless/components": "^0.0.35",
@@ -27,7 +28,8 @@
     "@bodiless/richtext": "^0.0.35",
     "@bodiless/richtext-ui": "^0.0.35",
     "lodash": "^4.17.11",
-    "nuka-carousel": "^4.4.7"
+    "nuka-carousel": "^4.4.7",
+    "rc-menu": "^8.0.0-alpha.5"
   },
   "peerDependencies": {
     "react": "^16.8.4"

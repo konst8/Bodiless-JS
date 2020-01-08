@@ -84,27 +84,3 @@ This combination should be done at the point of use, such as in the page file wh
 
 Here is a flow diagram of creating a Horizontal Tout:
 ![](./ToutHorizontalDefaultFlow.svg)
-
-### Creating Variations for the Flexbox
-
-* We can also create a set of components with multiple variations, by deriving from varying different tokens with the use of `vary`,`addToAll`, `permute` and `withFacet` functions, and generate a set of component variations that can be utilized.
-
-
-At the most basic, one needs to wrap a component in an HOC token, but sometimes we need to create a set of components derived from varying different tokens, in that case, the `vary`,`addToAll`, `permute` and `withFacet` function can be used to create a set of Tokens that can be applied.
-
-``` js
-const withOrientation()
-const toutTokenVariations = vary(
-   addToAll(
-    withFacet(Categories.Orientation)('Tout')(asPassThough),
-  ),
-  permute(Categories.Orientation)(
-    withFacet(Categories.Orientation)('Vertical')(asToutVertical),
-    withFacet(Categories.Orientation)('Horizontal')(asToutHorizontal),
-  ),
-  permute(Categories.Style)(
-    withFacet(Categories.Orientation)('Default')(),
-    withFacet(Categories.Orientation)('Bold')(asToutBold as HOC),
-  ),
-)(Tout);
-```

@@ -73,21 +73,18 @@ export const SubmitButton: FC<HTMLProps<HTMLButtonElement> & StylableProps> = pr
 
 export const Icon = flow(
   addClasses('bl-rounded bl-p-grid-1 material-icons'),
-  withoutProps<ButtonVariantProps>(['isHighlighted']),
+  withoutProps<ButtonVariantProps>(['isActive']),
   addClasses('bl-text-3xl'),
-  flowIf(hasProp('isHighlighted'))(
+  flowIf(hasProp('isActive'))(
     addClasses('bl-bg-primary'),
   ),
 )(Span);
 
 export const ToolbarButton = flow(
-  withoutProps<ButtonVariantProps>(['isActive', 'isFirst', 'isEnabled']),
-  addClasses('cursor-pointer bl-text-grey-600'),
-  flowIf(hasProp('isActive'))(
-    addClasses('bl-text-grey-200').removeClasses('bl-text-grey-600'),
-  ),
-  flowIf(hasProp('isFirst'))(
-    addClasses('bl-text-grey-200').removeClasses('bl-text-grey-600'),
+  withoutProps<ButtonVariantProps>(['isActive', 'isFirst', 'isDisabled']),
+  addClasses('cursor-pointer bl-text-grey-200'),
+  flowIf(hasProp('isDisabled'))(
+    addClasses('bl-text-grey-600').removeClasses('bl-text-grey-200'),
   ),
 )(Div);
 

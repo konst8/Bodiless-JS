@@ -125,7 +125,7 @@ class PageEditContext implements PageEditContextInterface {
     <PageEditContext.context.Consumer>
       {value => <Observer>{() => children(value)}</Observer>}
     </PageEditContext.context.Consumer>
-  )
+  );
 
   static Provider = PageEditContext.context.Provider;
 

@@ -39,7 +39,7 @@ export type Data = {
 
 // Type of the props accepted by this component.
 // Exclude the href from the props accepted as we write it.
-type AProps = HTMLProps<HTMLAnchorElement>
+type AProps = HTMLProps<HTMLAnchorElement>;
 
 export type Props = Pick<AProps, Exclude<keyof AProps, 'href'>> & {
   unwrap?: () => void,

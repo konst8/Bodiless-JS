@@ -120,7 +120,7 @@ function useGetMenuOptions(props: EditFlexboxProps) {
     icon: 'add',
     name: 'add',
     global: true,
-    isActive: () => context.isEdit,
+    isDisabled: () => !context.isEdit,
     handler: () => contextMenuForm({
       initialValues: { selection: '' },
     })(

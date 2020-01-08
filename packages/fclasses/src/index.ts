@@ -15,12 +15,15 @@
 import {
   stylable, addClasses, removeClasses, StylableProps,
 } from './FClasses';
+import addProps from './addProps';
 import {
   asComponent,
   applyDesign,
   withDesign,
   replaceWith,
+  startWith,
   remove,
+  Design,
   DesignableProps,
   DesignElement,
   DesignableComponentsProps,
@@ -34,6 +37,7 @@ import { flowIf, hasProp, withoutProps } from './hoc-util';
 export * from './StyledHTML';
 
 export {
+  addProps,
   stylable,
   StylableProps,
   addClasses,
@@ -41,10 +45,12 @@ export {
   withDesign,
   applyDesign,
   replaceWith,
+  startWith,
   remove,
   flowIf,
   hasProp,
   withoutProps,
+  Design,
   DesignableProps,
   DesignElement,
   DesignableComponentsProps,

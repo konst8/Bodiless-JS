@@ -27,7 +27,7 @@ type EdgeFile = {
   directotyPath: string,
   filePath: string,
   data: any,
-}
+};
 
 const graphql = jest.fn();
 const boundActionCreators = {

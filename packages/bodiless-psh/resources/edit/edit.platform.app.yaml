@@ -33,7 +33,7 @@ dependencies:
 mounts:
     'volume':
         source: local
-        source_path: volume 
+        source_path: volume
 web:
     #  locations:
     #      '/dist':
@@ -56,3 +56,4 @@ hooks:
 variables:
     env:
         APP_VOLUME: '/app/volume'
+        CHOKIDAR_USEPOLLING: true

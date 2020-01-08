@@ -62,9 +62,9 @@ export interface PageCreatorParams {
 }
 
 export class PageCreator {
-  params: PageCreatorParams
+  params: PageCreatorParams;
 
-  downloader: Downloader
+  downloader: Downloader;
 
   constructor(params: PageCreatorParams) {
     this.params = params;

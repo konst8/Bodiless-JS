@@ -4,7 +4,6 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  *
  */
-const pathUtil = require('path');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 // exports.onCreateBabelConfig = ({ actions: { setBabelPlugin } }) => {
@@ -29,11 +28,11 @@ exports.onCreateWebpackConfig = ({ stage, actions }) => {
       devtool: 'cheap-module-source-map',
       resolve: {
         plugins: [new TsconfigPathsPlugin()],
-        alias: {
-          // There should be only one instance of react in the project,
-          // otherwise react hooks will not work.
-          react: pathUtil.resolve('../../node_modules', 'react'),
-        },
+        // alias: {
+        //   // There should be only one instance of react in the project,
+        //   // otherwise react hooks will not work.
+        //   react: pathUtil.resolve('../../node_modules', 'react'),
+        // },
       },
     });
   }

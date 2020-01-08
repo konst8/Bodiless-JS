@@ -22,6 +22,7 @@ import {
   DesignableProps,
   Div,
 } from '@bodiless/fclasses';
+import MainMenu from '../Menus/MainMenu';
 import {
   asPageContainer,
   asHeader1,
@@ -32,9 +33,9 @@ const getHeaderComponents = applyDesign({
   Wrapper: Div,
   Container: Div,
   SiteReturn: Div,
-  Menu: Div,
+  Menu: MainMenu,
 });
-const Header: FC<DesignableProps> = ({ design, siteLogo }) => {
+const Header: FC<DesignableProps & { siteLogo: string }> = ({ design, siteLogo }) => {
   const {
     Wrapper,
     Container,
@@ -50,8 +51,10 @@ const Header: FC<DesignableProps> = ({ design, siteLogo }) => {
             <img src={siteLogo} className="h-16" alt="Return To Home" />
           </Link>
         </SiteReturn>
-        <Menu />
       </Container>
+      <div className="container mx-auto">
+        <Menu nodeKey="MainMenu" nodeCollection="site" />
+      </div>
     </Wrapper>
   );
 };

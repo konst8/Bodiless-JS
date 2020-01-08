@@ -30,7 +30,7 @@ const ui = {
 
 type RichTextProps<P> = {
   items: Array<RichTextItemInput<P>>,
-}
+};
 
 const RichText = <P extends object, D extends object>(props: P & RichTextProps<D>) => (
   <PlainRichText {...props} ui={ui} />

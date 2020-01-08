@@ -32,7 +32,7 @@ type Client = {
 
 type Props = {
   client?: Client;
-}
+};
 
 const formPageAdd = (client: Client, template: string) => contextMenuForm({
   submitValues: async (submittedValues: any) => {
@@ -98,7 +98,6 @@ const useGetMenuOptions = (): () => TMenuOption[] => {
       name: 'newpage',
       icon: 'note_add',
       label: 'Page',
-      isActive: () => true,
       handler: () => formPageAdd(defaultClient, gatsbyPage.subPageTemplate),
     },
   ];

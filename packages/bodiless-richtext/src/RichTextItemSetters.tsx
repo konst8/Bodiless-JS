@@ -100,9 +100,7 @@ const withHoverButton = (icon:string) => <P extends object> (data:RichTextItemIn
 */
 const withButton = (icon:string) => <P extends object> (input:RichTextItemInput<P>) => {
   const data = getData(input);
-  return data.type === RichTextItemType.block
-    ? withGlobalButton(icon)(data)
-    : withHoverButton(icon)(data);
+  return withHoverButton(icon)(data);
 };
 
 /*

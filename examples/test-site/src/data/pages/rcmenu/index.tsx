@@ -1,5 +1,5 @@
 /**
- * Copyright © 2019 Johnson & Johnson
+ * Copyright Â© 2019 Johnson & Johnson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,22 +11,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import React from 'react';
 import { graphql } from 'gatsby';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
-import { NodeViewer } from '@bodiless/components';
+
 import Layout from '../../../components/Layout';
-import { EditorFullFeatured } from '../../../components/Editors';
+import MainMenu from '../../../components/Menus/MainMenu';
+
 
 export default (props: any) => (
   <Page {...props}>
     <Layout>
-      <h1 className="text-3xl font-bold">Slate editor API demo</h1>
-      <EditorFullFeatured nodeKey="editor" />
-      <br />
-      <h3 className="text-lg font-bold">This shows the json content of the outer editor:</h3>
-      <NodeViewer nodeKey="editor" />
+      <h1 className="text-3xl font-bold">Editable Menu Demo</h1>
+      <div className="ml-10">
+        <p className="py-3">
+          The following is an editable menu using rc-menu
+        </p>
+        <MainMenu nodeKey="list1" className="w-1/2" />
+      </div>
     </Layout>
   </Page>
 );
@@ -34,5 +36,6 @@ export default (props: any) => (
 export const query = graphql`
   query($slug: String!) {
     ...PageQuery
+    ...SiteQuery
   }
 `;

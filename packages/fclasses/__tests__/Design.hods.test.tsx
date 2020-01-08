@@ -1,5 +1,5 @@
 import React, { ComponentType, Fragment } from 'react';
-import { varyDesign, extendDesign } from '../src/Design';
+import { varyDesign, extendDesign, FluidDesign } from '../src/Design';
 import { HOC } from '../src/FClasses';
 
 /**
@@ -30,7 +30,7 @@ const getTestText = (hoc: HOC | undefined) => {
 };
 describe('varyDesign', () => {
   it('takes a Design and returns an HOD that will martix it.', () => {
-    const baseDesign = {
+    const baseDesign: FluidDesign = {
       Item1: testHOC('item1'),
       Item2: testHOC('item2'),
     };
@@ -61,11 +61,11 @@ describe('varyDesign', () => {
     const baseDesign = {
       Item1: testHOC('item1'),
     };
-    const additionDesign1 = {
+    const additionDesign1: FluidDesign = {
       Addition: testHOC('addition'),
       Addition2: testHOC('addition2'),
     };
-    const additionDesign2 = {
+    const additionDesign2: FluidDesign = {
       Addition3: testHOC('addition3'),
       Addition4: testHOC('addition4'),
     };
@@ -80,7 +80,7 @@ describe('varyDesign', () => {
 describe('extendDesign', () => {
   // tslint:disable-next-line: max-line-length
   it(' takes a Design an returns an hod that will combine the it to the HOD Design if there are unique keys', () => {
-    const baseDesign = {
+    const baseDesign: FluidDesign = {
       Item1: testHOC('item1'),
       Item2: testHOC('item2'),
     };
@@ -133,11 +133,11 @@ describe('extendDesign', () => {
     const baseDesign = {
       Item1: testHOC('item1'),
     };
-    const additionDesign1 = {
+    const additionDesign1: FluidDesign = {
       Addition: testHOC('addition'),
       Addition2: testHOC('addition2'),
     };
-    const additionDesign2 = {
+    const additionDesign2: FluidDesign = {
       Addition3: testHOC('addition3'),
       Addition4: testHOC('addition4'),
     };
@@ -163,11 +163,11 @@ describe('extendDesign', () => {
       const baseDesign = {
         Item1: testHOC('item1'),
       };
-      const additionDesign1 = {
+      const additionDesign1: FluidDesign = {
         Addition: testHOC('addition'),
         Addition2: testHOC('addition2'),
       };
-      const additionDesign2 = {
+      const additionDesign2: FluidDesign = {
         Addition3: testHOC('addition3'),
         Addition4: testHOC('addition4'),
       };

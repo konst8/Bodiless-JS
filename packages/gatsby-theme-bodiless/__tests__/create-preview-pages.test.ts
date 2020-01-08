@@ -23,7 +23,7 @@ jest.mock('path', () => ({
 
 type EdgeFile = {
   relativePath: string,
-}
+};
 
 const graphql = jest.fn();
 const boundActionCreators = {

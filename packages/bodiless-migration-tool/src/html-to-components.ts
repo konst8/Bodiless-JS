@@ -35,7 +35,7 @@ export interface HtmlToComponentsSettings {
 }
 
 export class HtmlToComponents {
-  settings: HtmlToComponentsSettings
+  settings: HtmlToComponentsSettings;
 
   constructor(settings: HtmlToComponentsSettings) {
     this.settings = settings;

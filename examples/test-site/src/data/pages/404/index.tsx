@@ -13,20 +13,28 @@
  */
 
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, graphql } from 'gatsby';
+import { Page } from '@bodiless/gatsby-theme-bodiless';
 import Layout from '../../../components/Layout';
 
-const NotFoundPage = () => (
-  <Layout>
-    <h1>Page Not Found</h1>
-    <p>The requested page could not be found.</p>
-    <p>
-      <Link to="/" style={{ color: 'blue' }}>
-        {' '}
-        Go to homepage.
-      </Link>
-    </p>
-  </Layout>
+export default (props: any) => (
+  <Page {...props}>
+    <Layout>
+      <h1>Page Not Found</h1>
+      <p>The requested page could not be found.</p>
+      <p>
+        <Link to="/" style={{ color: 'blue' }}>
+          {' '}
+          Go to homepage.
+        </Link>
+      </p>
+    </Layout>
+  </Page>
 );
 
-export default NotFoundPage;
+export const query = graphql`
+  query($slug: String!) {
+    ...PageQuery
+    ...SiteQuery
+  }
+`;

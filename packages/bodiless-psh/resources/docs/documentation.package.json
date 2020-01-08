@@ -1,6 +1,6 @@
 {
   "name": "@bodiless/starter-documentation",
-  "version": "0.0.27",
+  "version": "0.0.35",
   "description": "This is a documentation app for starterkit",
   "author": "Ivan Rudiuk <IRudiuk@its.jnj.com>",
   "homepage": "",
@@ -14,27 +14,27 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://sourcecode.jnj.com/scm/asx-nbfp/bodiless_starter.git"
+    "url": "https://github.com/johnsonandjohnson/Bodiless-JS.git"
   },
   "scripts": {
     "docs:build": "bl-docs-build"
   },
   "dependencies": {
-    "@bodiless/backend": "^0.0.26",
-    "@bodiless/components": "^0.0.26",
-    "@bodiless/core": "^0.0.26",
-    "@bodiless/core-ui": "^0.0.26",
-    "@bodiless/fclasses": "^0.0.26",
-    "@bodiless/gatsby-theme-bodiless": "^0.0.26",
-    "@bodiless/layouts": "^0.0.26",
-    "@bodiless/layouts-ui": "^0.0.26",
-    "@bodiless/migration-tool": "^0.0.26",
-    "@bodiless/richtext": "^0.0.26",
-    "@bodiless/richtext-ui": "^0.0.26",
-    "@bodiless/ui": "^0.0.26"
+    "@bodiless/backend": "^0.0.35",
+    "@bodiless/components": "^0.0.35",
+    "@bodiless/core": "^0.0.35",
+    "@bodiless/core-ui": "^0.0.35",
+    "@bodiless/fclasses": "^0.0.35",
+    "@bodiless/gatsby-theme-bodiless": "^0.0.35",
+    "@bodiless/layouts": "^0.0.35",
+    "@bodiless/layouts-ui": "^0.0.35",
+    "@bodiless/migration-tool": "^0.0.35",
+    "@bodiless/richtext": "^0.0.35",
+    "@bodiless/richtext-ui": "^0.0.35",
+    "@bodiless/ui": "^0.0.35"
   },
   "devDependencies": {
-    "@bodiless/documentation": "^0.0.26",
+    "@bodiless/documentation": "^0.0.35",
     "docsify-cli": "^4.3.0"
   }
 }

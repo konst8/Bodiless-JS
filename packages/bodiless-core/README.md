@@ -90,7 +90,7 @@ below for more information).
 ### Consuming the context with hooks
 
 To access the current page edit context without modifying it, simply use the
-useEditContext()` and/or `useContextActivator()` hooks (../packages/bodiless-core/src/hooks.ts).
+`useEditContext()` and/or `useContextActivator()` hooks (../packages/bodiless-core/src/hooks.ts).
 
 ```javascript
 import { observer } from 'mobx-react-lite';
@@ -163,7 +163,7 @@ enclosing context on click:
 ```
 ## Context Menu Options
 
-The Global Contexxt Menu aggregates menu options provided by all contexts within
+The Global Context Menu aggregates menu options provided by all contexts within
 the [active context trail](#context-trail). It is a wrapper around the generic `ContextMenu` (../packages/bodiless-core/src/components/ContextMenu.tsx)
 component, which provides a mechanism for displaying a set of menu options
 provided in an "options" prop. Each item is an object with the following
@@ -171,7 +171,8 @@ members:
 - name: a human readable name for this option (currently unused)
 - icon: the name of a [material design icon](https://material.io/tools/icons/?style=baseline)
   to display for this item
-- isActive; a callback to determine if the option is "active" (for toggles)
+- isActive; a callback to determine if the option or its flyout panel is currently "active" 
+- isDisabled; a callback to determine if the option is currently "disabled" (for toggles)
 - handler: a callback to invoke when the item is selected
 
 

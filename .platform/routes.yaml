@@ -21,3 +21,5 @@
     type: upstream
     upstream: "static:http"
     id: 'docs-env-route-id'
+    ssi:
+        enabled: true

@@ -80,13 +80,13 @@ export type FinalUI = {
   // A label that will be displayed by the AccordionCheckbox
   AccordionCheckboxLabel: ComponentType<HTMLProps<HTMLLabelElement>> | string;
   // A input that will be displayed by the Accordion Label
-  AccordionCheckBox: ComponentType<HTMLProps<HTMLDivElement>> | string;
+  AccordionCheckBox: ComponentType<HTMLProps<HTMLInputElement>> | string;
   // A div that will wrap the search bar
   SearchBarWrapper: ComponentType<HTMLProps<HTMLDivElement>> | string;
   // A styled text input
   SearchBar: ComponentType<HTMLProps<HTMLInputElement>> | string;
   // A div element containing label text
-  AccordionLabel: ComponentType<HTMLProps<HTMLDivElement>> | string;
+  AccordionLabel: ComponentType<HTMLProps<HTMLLabelElement>> | string;
   // A span element containing the icon for the contracted menu
   AccordionIconContract: ComponentType<HTMLProps<HTMLSpanElement>> | string;
   // A span element containing the icon for the expanded menu

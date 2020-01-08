@@ -14,11 +14,16 @@
 
 import React, { FC, HTMLProps } from 'react';
 import {
-  H2, Section, addClasses, stylable,
+  H2,
+  Section,
+  addClasses,
+  stylable,
+  varyDesign,
+  replaceWith,
 } from '@bodiless/fclasses';
 import { withNode } from '@bodiless/core';
 import { flow } from 'lodash';
-import { withTerm, withTitle, withDisplayName } from '@bodiless/layouts';
+import { withTitle, withFacet } from '@bodiless/layouts';
 import { FlexboxGrid } from '@bodiless/layouts-ui';
 
 import CaptionedImage from './CaptionedImage';
@@ -29,36 +34,25 @@ const withBlueBorder = addClasses('border-blue-400');
 const withGreenBorder = addClasses('border-green-400');
 const withRedBorder = addClasses('border-red-400');
 
-const BlueImageTile = flow(
-  asGalleryTile,
-  withBlueBorder,
-  withTerm('Color')('Blue'),
-  withDisplayName('BlueImageTile'),
-  withTitle('Blue Image Tile'),
-)(CaptionedImage);
-
-const GreenImageTile = flow(
-  asGalleryTile,
-  withGreenBorder,
-  withTerm('Color')('Green'),
-  withTerm('Type')('Image'),
-  withDisplayName('GreenImageTile'),
-  withTitle('Green Image Tile'),
-)(CaptionedImage);
-
-const RedImageTile = flow(
-  stylable,
-  asGalleryTile,
-  withRedBorder,
-  withTerm('Color')('Red'),
-  withDisplayName('RedImageTile'),
-  withTitle('Red Image Tile'),
-)(CaptionedImage);
-
+const galleryDesign = varyDesign(
+  {
+    ImageTile: flow(
+      replaceWith(CaptionedImage),
+      stylable,
+      asGalleryTile,
+      withTitle('ImageTitle'),
+    ),
+  },
+  {
+    Red: withFacet('Color')('Red')(withRedBorder),
+    Green: withFacet('Color')('Green')(withGreenBorder),
+    Blue: withFacet('Color')('Blue')(withBlueBorder),
+  },
+)();
 const Wrapper = addClasses('my-2')(Section);
 const Header = addClasses('text-2xl')(H2);
 const Body: FC = () => (
-  <FlexboxGrid nodeKey="body" componentTypes={{ RedImageTile, BlueImageTile, GreenImageTile }} />
+  <FlexboxGrid nodeKey="body" design={galleryDesign} />
 );
 
 const Gallery: FC<HTMLProps<HTMLDivElement>> = ({ children, ...rest }) => (

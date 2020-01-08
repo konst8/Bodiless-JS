@@ -16,11 +16,23 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { StaticQuery, graphql } from 'gatsby';
 import { Div } from '@bodiless/fclasses';
-
+import {
+  withMeta, withMetaTitle, withMetaHtml, asBodilessHelmet,
+} from '@bodiless/components';
+import { flowRight } from 'lodash';
 import Header from './header';
 import Footer from './footer';
 import { asPageContainer } from '../Elements.token';
-import favicon from '../../images/favicon.ico';
+
+const ExampleHelmet = flowRight(
+  asBodilessHelmet('meta'),
+  withMeta('pagetype', 'page-type'),
+  withMeta('description', 'description'),
+  withMeta('bl-brand', 'brand', 'site'),
+  withMeta('bl-country', 'country', 'site'),
+  withMetaTitle('page-title'),
+  withMetaHtml('en'),
+)(Helmet);
 
 const Container = asPageContainer(Div);
 const Layout = ({ children }) => (
@@ -37,17 +49,7 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
-        <Helmet
-          title={data.site.siteMetadata.title}
-          meta={[
-            { name: 'description', content: 'BodilessJS Example Site' },
-          ]}
-          link={[
-            { rel: 'shortcut icon', type: 'image/x-icon', href: `${favicon}` },
-          ]}
-        >
-          <html lang="en" />
-        </Helmet>
+        <ExampleHelmet />
         <Header siteLogo={data.site.siteMetadata.logo} />
         <Container>
           {children}

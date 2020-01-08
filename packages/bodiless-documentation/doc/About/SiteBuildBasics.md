@@ -503,3 +503,26 @@ With your viewport at desktop width, use the component selector to place two 50%
 ### Selection vs Configuration
 
 BodilessJS favors selection over configuration. It follows the belief that it is better to create lots of simple components than to create a few complex components. The component selector supports this pattern by providing sophisticated search and filter capabilities allowing a content editor to find the exact component they are looking for quickly and easily. You can read more about this [the next section](About/CorePrinciples).
+
+With this in mind we can use the `varyDesign` function to refactor the design we use in the Gallery.
+
+This function takes any number of designs, and produces a new design which combines each key of the each design with each key of all the others -- for example, if your designs were { A, B } and {C, D}, your new design would be { AC, AD, BC, BD }. In our case:
+
+``` js
+const galleryDesign = varyDesign(
+  {
+    ImageTile: flow(
+      replaceWith(CaptionedImage),
+      stylable,
+      asGalleryTile,
+      withTitle('ImageTitle'),
+    ),
+  },
+  {
+    Red: withFacet('Color')('Red')(withRedBorder),
+    Green: withFacet('Color')('Green')(withGreenBorder),
+    Blue: withFacet('Color')('Blue')(withBlueBorder),
+  },
+)();
+
+```

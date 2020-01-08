@@ -102,13 +102,14 @@ To add meta data (used by the flexbox in its component selector) the following H
     Tout:  flow(startWith(Tout), withTerm('Type')('Tout')),
   }
   ```
+
 ---
 
-* **`withFacet`**: is similar to `withTerm` but it appends the term to the title, and adds the category and term to the description.
+* **`withFacet`**: is similar to `withTerm` but it appends the term to the title, and adds the category and term to the description as well as taking a hoc that will be applyed to the component.
 
   ``` js
   {
-  Tout:  flow(startWith(Tout), withFacet('Type')('Tout')),
+  Tout:  flow(startWith(Tout), withFacet('Color')('Red')(asRedTout)),
   }
   ```
 
@@ -119,10 +120,12 @@ To add meta data (used by the flexbox in its component selector) the following H
   > ``` js
   > const withType = withFacet('Type');
   > {
-  >  Tout:  flow(startWith(Tout), withType) ('Tout')),
+  >  Tout:  flow(startWith(Tout), withType('Tout')(asTout)),
   > } ```
   
 ---
+
+Also one can use the Design API function to combine designs in diffent variations.
 
 ### Control Component Widths
 

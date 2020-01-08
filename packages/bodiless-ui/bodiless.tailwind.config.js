@@ -667,8 +667,7 @@ module.exports = {
         '.material-icons': {
           color: '#ddd',
           padding: '2px',
-          margin: '0 2px',
-          'font-size': '24px',
+          'font-size': '30px',
           'vertical-align': 'text-bottom',
           'border-radius': '5px',
 

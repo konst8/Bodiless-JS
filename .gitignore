@@ -11,10 +11,8 @@ node_modules
 # Lerna git ignore items
 lerna-debug.log
 packages/**/lib
-packages/**/package-lock.json
 packages/**/bodiless.index.css
 examples/**/lib
-examples/**/package-lock.json
 examples/**/.env
 examples/**/.env.development
 examples/**/.env.production
@@ -26,3 +24,5 @@ coverage
 # Sonarqube
 .scannerwork
 test-report.xml
+
+/starters

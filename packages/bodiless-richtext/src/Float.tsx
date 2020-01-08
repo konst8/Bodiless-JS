@@ -25,7 +25,7 @@ import { observer } from 'mobx-react-lite';
 
 type Data = {
   float: string,
-}
+};
 
 const withFloatWrapper = <P extends object> (Component:ComponentType<P>) => observer((props:P) => {
   const { node } = useNode<Data>();

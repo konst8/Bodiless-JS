@@ -22,7 +22,7 @@
     "cheerio": "^1.0.0-rc.3",
     "css-to-object": "^1.1.0",
     "debug": "^4.1.1",
-    "dotenv": "^8.1.0",
+    "dotenv": "^8.2.0",
     "ee-ts": "^1.0.1",
     "glob": "^7.1.4",
     "headless-chrome-crawler": "^1.8.0",
@@ -32,7 +32,6 @@
     "minimatch": "^3.0.4",
     "patch-package": "^6.1.2",
     "path": "^0.12.7",
-    "postinstall-postinstall": "^2.0.0",
     "prettier": "^1.18.2",
     "request": "^2.88.0",
     "retry-request": "^4.1.1",
@@ -49,7 +48,7 @@
     "@babel/preset-react": "^7.0.0",
     "@types/bluebird": "^3.5.27",
     "@types/cheerio": "^0.22.11",
-    "@types/dotenv": "^6.1.1",
+    "@types/dotenv": "^8.2.0",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.18",
     "@types/lodash": "^4.14.130",
@@ -69,8 +68,7 @@
     "mock-fs": "^4.9.0",
     "react-helmet": "^5.2.1",
     "ts-jest": "^24.0.2",
-    "ts-node": "^8",
-    "typescript": "^3.5.3"
+    "ts-node": "^8"
   },
   "engines": {
     "node": ">=10.0.0"

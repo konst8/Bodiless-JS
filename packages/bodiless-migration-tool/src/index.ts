@@ -30,18 +30,18 @@ enum CommandType {
 }
 
 class MigrationTool extends Command {
-  static description = 'site flattenning tool'
+  static description = 'site flattenning tool';
 
   static flags = {
     // add --version flag to show CLI version
     version: flags.version({ char: 'v' }),
     help: flags.help({ char: 'h' }),
-  }
+  };
 
   static args = [
     { name: 'command' },
     { name: 'staticDir' },
-  ]
+  ];
 
   async run() {
     const { args } = this.parse(MigrationTool);
@@ -113,4 +113,4 @@ class MigrationTool extends Command {
   }
 }
 
-export = MigrationTool
+export = MigrationTool;

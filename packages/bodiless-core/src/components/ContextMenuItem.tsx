@@ -42,7 +42,8 @@ const ContextMenuItem = ({ option, index, ui }: IProps) => {
     FormWrapper,
     Tooltip,
   } = getUI(ui);
-  const isActive = option.isActive ? option.isActive() : true;
+  const isActive = option.isActive ? option.isActive() : false;
+  const isDisabled = option.isDisabled ? option.isDisabled() : false;
   const isFirst = index === 0;
 
   const onToolbarButtonClick = (event: React.MouseEvent<HTMLDivElement>): void => {
@@ -78,13 +79,11 @@ const ContextMenuItem = ({ option, index, ui }: IProps) => {
   if (option.name.startsWith('__divider')) {
     return <ToolbarDivider />;
   }
-  let isHighlighted = isToolTipShown;
-  if (option.isHighlighted) {
-    isHighlighted = isToolTipShown || option.isHighlighted();
-  }
+
   return (
     <ToolbarButton
       isActive={isActive}
+      isDisabled={isDisabled}
       isFirst={isFirst}
       onClick={onToolbarButtonClick}
     >
@@ -93,7 +92,7 @@ const ContextMenuItem = ({ option, index, ui }: IProps) => {
         overlay={getContextMenuForm()}
         visible={isToolTipShown}
       >
-        <Icon isHighlighted={isHighlighted || isToolTipShown}>{option.icon}</Icon>
+        <Icon isActive={isActive || isToolTipShown}>{option.icon}</Icon>
       </Tooltip>
       {(option.label) ? (
         <div className="bl-text-center bl-text-white">

@@ -17,7 +17,7 @@ import HtmlParser from './html-parser';
 type AttrTransformerConfig = {
   namespaces: {[attr: string]: string},
   attributes: {[attr: string]: string}
-}
+};
 
 export enum AttrTransformerDirecton {
   Direct = 'direct',

@@ -28,7 +28,7 @@ const defaultGatsbyPage = {
 
 export type Props = {
   pageContext: GatsbyPage,
-}
+};
 
 const GatsbyPageContext = React.createContext<GatsbyPage>(defaultGatsbyPage);
 

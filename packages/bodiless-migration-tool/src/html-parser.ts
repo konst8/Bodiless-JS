@@ -51,13 +51,13 @@ interface HtmlParserInterface {
 type TransformerType = (attrValue: string, element: CheerioElement) => string;
 
 export default class HtmlParser implements HtmlParserInterface {
-  html: string
+  html: string;
 
-  $: CheerioStatic
+  $: CheerioStatic;
 
-  allowedTags: boolean
+  allowedTags: boolean;
 
-  allowedAttributes: boolean
+  allowedAttributes: boolean;
 
   constructor(html: string) {
     const cleanHtml = this.cleanUpHtmlErrors(html);
@@ -192,7 +192,7 @@ export default class HtmlParser implements HtmlParserInterface {
     $(tag).each((i, element) => {
       if (!self.shouldSkipTextToAttributeTransformation(tag, element)) {
         const text = $(element).html();
-        $(element).attr(attribute, text).html('');
+        $(element).attr(attribute, text!).html('');
       }
     });
   }
@@ -274,7 +274,7 @@ export default class HtmlParser implements HtmlParserInterface {
     const { $ } = this;
     $(element).each((index, item) => {
       const currentValue = $(item).attr(attr);
-      $(item).attr(attr, transformer(currentValue, item));
+      $(item).attr(attr, transformer(currentValue!, item));
     });
   }
 

@@ -61,5 +61,5 @@ const asBasicSlider = withDesign({
   CarouselImage: addClasses('m-0 w-full h-64'),
 });
 
-type SBasicSliderProps = React.ComponentType<HTMLProps<HTMLDivElement> & WithNodeProps>
+type SBasicSliderProps = React.ComponentType<HTMLProps<HTMLDivElement> & WithNodeProps>;
 export default withNode(asBasicSlider(CleanSlider)) as SBasicSliderProps;

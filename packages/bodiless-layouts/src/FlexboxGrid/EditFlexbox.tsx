@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useRef, FC } from 'react';
+import React, { useRef, FC, PropsWithChildren } from 'react';
 import { arrayMove, SortEnd } from 'react-sortable-hoc';
 import { observer } from 'mobx-react-lite';
 import { v1 } from 'uuid';
@@ -29,7 +29,7 @@ import {
 } from './helpers';
 import { EditFlexboxProps, FlexboxItem } from './types';
 
-const ChildNodeProvider = withNode(React.Fragment);
+const ChildNodeProvider = withNode<PropsWithChildren<{}>, any>(React.Fragment);
 
 function isAllowedComponent(
   components: DesignableComponents,

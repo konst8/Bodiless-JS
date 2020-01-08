@@ -59,6 +59,7 @@ const FlexboxPage = (props: any) => (
 export const query = graphql`
   query($slug: String!) {
     ...PageQuery
+    ...SiteQuery
   }
 `;
 export default FlexboxPage;

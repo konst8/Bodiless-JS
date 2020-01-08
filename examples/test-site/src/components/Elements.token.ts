@@ -50,6 +50,7 @@ const asSuperScript = addClasses('');
 
 const asHeader1 = flow(addClasses('text-3xl'), asTextColorPrimary);
 const asHeader2 = addClasses('text-2xl');
+const asHeader3 = addClasses('text-xl');
 
 /* Image component */
 const asImage = addClasses('');
@@ -82,6 +83,7 @@ export {
   asAlignJustify,
   asHeader1,
   asHeader2,
+  asHeader3,
   asCta,
   asBlockItem,
   asPageContainer,

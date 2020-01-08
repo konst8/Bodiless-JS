@@ -15,11 +15,11 @@
 import React, { HTMLProps } from 'react';
 import { flow } from 'lodash';
 import {
-  List, Editable, asEditableList, withSublist, ListTitleProps,
-} from '..';
-import {
   withDesign, replaceWith, addClasses, stylable,
 } from '@bodiless/fclasses';
+import {
+  List, Editable, asEditableList, withSublist, ListTitleProps,
+} from '..';
 
 /**
  * A simple, editable title.

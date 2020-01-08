@@ -1,0 +1,20 @@
+{
+  "Components": {
+    "Bazaarvoice": {
+      "Configuration.md": "./doc/Configuration.md",
+      "Components": {
+        "BVLoaderProvider.md": "./doc/Components/BVLoaderProvider.md",
+        "BVRatingsSummary.md": "./doc/Components/BVRatingsSummary.md",
+        "BVRatingsSummaryBase.md": "./doc/Components/BVRatingsSummaryBase.md",
+        "BVReviews.md": "./doc/Components/BVReviews.md",
+        "BVReviewsBase.md": "./doc/Components/BVReviewsBase.md"
+      },
+      "HOCs": {
+        "asBodilessBV.md": "./doc/HOCs/asBodilessBV.md",
+        "asBVComponent.md": "./doc/HOCs/asBVComponent.md",
+        "asEditableBV.md": "./doc/HOCs/asEditableBV.md",
+        "withBVLoader.md": "./doc/HOCs/withBVLoader.md"
+      }
+    }
+  }
+}

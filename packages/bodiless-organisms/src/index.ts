@@ -15,10 +15,28 @@
 import Slider from './components/Slider';
 
 export {
+  SingleAccordion,
+  SingleAccordionClean,
+  asSingleAccordion,
+} from './components/SingleAccordion';
+
+export {
+  withSubmenu,
+  asEditableMenu,
+  asEditableSubMenu,
+  asHorizontalMenu,
+  asHorizontalSubMenu,
+  asMenu,
+  asSubMenu,
+  MenuLink,
+} from './components/MainMenu/index';
+
+export {
   Tout,
   ToutClean,
   asEditableTout,
 } from './components/Touts';
+
 export {
   asToutHorizontal,
   asToutVertical,

@@ -37,6 +37,9 @@ elif [ "$1" = "finish-deploy" ]; then
   cp ${PLATFORM_APP_DIR}/${DEFAULT_ENV} ${BACKEND_DIR}/.env
   cp ${PLATFORM_APP_DIR}/${DEFAULT_ENV} ${SITE_DIR}/.env.development
   echo "BODILESS_DOCS_URL=https://${PLATFORM_ENVIRONMENT}-${PLATFORM_PROJECT}.${PLATFORM_ZONE}/___docs" >> ${SITE_DIR}/.env.development
+  if [ -n "${BV_SCRIPT}" ]; then
+    echo "BV_SCRIPT=$BV_SCRIPT" >> ${SITE_DIR}/.env.development
+  fi
 else
   echo "Unknown command specified to $0"
 fi

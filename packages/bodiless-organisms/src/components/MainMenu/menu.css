@@ -1,0 +1,9 @@
+.rc-menu-submenu-popup {
+    position: absolute;
+}
+.rc-menu-hidden {
+    display: none;
+}
+.rc-menu-submenu-horizontal {
+    display: inline-block;
+}

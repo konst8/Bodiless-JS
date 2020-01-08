@@ -208,11 +208,11 @@ type getSelectorButtonToggleType = {
   value: Value,
   editor: Editor,
   name: string,
-}
+};
 type getSelectorButtonToggleMarkType = {
   editor: Editor,
   name: string,
-}
+};
 /*
   getSelectorButton takes a Rich Text Item and returns a button used in the RichText Selector
 */

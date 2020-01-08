@@ -59,7 +59,7 @@ export type ToggleBlockOptions = {
 export type createToggleBlockOptions = {
   editor: Editor,
   value: Value,
-}
+};
 
 export const updateBlock = ({
   editor,

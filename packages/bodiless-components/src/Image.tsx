@@ -40,7 +40,6 @@ import {
 
 import { flowRight } from 'lodash';
 import { useDropzone } from 'react-dropzone';
-import { Data } from 'slate';
 import { FormApi } from 'informed';
 import { Spinner } from '@bodiless/ui';
 import BackendSave from './BackendSave';
@@ -94,7 +93,7 @@ function DropZonePlugin({ formApi, targetFieldName }: {
       .then(() => {
         const state = formApi.getState();
         // *HACK* as the formApi does not provide a interface to unset errors
-        delete state.errors[targetFieldName];
+        delete state.errors[targetFieldName as ('alt' | 'src')];
         formApi.setValue(targetFieldName, `/${acceptedFiles[0].name}`);
         // formApi.validate();
         setIsUploading(false);
@@ -138,7 +137,7 @@ function DropZonePlugin({ formApi, targetFieldName }: {
   );
 }
 
-export type Props = Pick<ImageProps, Exclude<keyof ImageProps, 'src'> | Exclude<keyof ImageProps, 'alt'>>
+export type Props = Pick<ImageProps, Exclude<keyof ImageProps, 'src'> | Exclude<keyof ImageProps, 'alt'>>;
 
 // Options used to create an edit button.
 export const editButtonOptions: EditButtonOptions<Props, Data> = {

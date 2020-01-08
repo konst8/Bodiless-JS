@@ -25,10 +25,11 @@ import { TMenuOption } from '../PageEditContext/types';
 export type ButtonVariantProps = HTMLProps<HTMLDivElement> & {
   isActive?: boolean;
   isFirst?: boolean;
+  isDisabled?: boolean;
 };
 
 type IconVariantProps = HTMLProps<HTMLSpanElement> & {
-  isHighlighted?: boolean;
+  isActive?: boolean;
 };
 
 export type UI = {

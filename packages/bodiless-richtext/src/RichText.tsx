@@ -24,7 +24,6 @@ import {
 } from '@bodiless/core';
 import { BasicEditorProps, Plugin } from 'slate-react';
 import { SchemaProperties } from 'slate';
-import { TextSelectorButton } from './components';
 import {
   withSlateEditor,
   Content,
@@ -35,7 +34,6 @@ import withNodeStateHandlers from './withNodeStateHandlers';
 import {
   getPlugins,
   getHoverButtons,
-  getSelectorButtons,
   getGlobalButtons,
   dereferenceItems,
   getSchema,
@@ -182,12 +180,6 @@ const RichText = <P extends object, D extends object>(props: P & RichTextProps<D
               // eslint-disable-next-line react/no-array-index-key
               getHoverButtons(sureItems).map((C, i) => <C key={i} />)
             }
-            <TextSelectorButton>
-              {
-                // eslint-disable-next-line react/no-array-index-key
-                getSelectorButtons(sureItems).map((C, i) => <C key={i} />)
-              }
-            </TextSelectorButton>
           </HoverMenu>
           )
         }

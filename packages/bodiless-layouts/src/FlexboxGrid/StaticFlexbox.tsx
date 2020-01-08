@@ -12,12 +12,12 @@
  * limitations under the License.
  */
 
-import React, { FC } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { withNode } from '@bodiless/core';
 import { useItemHandlers } from './helpers';
 import { StaticFlexboxProps, FlexboxItem } from './types';
 
-const NodeProvider = withNode(React.Fragment);
+const NodeProvider = withNode<PropsWithChildren<{}>, any>(React.Fragment);
 
 const StaticFlexbox: FC<StaticFlexboxProps> = ({ components }) => {
   const items = useItemHandlers().getItems();

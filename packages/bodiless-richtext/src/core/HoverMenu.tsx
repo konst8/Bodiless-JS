@@ -26,7 +26,7 @@ const defaultUI = {
 
 export type UI = {
   Menu?: ComponentType<HTMLProps<HTMLDivElement>> | string;
-}
+};
 
 export const getUI = (ui: UI = {}) => ({
   ...defaultUI,
@@ -53,14 +53,12 @@ function updateMenu(menu: HTMLElement | null, editorContext: EditorContext) {
   }
   const range = native.getRangeAt(0);
   const rect = range.getBoundingClientRect();
+  const offsetLeft = rect.left + window.pageXOffset - menu.offsetWidth / 2 + rect.width / 2;
 
   const { style } = menu;
   style.opacity = '1';
   style.top = `${rect.top + window.pageYOffset - menu.offsetHeight}px`;
-  style.left = `${rect.left
-    + window.pageXOffset
-    - menu.offsetWidth / 2
-    + rect.width / 2}px`;
+  style.left = `${offsetLeft < 0 ? 15 : offsetLeft}px`;
 }
 
 export type HoverMenuProps = {

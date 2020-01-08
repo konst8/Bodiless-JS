@@ -372,6 +372,107 @@ out the branch locally and executing `platform env:delete -y`.
 When you merge a feature branch to master, the updated master branch will be automatically deployed
 to the static environment on platform.sh.  To deploy changes to the edit environment, you must follow the same process as in [Pushing Changes](#pushing-changes) above.
 
+## How to load environment specific html snippets
+
+When you want to inject different html snippets depending on your environment type, you can use Server Side Includes (SSI) mechanism.
+
+### Activate SSI
+
+* Activate SSI for your route(s) in your routes.yaml file. See: https://docs.platform.sh/configuration/routes/ssi.html
+* Use SSI_ENV enviroment variable to specify type of your environment. Default value is 'dev'.
+* Ensure ssi configs are loaded to psh container and set SSI_CONF_PATH environment variable to path to json file containing SSI configs.
+* Ensure your .platform.app.yaml contains invocation of generate-ssi-files.js node scripts. The script should be invoked during build and deploy phases. PSH phase (build or deploy) should be passed as an argument to the script.
+* Ensure the files of you app, that will be served by psh, contain SSI directives.
+* Ensure a writable volume is mounted to your app.
+
+### SSI config format
+
+SSI configuration file should be in json format.
+
+```
+{
+  key1: {
+    pragma: "<!--# ssi data should go here -->",
+    env1: {
+      file: "key1.env1.html"
+    }
+    ...
+    envN: {
+      file: "key1.envN.html"
+    }
+  }
+  ...
+  keyN: {
+    pragma: "<!--# ssi data should go here -->",
+    ...
+    env1: {
+      file: "keyN.envN.html"
+    }
+    ...
+    envN: {
+      file: "keyN.envN.html"
+    }
+  }
+}
+```
+### How it works
+
+* during build phase, generate-ssi-files reads SSI configs and for each key it creates symlink from PLATFORM_DOCUMENT_ROOT/filename.html into APP_VOLUME/filename.html. Filename is generated based on key. There is an opportunity to improve this logic. We can read and parse pragma field, exract filename from it. But it makes the things more complicated and in addition, pragma may not have files at all.
+* during deploy phase, generate-ssi-files reads SSI configs and SSI_ENV and for each key it copies the file defined in conf.{key}.{env}.{file} to APP_VOLUME/filename.html that was created during build phase.
+
+## How to replace your site prod url with psh environment url in a public file
+
+If you want to make urls in a particular public file match psh environment url, you can leverage psh-url-replacer node script. For instance, your site sitemap.xml, which is generated during build time, contains production urls and you want to replace the production url with psh environment url, to which your website is deployed to.
+
+### Why
+
+Platform.sh does not allow to expose environment level environment variables to the application build stage.
+
+### How it works
+
+on psh build stage:
+
+- it moves your source file from public dir to a tmp directory
+- then it creates a symlink from a writable volume file to the source public file
+
+on psh deploy stage:
+
+- it copies the file from the tmp directory to the writable volume file
+- then it replaces production url with psh environment url in the file
+
+### How to activate this feature
+
+By default, the feature is activated for sitemap.xml and robots.txt. If you want to activate the feature for some other files or if you have custom installation of sitemap.xml or robots.txt, please follow the following steps:
+
+1. ensure writable volume mounting is configured for your app
+
+1. export environment variables and invoke psh-url-replacer in build section of your psh app .platform.app.yaml
+
+```bash
+
+hooks:
+    build: |
+        export PSH_URL_REPLACER_SRC_FILE=/path/to/your/src/public/file
+        export PSH_URL_REPLACER_TMP_FILE=/path/to/a/tmp/file
+        export PSH_URL_REPLACER_TARGET_FILE=/path/to/writable/volume/file
+        node /path/to/psh-url-replacer.js build
+
+```
+
+1. export environment variables and invoke psh-url-replacer in deploy section of your psh app .platform.app.yaml
+
+```bash
+
+hooks:
+    deploy: |
+        export PSH_URL_REPLACER_TMP_FILE=/path/to/the/tmp/file/you/saved/during/build/phase
+        export PSH_URL_REPLACER_TARGET_FILE=/path/to/writable/volume/file
+        export PSH_URL_REPLACER_SRC_URL=https://your-site-production-url.com
+        export PSH_URL_REPLACER_TARGET_URL=https://your-psh-env.url.site
+        export PSH_URL_REPLACER_PROD_ENV='0' # set to '1' if you want to disable the replacement
+        node /path/to/psh-url-replacer.js deploy
+```
+
 ## Known limitations
 
 - PR Branches and Feature branches created in bitbucket will always inherit from
