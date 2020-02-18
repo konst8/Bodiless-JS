@@ -17,7 +17,7 @@ import ReactTooltip from 'rc-tooltip';
 import { flow } from 'lodash';
 import { addClasses, removeClasses } from '@bodiless/fclasses';
 import {
-  ContextMenu, ContextMenuUI, ContextMenuProps, useEditContext,
+  ContextMenu, ContextMenuUI, ContextMenuProps,
 } from '@bodiless/core';
 import {
   ComponentFormTitle, ComponentFormCloseButton, ComponentFormLabel, ComponentFormText,
@@ -78,9 +78,13 @@ const ui: ContextMenuUI = {
 };
 
 const GlobalContextMenu: FC<ContextMenuProps> = props => {
-  const { isPositionToggled } = useEditContext();
+  const { isPositionToggled = false } = props;
   if (isPositionToggled) {
-    ui.Toolbar = ToolbarRight;
+    const updatedUi = {
+      ...ui,
+      Toolbar: ToolbarRight,
+    };
+    return <ContextMenu {...props} ui={updatedUi} />;
   }
   return <ContextMenu {...props} ui={ui} />;
 };

@@ -45,11 +45,11 @@ export const useUI = () => useContext(uiContext);
 const GlobalContextMenu: FC<Props> = observer(() => {
   const { GlobalContextMenu: Menu } = useUI();
   const context = useEditContext();
-  const { contextMenuOptions } = context;
+  const { contextMenuOptions, isPositionToggled } = context;
   const options = contextMenuOptions.filter(
     (op: TMenuOption) => op.global !== false,
   );
-  return <Menu options={options} />;
+  return <Menu options={options} isPositionToggled={isPositionToggled} />;
 });
 
 const PageEditor: FC<Props> = ({ children, ui }) => {
