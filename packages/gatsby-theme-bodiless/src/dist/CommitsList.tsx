@@ -14,6 +14,7 @@
 
 import React from 'react';
 import debug from 'debug';
+import { Overlay } from '@bodiless/core-ui';
 
 const errorLog = debug('CommitList');
 
@@ -95,7 +96,7 @@ class CommitsList extends React.Component<{
 }, { content: string | JSX.Element }> {
   constructor(props: any) {
     super(props);
-    this.state = { content: 'Loading ...' };
+    this.state = { content: <Overlay /> };
   }
 
   async componentDidMount() {

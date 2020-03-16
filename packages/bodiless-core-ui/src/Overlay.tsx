@@ -12,8 +12,25 @@
  * limitations under the License.
  */
 
-import ContextWrapper from './ContextWrapper';
-import PageEditor from './PageEditor';
-import { Overlay } from './Overlay';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Spinner } from '@bodiless/ui';
 
-export { ContextWrapper, PageEditor, Overlay };
+const root = typeof window !== 'undefined' ? window.document.body : null;
+
+const OverlayUI = () => (
+  <div
+    id="overlay"
+    className="bl-bg-black bl-opacity-75 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50"
+  >
+    <Spinner color="bl-bg-white" />
+  </div>
+);
+
+export const Overlay = () => (
+  root
+  && ReactDOM.createPortal(
+    <OverlayUI />,
+    root,
+  )
+);
