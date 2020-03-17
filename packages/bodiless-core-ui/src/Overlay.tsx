@@ -34,3 +34,5 @@ export const Overlay = () => (
     root,
   )
 );
+
+export default Overlay;
