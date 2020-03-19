@@ -22,7 +22,7 @@ import {
   TMenuOption,
   useEditContext,
 } from '@bodiless/core';
-import { showOverlay, hideOverlay } from '@bodiless/core-ui';
+import { showOverlay } from '@bodiless/core-ui';
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
 import CommitsList from './CommitsList';
