@@ -14,7 +14,7 @@
 
 import React from 'react';
 import debug from 'debug';
-import { Overlay } from '@bodiless/core-ui';
+import { showOverlay, hideOverlay } from '@bodiless/core-ui';
 
 const errorLog = debug('CommitList');
 
@@ -96,16 +96,18 @@ class CommitsList extends React.Component<{
 }, { content: string | JSX.Element }> {
   constructor(props: any) {
     super(props);
-    this.state = { content: <Overlay /> };
+    this.state = { content: 'Loading ...' };
   }
 
   async componentDidMount() {
     try {
       const { client } = this.props;
+      showOverlay();
       const response = await client.getLatestCommits();
       this.setState({
         content: handleResponse(response.data),
       });
+      hideOverlay();
     } catch (error) {
       errorLog(error);
       this.setState({
