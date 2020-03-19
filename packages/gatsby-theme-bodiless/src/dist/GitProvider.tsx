@@ -22,6 +22,7 @@ import {
   TMenuOption,
   useEditContext,
 } from '@bodiless/core';
+import { showOverlay, hideOverlay } from '@bodiless/core-ui';
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
 import CommitsList from './CommitsList';
@@ -140,7 +141,8 @@ const formGitCommit = (client: Client) => contextMenuForm({
 
 const formGitReset = (client: Client) => contextMenuForm({
   submitValues: () => handle(client.reset(), () => {
-    alert('Revert is in progress. This may take a minute.');
+    // alert('Revert is in progress. This may take a minute.');
+    showOverlay();
     window.location.reload();
   }),
 })(
