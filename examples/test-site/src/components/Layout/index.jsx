@@ -19,6 +19,7 @@ import { Div } from '@bodiless/fclasses';
 import {
   withMeta, withMetaTitle, withMetaHtml, asBodilessHelmet,
 } from '@bodiless/components';
+import { Overlay } from '@bodiless/core-ui';
 import { flowRight } from 'lodash';
 import Header from './header';
 import Footer from './footer';
@@ -55,6 +56,7 @@ const Layout = ({ children }) => (
           {children}
         </Container>
         <Footer siteTitle={data.site.siteMetadata.title} />
+        <Overlay />
       </>
     )}
   />

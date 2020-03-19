@@ -22,6 +22,7 @@ import {
   useEditContext,
 } from '@bodiless/core';
 import { AxiosPromise } from 'axios';
+import { showOverlay, hideOverlay } from '@bodiless/core-ui';
 import BackendClient from './BackendClient';
 import handle from './ResponseHandler';
 import verifyPage from './PageVerification';
@@ -35,8 +36,32 @@ type Props = {
   client?: Client;
 };
 
+// const testDelay = () => (
+//   new Promise(resolve => (
+//     setTimeout(() => (
+//       resolve('test delay completed')
+//     ), 2000)
+//   ))
+// );
+
+// const testFormBody = () => (
+//   <h1>Test form body</h1>
+// );
+
+// const testFormOptions = {
+//   submitValues: async () => {
+//     showOverlay();
+//     await testDelay();
+//     console.log('testForm was submitted');
+//     hideOverlay();
+//   },
+// };
+
+// const testFormWithOverlay = () => contextMenuForm(testFormOptions)(testFormBody);
+
 const formPageAdd = (client: Client, template: string) => contextMenuForm({
   submitValues: async (submittedValues: any) => {
+    showOverlay();
     const pathname = window.location.pathname
       ? window.location.pathname.replace(/\/?$/, '/')
       : '';
@@ -49,6 +74,7 @@ const formPageAdd = (client: Client, template: string) => contextMenuForm({
 It is likely that your new page was created but is not yet available.
 Click ok to visit the new page; if it does not load, wait a while and reload.`);
       }
+      hideOverlay();
       window.location.href = newPagePath;
     }
   },
@@ -103,6 +129,7 @@ const useGetMenuOptions = (): () => TMenuOption[] => {
       label: 'Page',
       isHidden: () => !context.isEdit,
       handler: () => formPageAdd(defaultClient, gatsbyPage.subPageTemplate),
+      // handler: () => testFormWithOverlay(),
     },
   ];
 };
