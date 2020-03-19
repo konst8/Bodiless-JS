@@ -53,7 +53,7 @@ type Props = {
 //     showOverlay({ message: 'test triggered message' });
 //     await testDelay();
 //     console.log('testForm was submitted');
-//     hideOverlay();
+//     showOverlay({ message: 'An arror occured!', isManageable: true });
 //   },
 // };
 
@@ -70,12 +70,17 @@ const formPageAdd = (client: Client, template: string) => contextMenuForm({
     if (result) {
       const isPageVerified = await verifyPage(newPagePath);
       if (!isPageVerified) {
-        alert(`unable to verify page creation.
+        const errorMessage = `Unable to verify page creation.
 It is likely that your new page was created but is not yet available.
-Click ok to visit the new page; if it does not load, wait a while and reload.`);
+Click ok to visit the new page; if it does not load, wait a while and reload.`;
+        // @todo add success button with callback
+        showOverlay({
+          message: errorMessage,
+          isManageable: true,
+        });
+      } else {
+        window.location.href = newPagePath;
       }
-      hideOverlay();
-      window.location.href = newPagePath;
     }
   },
 })(({ ui, formState }: any) => {

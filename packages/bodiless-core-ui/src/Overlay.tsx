@@ -14,25 +14,49 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { flow } from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import { Spinner } from '@bodiless/ui';
+import {
+  removeClasses,
+} from '@bodiless/fclasses';
+import { Spinner, ComponentFormCloseButton } from '@bodiless/ui';
 
 export const overlayStore = observable({
   isActive: false,
+  isManageable: false,
   message: '',
 });
 
-export const showOverlay = ({ message }: { message: string } = { message: '' }) => {
+export const showOverlay = (
+  { message, isManageable }:
+  { message: string,
+    isManageable: boolean,
+  } = {
+    message: '',
+    isManageable: false,
+  },
+) => {
   overlayStore.isActive = true;
   overlayStore.message = message;
+  overlayStore.isManageable = isManageable;
 };
 
 export const hideOverlay = () => {
   overlayStore.isActive = false;
 };
 
-export const OverlayUI = ({ message }: {message: string}) => (
+const OverlayCloseButton = flow(
+  removeClasses('bl-float-right'),
+)(ComponentFormCloseButton);
+
+export const OverlayUI = ({
+  message,
+  isManageable,
+}: {
+  message: string,
+  isManageable: boolean,
+}) => (
   <div
     id="overlay"
     className="bl-bg-black bl-opacity-75
@@ -42,14 +66,8 @@ export const OverlayUI = ({ message }: {message: string}) => (
       <Spinner color="bl-bg-white" />
     </div>
     {/* temporary inline-styled. */}
-    <h1
-      style={{
-        color: 'white',
-        fontSize: '30px',
-      }}
-    >
-      {message}
-    </h1>
+    {message && <h1 style={{ color: 'white', fontSize: '30px' }}>{message}</h1>}
+    {isManageable && <OverlayCloseButton onClick={() => hideOverlay()} />}
   </div>
 );
 
@@ -58,7 +76,10 @@ export const OverlayPortal = observer(({ store }) => {
   return store.isActive
   && root
   && ReactDOM.createPortal(
-    <OverlayUI message={store.message} />,
+    <OverlayUI
+      message={store.message}
+      isManageable={store.isManageable}
+    />,
     root,
   );
 });
