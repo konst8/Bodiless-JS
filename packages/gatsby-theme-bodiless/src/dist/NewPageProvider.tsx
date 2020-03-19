@@ -22,7 +22,7 @@ import {
   useEditContext,
 } from '@bodiless/core';
 import { AxiosPromise } from 'axios';
-import { showOverlay, hideOverlay } from '@bodiless/core-ui';
+import { showOverlay } from '@bodiless/core-ui';
 import BackendClient from './BackendClient';
 import handle from './ResponseHandler';
 import verifyPage from './PageVerification';
