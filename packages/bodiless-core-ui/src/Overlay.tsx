@@ -20,22 +20,36 @@ import { Spinner } from '@bodiless/ui';
 
 export const overlayStore = observable({
   isActive: false,
+  message: '',
 });
 
-export const showOverlay = () => {
+export const showOverlay = ({ message }: { message: string } = { message: '' }) => {
   overlayStore.isActive = true;
+  overlayStore.message = message;
 };
 
 export const hideOverlay = () => {
   overlayStore.isActive = false;
 };
 
-export const OverlayUI = () => (
+export const OverlayUI = ({ message }: {message: string}) => (
   <div
     id="overlay"
-    className="bl-bg-black bl-opacity-75 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50"
+    className="bl-bg-black bl-opacity-75
+      bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50 flex flex-col justify-around items-center"
   >
-    <Spinner color="bl-bg-white" />
+    <div>
+      <Spinner color="bl-bg-white" />
+    </div>
+    {/* temporary inline-styled. */}
+    <h1
+      style={{
+        color: 'white',
+        fontSize: '30px',
+      }}
+    >
+      {message}
+    </h1>
   </div>
 );
 
@@ -44,7 +58,7 @@ export const OverlayPortal = observer(({ store }) => {
   return store.isActive
   && root
   && ReactDOM.createPortal(
-    <OverlayUI />,
+    <OverlayUI message={store.message} />,
     root,
   );
 });

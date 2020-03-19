@@ -142,7 +142,7 @@ const formGitCommit = (client: Client) => contextMenuForm({
 const formGitReset = (client: Client) => contextMenuForm({
   submitValues: () => handle(client.reset(), () => {
     // alert('Revert is in progress. This may take a minute.');
-    showOverlay();
+    showOverlay({ message: 'Revert is in progress. This may take a minute.' });
     window.location.reload();
   }),
 })(
