@@ -61,10 +61,6 @@ export const showOverlay = ({
   }
 };
 
-export const Wrapper = {
-  showOverlay,
-};
-
 export const hideOverlay = () => {
   overlayStore.isActive = false;
 };
