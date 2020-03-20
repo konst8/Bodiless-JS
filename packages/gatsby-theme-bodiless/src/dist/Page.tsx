@@ -19,7 +19,7 @@ import {
   useEditContext,
 } from '@bodiless/core';
 import { observer } from 'mobx-react-lite';
-import { ContextWrapper, PageEditor, Overlay } from '@bodiless/core-ui';
+import { ContextWrapper, PageEditor, PageOverlay } from '@bodiless/core-ui';
 import GatsbyNodeProvider, {
   Props as NodeProviderProps,
 } from './GatsbyNodeProvider';
@@ -58,7 +58,7 @@ const Page: FC<Props> = observer(({ children, ui, ...rest }) => {
                 <Wrapper clickable>
                   <DefaultActiveMenuOptions>
                     {children}
-                    <Overlay />
+                    <PageOverlay />
                   </DefaultActiveMenuOptions>
                 </Wrapper>
               </GitProvider>

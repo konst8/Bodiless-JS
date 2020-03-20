@@ -15,9 +15,9 @@
 import ContextWrapper from './ContextWrapper';
 import PageEditor from './PageEditor';
 import {
-  Overlay, showOverlay, hideOverlay, showError,
+  Overlay, PageOverlay, showOverlay, hideOverlay, showError,
 } from './PageOverlay';
 
 export {
-  ContextWrapper, PageEditor, Overlay, showOverlay, hideOverlay, showError,
+  ContextWrapper, PageEditor, Overlay, PageOverlay, showOverlay, hideOverlay, showError,
 };

@@ -18,16 +18,21 @@ import { flow } from 'lodash';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import {
-  removeClasses,
+  removeClasses, addProps,
 } from '@bodiless/fclasses';
 import { Spinner, ComponentFormCloseButton } from '@bodiless/ui';
 
-type overlaySettings = {
+type OverlaySettings = {
   isActive?: boolean,
   isManageable?: boolean,
   hasSpinner?: boolean,
   maxTimeout?: number | null,
   message?: string,
+};
+
+type OverlayProps = {
+  ui: any,
+  settings: OverlaySettings,
 };
 
 export const overlayStore = observable({
@@ -42,7 +47,7 @@ export const showOverlay = ({
   hasSpinner = true,
   isManageable = false,
   maxTimeout = null,
-}: overlaySettings = {
+}: OverlaySettings = {
   message: '',
   hasSpinner: true,
   isManageable: false,
@@ -75,51 +80,62 @@ export const hideOverlay = () => {
   overlayStore.isActive = false;
 };
 
-const OverlayCloseButton = flow(
+const DefaultSpinner = () => <Spinner color="bl-bg-white" />;
+
+const DefaultCloseButton = flow(
+  addProps({
+    onClick: () => { hideOverlay(); },
+  }),
   removeClasses('bl-float-right'),
 )(ComponentFormCloseButton);
 
-export const OverlayUI = ({ message, isManageable, hasSpinner }: overlaySettings) => (
-  <div
-    id="overlay"
-    className="bl-px-20 bl-py-10 bl-bg-black bl-opacity-75
-      bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
-      bl-flex bl-flex-col bl-justify-center bl-items-center"
-  >
-    {isManageable && (
-      <div className="bl-flex bl-justify-end bl-w-full">
-        <OverlayCloseButton onClick={() => hideOverlay()} />
-      </div>
-    )}
-    {hasSpinner && (
-      <div className="bl-py-5">
-        <Spinner color="bl-bg-white" />
-      </div>
-    )}
-    {message && (
-      <h1 className="bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line">
-        {message}
-      </h1>
-    )}
-  </div>
-);
+export const Overlay = ({ ui, settings }: OverlayProps) => {
+  const { OSpinner, OCloseButton } = ui;
+  const { message, isManageable, hasSpinner } = settings;
+  return (
+    <div
+      id="overlay"
+      className="bl-px-20 bl-py-10 bl-bg-black bl-opacity-75
+        bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
+        bl-flex bl-flex-col bl-justify-center bl-items-center"
+    >
+      {isManageable && (
+        <div className="bl-flex bl-justify-end bl-w-full">
+          <OCloseButton />
+        </div>
+      )}
+      {hasSpinner && (
+        <div className="bl-py-5">
+          <OSpinner />
+        </div>
+      )}
+      {message && (
+        <h1 className="bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line">
+          {message}
+        </h1>
+      )}
+    </div>
+  );
+};
 
 export const OverlayPortal = observer(({ store }) => {
   const root = typeof window !== 'undefined' ? window.document.body : null;
   return store.isActive
   && root
   && ReactDOM.createPortal(
-    <OverlayUI
-      message={store.message}
-      isManageable={store.isManageable}
-      hasSpinner={store.hasSpinner}
+    <Overlay
+      ui={{
+        OSpinner: DefaultSpinner,
+        OCloseButton: DefaultCloseButton,
+      }}
+      settings={store}
     />,
     root,
   );
 });
 
-export const Overlay = () => (
+export const PageOverlay = () => (
   <OverlayPortal store={overlayStore} />
 );
 
-export default Overlay;
+export default PageOverlay;
