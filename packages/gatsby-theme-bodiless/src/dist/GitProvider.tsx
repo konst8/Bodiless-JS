@@ -22,7 +22,7 @@ import {
   TMenuOption,
   useEditContext,
 } from '@bodiless/core';
-import { showOverlay } from '@bodiless/core-ui';
+import { showOverlay, showError } from '@bodiless/core-ui';
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
 import CommitsList from './CommitsList';
@@ -140,11 +140,23 @@ const formGitCommit = (client: Client) => contextMenuForm({
 // );
 
 const formGitReset = (client: Client) => contextMenuForm({
-  submitValues: () => handle(client.reset(), () => {
-    // alert('Revert is in progress. This may take a minute.');
-    showOverlay({ message: 'Revert is in progress. This may take a minute.' });
-    window.location.reload();
-  }),
+  submitValues: async () => {
+    showOverlay({
+      message: 'Revert is in progress. This may take a minute.',
+      maxTimeout: 10,
+    });
+    try {
+      await client.reset();
+      showOverlay({
+        message: 'Revert completed. You may need to reload the page to get all the changes applied.',
+        hasSpinner: false,
+        isManageable: true,
+      });
+      // window.location.reload();
+    } catch {
+      showError();
+    }
+  },
 })(
   ({ ui }: any) => {
     const { ComponentFormTitle, ComponentFormLabel } = getUI(ui);
