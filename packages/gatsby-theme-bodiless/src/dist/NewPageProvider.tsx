@@ -61,7 +61,10 @@ type Props = {
 
 const formPageAdd = (client: Client, template: string) => contextMenuForm({
   submitValues: async (submittedValues: any) => {
-    showOverlay();
+    showOverlay({
+      message: 'The page is creating.',
+      maxTimeout: 10,
+    });
     const pathname = window.location.pathname
       ? window.location.pathname.replace(/\/?$/, '/')
       : '';

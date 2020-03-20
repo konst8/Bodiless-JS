@@ -15,6 +15,7 @@
 /* eslint-disable no-alert */
 
 import { AxiosPromise, AxiosResponse } from 'axios';
+import { showError } from '@bodiless/core-ui';
 
 // eslint-disable-next-line arrow-body-style
 const isResponseSuccessful = (res: AxiosResponse<any>): boolean => {
@@ -24,7 +25,7 @@ const isResponseSuccessful = (res: AxiosResponse<any>): boolean => {
 const handle = (promise: AxiosPromise<any>) => promise
   .then(res => {
     if (!isResponseSuccessful(res)) {
-      alert('An unknown error has occured.');
+      showError('An unknown error has occured.');
       return false;
     }
     return true;
@@ -32,11 +33,9 @@ const handle = (promise: AxiosPromise<any>) => promise
   .catch(err => {
     // Use back-end crafted error message if available.
     if (err.response && err.response.data) {
-      // eslint-disable-next-line no-undef
-      alert(err.response.data);
+      showError(err.response.data);
     } else {
-      // eslint-disable-next-line no-undef
-      alert(err.message);
+      showError(err.message);
     }
     return false;
   });

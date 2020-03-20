@@ -54,11 +54,21 @@ export const showOverlay = ({
   overlayStore.hasSpinner = hasSpinner;
   if (maxTimeout) {
     setTimeout(() => {
-      overlayStore.message = 'The operation has timed out';
-      overlayStore.hasSpinner = false;
-      overlayStore.isManageable = true;
+      if (!overlayStore.isManageable) {
+        overlayStore.message = 'The operation has timed out';
+        overlayStore.hasSpinner = false;
+        overlayStore.isManageable = true;
+      }
     }, maxTimeout * 1000);
   }
+};
+
+export const showError = (message: string = 'An error has occurred.') => {
+  showOverlay({
+    message,
+    hasSpinner: false,
+    isManageable: true,
+  });
 };
 
 export const hideOverlay = () => {
