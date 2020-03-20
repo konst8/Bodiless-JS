@@ -50,7 +50,7 @@ type Props = {
 
 // const testFormOptions = {
 //   submitValues: async () => {
-//     showOverlay({ message: 'test triggered message' });
+//     showOverlay({ message: 'test triggered message', maxTimeout: 1 });
 //     await testDelay();
 //     console.log('testForm was submitted');
 //     showOverlay({ message: 'An arror occured!', isManageable: true });

@@ -22,24 +22,47 @@ import {
 } from '@bodiless/fclasses';
 import { Spinner, ComponentFormCloseButton } from '@bodiless/ui';
 
+type overlaySettings = {
+  isActive?: boolean,
+  isManageable?: boolean,
+  hasSpinner?: boolean,
+  maxTimeout?: number | null,
+  message?: string,
+};
+
 export const overlayStore = observable({
   isActive: false,
   isManageable: false,
+  hasSpinner: true,
   message: '',
 });
 
-export const showOverlay = (
-  { message, isManageable }:
-  { message: string,
-    isManageable: boolean,
-  } = {
-    message: '',
-    isManageable: false,
-  },
-) => {
+export const showOverlay = ({
+  message = '',
+  hasSpinner = true,
+  isManageable = false,
+  maxTimeout = null,
+}: overlaySettings = {
+  message: '',
+  hasSpinner: true,
+  isManageable: false,
+  maxTimeout: null,
+}) => {
   overlayStore.isActive = true;
   overlayStore.message = message;
   overlayStore.isManageable = isManageable;
+  overlayStore.hasSpinner = hasSpinner;
+  if (maxTimeout) {
+    setTimeout(() => {
+      overlayStore.message = 'The operation has timed out';
+      overlayStore.hasSpinner = false;
+      overlayStore.isManageable = true;
+    }, maxTimeout * 1000);
+  }
+};
+
+export const Wrapper = {
+  showOverlay,
 };
 
 export const hideOverlay = () => {
@@ -50,22 +73,13 @@ const OverlayCloseButton = flow(
   removeClasses('bl-float-right'),
 )(ComponentFormCloseButton);
 
-export const OverlayUI = ({
-  message,
-  isManageable,
-}: {
-  message: string,
-  isManageable: boolean,
-}) => (
+export const OverlayUI = ({ message, isManageable, hasSpinner }: overlaySettings) => (
   <div
     id="overlay"
     className="bl-bg-black bl-opacity-75
       bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50 flex flex-col justify-around items-center"
   >
-    <div>
-      <Spinner color="bl-bg-white" />
-    </div>
-    {/* temporary inline-styled. */}
+    {hasSpinner && <div><Spinner color="bl-bg-white" /></div>}
     {message && <h1 style={{ color: 'white', fontSize: '30px' }}>{message}</h1>}
     {isManageable && <OverlayCloseButton onClick={() => hideOverlay()} />}
   </div>
@@ -79,6 +93,7 @@ export const OverlayPortal = observer(({ store }) => {
     <OverlayUI
       message={store.message}
       isManageable={store.isManageable}
+      hasSpinner={store.hasSpinner}
     />,
     root,
   );
