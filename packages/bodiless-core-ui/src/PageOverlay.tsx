@@ -90,7 +90,7 @@ const DefaultCloseButton = flow(
 )(ComponentFormCloseButton);
 
 export const Overlay = ({ ui, settings }: OverlayProps) => {
-  const { OSpinner, OCloseButton } = ui;
+  const { OvSpinner, OvCloseButton } = ui;
   const { message, isManageable, hasSpinner } = settings;
   return (
     <div
@@ -101,12 +101,12 @@ export const Overlay = ({ ui, settings }: OverlayProps) => {
     >
       {isManageable && (
         <div className="bl-flex bl-justify-end bl-w-full">
-          <OCloseButton />
+          <OvCloseButton />
         </div>
       )}
       {hasSpinner && (
         <div className="bl-py-5">
-          <OSpinner />
+          <OvSpinner />
         </div>
       )}
       {message && (
@@ -125,10 +125,14 @@ export const OverlayPortal = observer(({ store }) => {
   && ReactDOM.createPortal(
     <Overlay
       ui={{
-        OSpinner: DefaultSpinner,
-        OCloseButton: DefaultCloseButton,
+        OvSpinner: DefaultSpinner,
+        OvCloseButton: DefaultCloseButton,
       }}
-      settings={store}
+      settings={{
+        message: store.message,
+        isManageable: store.isManageable,
+        hasSpinner: store.hasSpinner,
+      }}
     />,
     root,
   );
