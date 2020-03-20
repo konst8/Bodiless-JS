@@ -72,12 +72,25 @@ const OverlayCloseButton = flow(
 export const OverlayUI = ({ message, isManageable, hasSpinner }: overlaySettings) => (
   <div
     id="overlay"
-    className="bl-bg-black bl-opacity-75
-      bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50 flex flex-col justify-around items-center"
+    className="bl-px-20 bl-py-10 bl-bg-black bl-opacity-75
+      bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
+      bl-flex bl-flex-col bl-justify-center bl-items-center"
   >
-    {hasSpinner && <div><Spinner color="bl-bg-white" /></div>}
-    {message && <h1 style={{ color: 'white', fontSize: '30px' }}>{message}</h1>}
-    {isManageable && <OverlayCloseButton onClick={() => hideOverlay()} />}
+    {isManageable && (
+      <div className="bl-flex bl-justify-end bl-w-full">
+        <OverlayCloseButton onClick={() => hideOverlay()} />
+      </div>
+    )}
+    {hasSpinner && (
+      <div className="bl-py-5">
+        <Spinner color="bl-bg-white" />
+      </div>
+    )}
+    {message && (
+      <h1 className="bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line">
+        {message}
+      </h1>
+    )}
   </div>
 );
 
