@@ -36,29 +36,6 @@ type Props = {
   client?: Client;
 };
 
-// const testDelay = () => (
-//   new Promise(resolve => (
-//     setTimeout(() => (
-//       resolve('test delay completed')
-//     ), 2000)
-//   ))
-// );
-
-// const testFormBody = () => (
-//   <h1>Test form body</h1>
-// );
-
-// const testFormOptions = {
-//   submitValues: async () => {
-//     showOverlay({ message: 'test triggered message', maxTimeout: 1 });
-//     await testDelay();
-//     console.log('testForm was submitted');
-//     showOverlay({ message: 'An arror occured!', isManageable: true });
-//   },
-// };
-
-// const testFormWithOverlay = () => contextMenuForm(testFormOptions)(testFormBody);
-
 const formPageAdd = (client: Client, template: string) => contextMenuForm({
   submitValues: async (submittedValues: any) => {
     showOverlay({
@@ -137,7 +114,6 @@ const useGetMenuOptions = (): () => TMenuOption[] => {
       label: 'Page',
       isHidden: () => !context.isEdit,
       handler: () => formPageAdd(defaultClient, gatsbyPage.subPageTemplate),
-      // handler: () => testFormWithOverlay(),
     },
   ];
 };

@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 import { flow } from 'lodash';
 import { observable } from 'mobx';
@@ -31,40 +31,43 @@ type OverlaySettings = {
 };
 
 type OverlayProps = {
-  ui: any,
+  ui: {
+    OvSpinner: FC,
+    OvCloseButton: FC,
+  },
   settings: OverlaySettings,
 };
 
-export const overlayStore = observable({
+const defaultSettings: OverlaySettings = {
   isActive: false,
   isManageable: false,
   hasSpinner: true,
   message: '',
-});
-
-export const showOverlay = ({
-  message = '',
-  hasSpinner = true,
-  isManageable = false,
-  maxTimeout = null,
-}: OverlaySettings = {
-  message: '',
-  hasSpinner: true,
-  isManageable: false,
   maxTimeout: null,
-}) => {
-  overlayStore.isActive = true;
-  overlayStore.message = message;
-  overlayStore.isManageable = isManageable;
-  overlayStore.hasSpinner = hasSpinner;
-  if (maxTimeout) {
+};
+
+export const overlayStore = observable({ data: defaultSettings });
+
+export const showOverlay = (props: OverlaySettings = {}) => {
+  const settings = {
+    ...defaultSettings,
+    ...props,
+    isActive: true,
+  };
+
+  overlayStore.data = settings;
+
+  if (props.maxTimeout) {
     setTimeout(() => {
-      if (!overlayStore.isManageable) {
-        overlayStore.message = 'The operation has timed out';
-        overlayStore.hasSpinner = false;
-        overlayStore.isManageable = true;
+      if (!overlayStore.data.isManageable) {
+        overlayStore.data = {
+          ...settings,
+          message: 'The operation has timed out',
+          hasSpinner: false,
+          isManageable: true,
+        };
       }
-    }, maxTimeout * 1000);
+    }, props.maxTimeout * 1000);
   }
 };
 
@@ -77,7 +80,7 @@ export const showError = (message: string = 'An error has occurred.') => {
 };
 
 export const hideOverlay = () => {
-  overlayStore.isActive = false;
+  overlayStore.data.isActive = false;
 };
 
 const DefaultSpinner = () => <Spinner color="bl-bg-white" />;
@@ -120,7 +123,7 @@ export const Overlay = ({ ui, settings }: OverlayProps) => {
 
 export const OverlayPortal = observer(({ store }) => {
   const root = typeof window !== 'undefined' ? window.document.body : null;
-  return store.isActive
+  return store.data.isActive
   && root
   && ReactDOM.createPortal(
     <Overlay
@@ -128,11 +131,7 @@ export const OverlayPortal = observer(({ store }) => {
         OvSpinner: DefaultSpinner,
         OvCloseButton: DefaultCloseButton,
       }}
-      settings={{
-        message: store.message,
-        isManageable: store.isManageable,
-        hasSpinner: store.hasSpinner,
-      }}
+      settings={{ ...store.data }}
     />,
     root,
   );
