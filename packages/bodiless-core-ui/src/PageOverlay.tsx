@@ -12,11 +12,12 @@
  * limitations under the License.
  */
 
-import React, { FC } from 'react';
+import React, { ComponentType, HTMLProps } from 'react';
 import ReactDOM from 'react-dom';
 import { flow } from 'lodash';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react';
+import { useEditContext } from '@bodiless/core';
+
 import {
   removeClasses, addProps,
 } from '@bodiless/fclasses';
@@ -24,7 +25,7 @@ import { Spinner, ComponentFormCloseButton } from '@bodiless/ui';
 
 type OverlaySettings = {
   isActive?: boolean,
-  isManageable?: boolean,
+  hasCloseButton?: boolean,
   hasSpinner?: boolean,
   maxTimeout?: number | null,
   message?: string,
@@ -32,69 +33,77 @@ type OverlaySettings = {
 
 type OverlayProps = {
   ui: {
-    OvSpinner: FC,
-    OvCloseButton: FC,
+    OvSpinner: ComponentType<HTMLProps<HTMLDivElement>>,
+    OvCloseButton: ComponentType<HTMLProps<HTMLDivElement>>,
   },
   settings: OverlaySettings,
 };
 
-const defaultSettings: OverlaySettings = {
-  isActive: false,
-  isManageable: false,
-  hasSpinner: true,
-  message: '',
-  maxTimeout: null,
-};
+// const defaultSettings: OverlaySettings = {
+//   isActive: false,
+//   hasCloseButton: false,
+//   hasSpinner: true,
+//   message: '',
+//   maxTimeout: null,
+// };
 
-export const overlayStore = observable({ data: defaultSettings });
+// export const overlayStore = observable({ data: defaultSettings });
 
-export const showOverlay = (props: OverlaySettings = {}) => {
-  const settings = {
-    ...defaultSettings,
-    ...props,
-    isActive: true,
-  };
+// export const showOverlay = (props: OverlaySettings = {}) => {
+//   const settings = {
+//     ...defaultSettings,
+//     ...props,
+//     isActive: true,
+//   };
 
-  overlayStore.data = settings;
+//   overlayStore.data = settings;
 
-  if (props.maxTimeout) {
-    setTimeout(() => {
-      if (!overlayStore.data.isManageable) {
-        overlayStore.data = {
-          ...settings,
-          message: 'The operation has timed out',
-          hasSpinner: false,
-          isManageable: true,
-        };
-      }
-    }, props.maxTimeout * 1000);
-  }
-};
+//   if (props.maxTimeout) {
+//     setTimeout(() => {
+//       if (!overlayStore.data.hasCloseButton) {
+//         overlayStore.data = {
+//           ...settings,
+//           message: 'The operation has timed out',
+//           hasSpinner: false,
+//           hasCloseButton: true,
+//         };
+//       }
+//     }, props.maxTimeout * 1000);
+//   }
+// };
 
-export const showError = (message: string = 'An error has occurred.') => {
-  showOverlay({
-    message,
-    hasSpinner: false,
-    isManageable: true,
-  });
-};
+// export const showError = (message: string = 'An error has occurred.') => {
+//   showOverlay({
+//     message,
+//     hasSpinner: false,
+//     hasCloseButton: true,
+//   });
+// };
 
-export const hideOverlay = () => {
-  overlayStore.data.isActive = false;
-};
+// export const hideOverlay = () => {
+//   overlayStore.data.isActive = false;
+// };
 
 const DefaultSpinner = () => <Spinner color="bl-bg-white" />;
 
-const DefaultCloseButton = flow(
-  addProps({
-    onClick: () => { hideOverlay(); },
-  }),
-  removeClasses('bl-float-right'),
-)(ComponentFormCloseButton);
+const DefaultCloseButton = props => {
+  const context = useEditContext();
+  const Button = flow(
+    addProps({
+      onClick: () => {
+        context.hidePageOverlay();
+        props.onClick();
+      },
+    }),
+    removeClasses('bl-float-right'),
+  )(ComponentFormCloseButton);
+  return <Button />;
+};
 
 export const Overlay = ({ ui, settings }: OverlayProps) => {
+  console.log('overlay rendered');
   const { OvSpinner, OvCloseButton } = ui;
-  const { message, isManageable, hasSpinner } = settings;
+  const { message, hasCloseButton, hasSpinner } = settings;
   return (
     <div
       id="overlay"
@@ -102,9 +111,9 @@ export const Overlay = ({ ui, settings }: OverlayProps) => {
         bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
         bl-flex bl-flex-col bl-justify-center bl-items-center"
     >
-      {isManageable && (
+      {hasCloseButton && (
         <div className="bl-flex bl-justify-end bl-w-full">
-          <OvCloseButton />
+          <OvCloseButton onClick={() => { settings.onClose(); }} />
         </div>
       )}
       {hasSpinner && (
@@ -137,8 +146,9 @@ export const OverlayPortal = observer(({ store }) => {
   );
 });
 
-export const PageOverlay = () => (
-  <OverlayPortal store={overlayStore} />
-);
+export const PageOverlay = () => {
+  const pageOverlayStore = useEditContext().pageOverlay;
+  return <OverlayPortal store={pageOverlayStore} />;
+};
 
 export default PageOverlay;

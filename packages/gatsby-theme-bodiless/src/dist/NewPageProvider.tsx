@@ -36,9 +36,9 @@ type Props = {
   client?: Client;
 };
 
-const formPageAdd = (client: Client, template: string) => contextMenuForm({
+const formPageAdd = (client: Client, template: string, context: any) => contextMenuForm({
   submitValues: async (submittedValues: any) => {
-    showOverlay({
+    context.showPageOverlay({
       message: 'The page is creating.',
       maxTimeout: 10,
     });
@@ -47,20 +47,29 @@ const formPageAdd = (client: Client, template: string) => contextMenuForm({
       : '';
     const newPagePath = pathname + submittedValues.path;
     const result = await handle(client.savePage(newPagePath, template));
-    if (result) {
+    if (result.response) {
       const isPageVerified = await verifyPage(newPagePath);
       if (!isPageVerified) {
         const errorMessage = `Unable to verify page creation.
 It is likely that your new page was created but is not yet available.
 Click ok to visit the new page; if it does not load, wait a while and reload.`;
-        // @todo add success button with callback
-        showOverlay({
+        context.showPageOverlay({
           message: errorMessage,
-          isManageable: true,
+          hasSpinner: false,
+          hasCloseButton: true,
+          onClose: () => {
+            window.location.href = newPagePath;
+          },
         });
       } else {
         window.location.href = newPagePath;
       }
+    } else {
+      context.showPageOverlay({
+        message: result.message,
+        hasSpinner: false,
+        hasCloseButton: true,
+      });
     }
   },
 })(({ ui, formState }: any) => {
@@ -113,7 +122,8 @@ const useGetMenuOptions = (): () => TMenuOption[] => {
       icon: 'note_add',
       label: 'Page',
       isHidden: () => !context.isEdit,
-      handler: () => formPageAdd(defaultClient, gatsbyPage.subPageTemplate),
+      handler: () => formPageAdd(defaultClient, gatsbyPage.subPageTemplate, context),
+      // handler: () => testFormWithOverlay(context),
     },
   ];
 };

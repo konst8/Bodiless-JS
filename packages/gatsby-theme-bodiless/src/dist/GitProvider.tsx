@@ -150,7 +150,7 @@ const formGitReset = (client: Client) => contextMenuForm({
       showOverlay({
         message: 'Revert completed. You may need to reload the page to get all the changes applied.',
         hasSpinner: false,
-        isManageable: true,
+        hasCloseButton: true,
       });
       // window.location.reload();
     } catch {

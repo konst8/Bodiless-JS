@@ -12,11 +12,8 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import debug from 'debug';
-import { showOverlay, hideOverlay } from '@bodiless/core-ui';
-
-const errorLog = debug('CommitList');
+import React, { useState, useEffect } from 'react';
+import { useEditContext } from '@bodiless/core';
 
 type Commit = {
   hash: string,
@@ -91,35 +88,70 @@ const handleResponse = (responseData: ResponseData) => {
   return renderSelectableList(commits);
 };
 
-class CommitsList extends React.Component<{
-  client: any
-}, { content: string | JSX.Element }> {
-  constructor(props: any) {
-    super(props);
-    this.state = { content: 'Loading ...' };
-  }
+// class CommitsList extends React.Component<{
+//   client: any
+// }, { content: string | JSX.Element }> {
+//   constructor(props: any) {
+//     super(props);
+//     this.state = { content: 'Loading ...' };
+//   }
 
-  async componentDidMount() {
-    try {
-      const { client } = this.props;
-      showOverlay();
-      const response = await client.getLatestCommits();
-      this.setState({
-        content: handleResponse(response.data),
-      });
-      hideOverlay();
-    } catch (error) {
-      errorLog(error);
-      this.setState({
-        content: 'An unexpected error has occurred',
-      });
-    }
-  }
+//   async componentDidMount() {
+//     try {
+//       const { client } = this.props;
+//       showOverlay();
+//       const response = await client.getLatestCommits();
+//       this.setState({
+//         content: handleResponse(response.data),
+//       });
+//       hideOverlay();
+//     } catch (error) {
+//       errorLog(error);
+//       this.setState({
+//         content: 'An unexpected error has occurred',
+//       });
+//     }
+//   }
 
-  render() {
-    const { content } = this.state;
-    return content;
-  }
-}
+//   render() {
+//     console.log('commit props', this.props);
+//     const { content } = this.state;
+//     return content;
+//   }
+// }
+
+type Props = {
+  client: any,
+};
+
+const CommitsList = ({ client }: Props) => {
+  const [state, setState] = useState<{ content: string | JSX.Element }>({ content: 'Loading ...' });
+  const context = useEditContext();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        context.showPageOverlay();
+        const response = await client.getLatestCommits();
+        setState({
+          content: handleResponse(response.data),
+        });
+        context.hidePageOverlay();
+      } catch (error) {
+        context.showPageOverlay({
+          hasCloseButton: true,
+          message: error.message || 'An unexpected error has occurred',
+          hasSpinner: false,
+        });
+        setState({
+          content: 'An unexpected error has occurred',
+        });
+      }
+    })();
+  }, []);
+
+  const { content } = state;
+  return content;
+};
 
 export default CommitsList;

@@ -60,7 +60,8 @@ export const reduceRecursively = <T extends any>(
 //    - PageEditContext.Consumer (an observable version of PageEditContext.context.Consumer).
 //    - PageEditContext.Provider (equivalent to PageEditContext.context.Provider).
 // Singleton store.
-export class PageEditStore implements PageEditStoreInterface {
+// export class PageEditStore implements PageEditStoreInterface {
+export class PageEditStore {
   @observable activeContext: PageEditContext | undefined = undefined;
 
   @observable contextMenuOptions: TMenuOption[] = [];
@@ -68,6 +69,16 @@ export class PageEditStore implements PageEditStoreInterface {
   @observable isEdit = getFromSessionStorage('isEdit', false);
 
   @observable isPositionToggled = getFromSessionStorage('isPositionToggled', false);
+
+  @observable pageOverlay = {
+    data: {
+      isActive: false,
+      hasCloseButton: false,
+      hasSpinner: true,
+      message: '',
+      maxTimeout: null,
+    },
+  };
 
   @action
   setActiveContext(context?: PageEditContext) {
@@ -109,8 +120,18 @@ export class PageEditStore implements PageEditStoreInterface {
 
 export const defaultStore = new PageEditStore();
 
+const defaultOverlaySettings = {
+  isActive: false,
+  hasCloseButton: false,
+  hasSpinner: true,
+  message: '',
+  maxTimeout: null,
+  onClose: () => {},
+};
+
 // tslint:disable-next-line:max-line-length
-class PageEditContext implements PageEditContextInterface {
+// class PageEditContext implements PageEditContextInterface {
+class PageEditContext {
   readonly id: string = v1();
 
   readonly name: string = 'PageEditContext';
@@ -203,12 +224,31 @@ class PageEditContext implements PageEditContextInterface {
     return this.store.isPositionToggled;
   }
 
+  get pageOverlay() {
+    return this.store.pageOverlay;
+  }
+
   togglePosition(on?: boolean) {
     this.store.togglePosition(on);
   }
 
   get contextMenuOptions() {
     return this.store.contextMenuOptions;
+  }
+
+  showPageOverlay(passedSettings) {
+    const settings = {
+      ...defaultOverlaySettings,
+      ...passedSettings,
+      isActive: true,
+    };
+    this.store.pageOverlay.data = settings;
+    console.log('show page overlay was applied');
+  }
+
+  hidePageOverlay() {
+    this.store.pageOverlay.data = defaultOverlaySettings;
+    console.log('hide page overlay was applied');
   }
 }
 
