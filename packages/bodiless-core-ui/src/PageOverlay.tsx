@@ -69,7 +69,7 @@ export const Overlay = ({ ui, settings }: OverlayProps) => {
         bl-flex bl-flex-col bl-justify-center bl-items-center"
     >
       <div
-        className="bl-w-full bl-p-3"
+        className="bl-w-full bl-p-5"
         style={hasCloseButton ? { backgroundColor: '#00000050' } : {}}
       >
         {hasCloseButton && (
