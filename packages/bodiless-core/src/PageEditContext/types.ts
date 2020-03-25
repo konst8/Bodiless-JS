@@ -38,6 +38,7 @@ export interface CanControlMenuPosition {
   togglePosition: (mode?: boolean) => void;
 }
 export interface CanControlPageOverlay {
+  pageOverlay: any;
   showPageOverlay: (settings?: any) => void;
   hidePageOverlay: (settings?: any) => void;
   showError: (settings?: any) => void;

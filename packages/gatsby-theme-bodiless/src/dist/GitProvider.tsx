@@ -174,7 +174,7 @@ const formGitReset = (client: Client, context: any) => contextMenuForm({
 
 const defaultClient = new BackendClient();
 
-const getMenuOptions = (client: Client = defaultClient, context): TMenuOption[] => {
+const getMenuOptions = (client: Client = defaultClient, context: any): TMenuOption[] => {
   const saveChanges = canCommit ? formGitCommit(client) : undefined;
   return [
     {

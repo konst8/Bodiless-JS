@@ -88,44 +88,12 @@ const handleResponse = (responseData: ResponseData) => {
   return renderSelectableList(commits);
 };
 
-// class CommitsList extends React.Component<{
-//   client: any
-// }, { content: string | JSX.Element }> {
-//   constructor(props: any) {
-//     super(props);
-//     this.state = { content: 'Loading ...' };
-//   }
-
-//   async componentDidMount() {
-//     try {
-//       const { client } = this.props;
-//       showOverlay();
-//       const response = await client.getLatestCommits();
-//       this.setState({
-//         content: handleResponse(response.data),
-//       });
-//       hideOverlay();
-//     } catch (error) {
-//       errorLog(error);
-//       this.setState({
-//         content: 'An unexpected error has occurred',
-//       });
-//     }
-//   }
-
-//   render() {
-//     console.log('commit props', this.props);
-//     const { content } = this.state;
-//     return content;
-//   }
-// }
-
 type Props = {
   client: any,
 };
 
 const CommitsList = ({ client }: Props) => {
-  const [state, setState] = useState<{ content: string | JSX.Element }>({ content: 'Loading ...' });
+  const [state, setState] = useState<{ content: any }>({ content: 'Loading ...' });
   const context = useEditContext();
 
   useEffect(() => {
