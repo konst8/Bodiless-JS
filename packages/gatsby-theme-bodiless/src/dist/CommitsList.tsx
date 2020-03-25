@@ -110,6 +110,13 @@ const CommitsList = ({ client }: Props) => {
           hasSpinner: false,
           maxTimeoutInSeconds: 5,
         });
+        await (() => (
+          new Promise(resolve => {
+            setTimeout(() => {
+              resolve('done');
+            }, 3000);
+          })
+        ))();
         const response = await client.getLatestCommits();
         setState({
           content: handleResponse(response.data),
