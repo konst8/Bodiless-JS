@@ -14,6 +14,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useEditContext } from '@bodiless/core';
+import { Spinner } from '@bodiless/ui';
 
 type Commit = {
   hash: string,
@@ -92,14 +93,23 @@ type Props = {
   client: any,
 };
 
+const WrappedSpinner = () => (
+  <div className="bl-pt-5">
+    <Spinner color="bl-bg-white" />
+  </div>
+);
+
 const CommitsList = ({ client }: Props) => {
-  const [state, setState] = useState<{ content: any }>({ content: 'Loading ...' });
+  const [state, setState] = useState<{ content: any }>({ content: <WrappedSpinner /> });
   const context = useEditContext();
 
   useEffect(() => {
     (async () => {
       try {
-        context.showPageOverlay();
+        context.showPageOverlay({
+          hasSpinner: false,
+          maxTimeoutInSeconds: 5,
+        });
         const response = await client.getLatestCommits();
         setState({
           content: handleResponse(response.data),

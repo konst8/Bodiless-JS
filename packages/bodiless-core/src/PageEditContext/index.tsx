@@ -240,8 +240,8 @@ class PageEditContext implements PageEditContextInterface {
     clearTimeout(this.store.pageOverlay.timeoutId);
     const settings = {
       ...defaultOverlaySettings,
-      ...passedSettings,
       isActive: true,
+      ...passedSettings,
     };
     this.store.pageOverlay.data = settings;
 
@@ -255,7 +255,9 @@ class PageEditContext implements PageEditContextInterface {
   }
 
   hidePageOverlay() {
-    this.store.pageOverlay.data = defaultOverlaySettings;
+    this.showPageOverlay({
+      isActive: false,
+    });
   }
 
   showError(passedSettings: any) {
