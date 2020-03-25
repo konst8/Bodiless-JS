@@ -22,7 +22,6 @@ import {
   useEditContext,
 } from '@bodiless/core';
 import { AxiosPromise } from 'axios';
-import { showOverlay } from '@bodiless/core-ui';
 import BackendClient from './BackendClient';
 import handle from './ResponseHandler';
 import verifyPage from './PageVerification';
@@ -40,7 +39,7 @@ const formPageAdd = (client: Client, template: string, context: any) => contextM
   submitValues: async (submittedValues: any) => {
     context.showPageOverlay({
       message: 'The page is creating.',
-      maxTimeout: 10,
+      maxTimeoutInSeconds: 10,
     });
     const pathname = window.location.pathname
       ? window.location.pathname.replace(/\/?$/, '/')
@@ -53,10 +52,8 @@ const formPageAdd = (client: Client, template: string, context: any) => contextM
         const errorMessage = `Unable to verify page creation.
 It is likely that your new page was created but is not yet available.
 Click ok to visit the new page; if it does not load, wait a while and reload.`;
-        context.showPageOverlay({
+        context.showError({
           message: errorMessage,
-          hasSpinner: false,
-          hasCloseButton: true,
           onClose: () => {
             window.location.href = newPagePath;
           },
@@ -65,10 +62,8 @@ Click ok to visit the new page; if it does not load, wait a while and reload.`;
         window.location.href = newPagePath;
       }
     } else {
-      context.showPageOverlay({
+      context.showError({
         message: result.message,
-        hasSpinner: false,
-        hasCloseButton: true,
       });
     }
   },

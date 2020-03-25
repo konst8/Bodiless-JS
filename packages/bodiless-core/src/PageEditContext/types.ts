@@ -37,6 +37,11 @@ export interface CanControlMenuPosition {
   isPositionToggled: boolean;
   togglePosition: (mode?: boolean) => void;
 }
+export interface CanControlPageOverlay {
+  showPageOverlay: (settings?: any) => void;
+  hidePageOverlay: (settings?: any) => void;
+  showError: (settings?: any) => void;
+}
 export interface CanGetContextMenuOptions {
   contextMenuOptions: TMenuOption[];
 }
@@ -68,6 +73,7 @@ export interface PageEditContextInterface extends
   CanControlEditMode,
   CanControlMenuPosition,
   CanGetContextMenuOptions,
+  CanControlPageOverlay,
   DefinesLocalEditContext
 {
   readonly id: string;

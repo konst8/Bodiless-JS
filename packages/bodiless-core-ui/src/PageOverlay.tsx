@@ -27,8 +27,9 @@ type OverlaySettings = {
   isActive?: boolean,
   hasCloseButton?: boolean,
   hasSpinner?: boolean,
-  maxTimeout?: number | null,
+  maxTimeoutInSeconds?: number | null,
   message?: string,
+  onClose?: any,
 };
 
 type OverlayProps = {
@@ -39,54 +40,9 @@ type OverlayProps = {
   settings: OverlaySettings,
 };
 
-// const defaultSettings: OverlaySettings = {
-//   isActive: false,
-//   hasCloseButton: false,
-//   hasSpinner: true,
-//   message: '',
-//   maxTimeout: null,
-// };
-
-// export const overlayStore = observable({ data: defaultSettings });
-
-// export const showOverlay = (props: OverlaySettings = {}) => {
-//   const settings = {
-//     ...defaultSettings,
-//     ...props,
-//     isActive: true,
-//   };
-
-//   overlayStore.data = settings;
-
-//   if (props.maxTimeout) {
-//     setTimeout(() => {
-//       if (!overlayStore.data.hasCloseButton) {
-//         overlayStore.data = {
-//           ...settings,
-//           message: 'The operation has timed out',
-//           hasSpinner: false,
-//           hasCloseButton: true,
-//         };
-//       }
-//     }, props.maxTimeout * 1000);
-//   }
-// };
-
-// export const showError = (message: string = 'An error has occurred.') => {
-//   showOverlay({
-//     message,
-//     hasSpinner: false,
-//     hasCloseButton: true,
-//   });
-// };
-
-// export const hideOverlay = () => {
-//   overlayStore.data.isActive = false;
-// };
-
 const DefaultSpinner = () => <Spinner color="bl-bg-white" />;
 
-const DefaultCloseButton = props => {
+const DefaultCloseButton = (props: any) => {
   const context = useEditContext();
   const Button = flow(
     addProps({
@@ -101,7 +57,6 @@ const DefaultCloseButton = props => {
 };
 
 export const Overlay = ({ ui, settings }: OverlayProps) => {
-  console.log('overlay rendered');
   const { OvSpinner, OvCloseButton } = ui;
   const { message, hasCloseButton, hasSpinner } = settings;
   return (

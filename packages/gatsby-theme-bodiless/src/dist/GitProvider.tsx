@@ -22,7 +22,6 @@ import {
   TMenuOption,
   useEditContext,
 } from '@bodiless/core';
-import { showOverlay, showError } from '@bodiless/core-ui';
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
 import CommitsList from './CommitsList';
@@ -139,22 +138,24 @@ const formGitCommit = (client: Client) => contextMenuForm({
 //   },
 // );
 
-const formGitReset = (client: Client) => contextMenuForm({
+const formGitReset = (client: Client, context: any) => contextMenuForm({
   submitValues: async () => {
-    showOverlay({
+    context.showPageOverlay({
       message: 'Revert is in progress. This may take a minute.',
-      maxTimeout: 10,
+      maxTimeoutInSeconds: 10,
     });
     try {
       await client.reset();
-      showOverlay({
-        message: 'Revert completed. You may need to reload the page to get all the changes applied.',
+      context.showPageOverlay({
+        message: 'Revert completed.',
         hasSpinner: false,
         hasCloseButton: true,
+        onClose: () => {
+          window.location.reload();
+        },
       });
-      // window.location.reload();
     } catch {
-      showError();
+      context.showError();
     }
   },
 })(
@@ -173,7 +174,7 @@ const formGitReset = (client: Client) => contextMenuForm({
 
 const defaultClient = new BackendClient();
 
-const getMenuOptions = (client: Client = defaultClient, isEdit?: boolean): TMenuOption[] => {
+const getMenuOptions = (client: Client = defaultClient, context): TMenuOption[] => {
   const saveChanges = canCommit ? formGitCommit(client) : undefined;
   return [
     {
@@ -185,7 +186,7 @@ const getMenuOptions = (client: Client = defaultClient, isEdit?: boolean): TMenu
       name: 'savechanges',
       icon: 'cloud_upload',
       isDisabled: () => !canCommit,
-      isHidden: () => !isEdit,
+      isHidden: () => !context.isEdit,
       handler: () => saveChanges,
     },
     // Currently descoping the Pull Changes Button Functionality.
@@ -198,8 +199,8 @@ const getMenuOptions = (client: Client = defaultClient, isEdit?: boolean): TMenu
     {
       name: 'resetchanges',
       icon: 'first_page',
-      isHidden: () => !isEdit,
-      handler: () => formGitReset(client),
+      isHidden: () => !context.isEdit,
+      handler: () => formGitReset(client, context),
     },
   ];
 };
@@ -209,7 +210,7 @@ const GitProvider: FC<Props> = ({ children, client }) => {
 
   return (
     <ContextProvider
-      getMenuOptions={() => getMenuOptions(client, context.isEdit)}
+      getMenuOptions={() => getMenuOptions(client, context)}
       name="Git"
     >
       {children}

@@ -60,8 +60,7 @@ export const reduceRecursively = <T extends any>(
 //    - PageEditContext.Consumer (an observable version of PageEditContext.context.Consumer).
 //    - PageEditContext.Provider (equivalent to PageEditContext.context.Provider).
 // Singleton store.
-// export class PageEditStore implements PageEditStoreInterface {
-export class PageEditStore {
+export class PageEditStore implements PageEditStoreInterface {
   @observable activeContext: PageEditContext | undefined = undefined;
 
   @observable contextMenuOptions: TMenuOption[] = [];
@@ -76,8 +75,9 @@ export class PageEditStore {
       hasCloseButton: false,
       hasSpinner: true,
       message: '',
-      maxTimeout: null,
+      maxTimeoutInSeconds: null,
     },
+    timeoutId: 0,
   };
 
   @action
@@ -125,13 +125,12 @@ const defaultOverlaySettings = {
   hasCloseButton: false,
   hasSpinner: true,
   message: '',
-  maxTimeout: null,
+  maxTimeoutInSeconds: null,
   onClose: () => {},
 };
 
 // tslint:disable-next-line:max-line-length
-// class PageEditContext implements PageEditContextInterface {
-class PageEditContext {
+class PageEditContext implements PageEditContextInterface {
   readonly id: string = v1();
 
   readonly name: string = 'PageEditContext';
@@ -224,10 +223,6 @@ class PageEditContext {
     return this.store.isPositionToggled;
   }
 
-  get pageOverlay() {
-    return this.store.pageOverlay;
-  }
-
   togglePosition(on?: boolean) {
     this.store.togglePosition(on);
   }
@@ -236,19 +231,41 @@ class PageEditContext {
     return this.store.contextMenuOptions;
   }
 
-  showPageOverlay(passedSettings) {
+  get pageOverlay() {
+    return this.store.pageOverlay;
+  }
+
+  // @todo define types
+  showPageOverlay(passedSettings: any) {
+    clearTimeout(this.store.pageOverlay.timeoutId);
     const settings = {
       ...defaultOverlaySettings,
       ...passedSettings,
       isActive: true,
     };
     this.store.pageOverlay.data = settings;
-    console.log('show page overlay was applied');
+
+    if (settings.maxTimeoutInSeconds) {
+      this.store.pageOverlay.timeoutId = window.setTimeout(() => {
+        this.showError({
+          message: 'The operation has timed out.',
+        });
+      }, settings.maxTimeoutInSeconds * 1000);
+    }
   }
 
   hidePageOverlay() {
     this.store.pageOverlay.data = defaultOverlaySettings;
-    console.log('hide page overlay was applied');
+  }
+
+  showError(passedSettings: any) {
+    const settings = {
+      message: 'An error has occurred.',
+      hasCloseButton: true,
+      hasSpinner: false,
+      ...passedSettings,
+    };
+    this.showPageOverlay(settings);
   }
 }
 

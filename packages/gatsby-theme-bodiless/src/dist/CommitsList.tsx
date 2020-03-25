@@ -138,10 +138,8 @@ const CommitsList = ({ client }: Props) => {
         });
         context.hidePageOverlay();
       } catch (error) {
-        context.showPageOverlay({
-          hasCloseButton: true,
+        context.showError({
           message: error.message || 'An unexpected error has occurred',
-          hasSpinner: false,
         });
         setState({
           content: 'An unexpected error has occurred',
