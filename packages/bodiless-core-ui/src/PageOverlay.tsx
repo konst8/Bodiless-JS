@@ -62,25 +62,32 @@ export const Overlay = ({ ui, settings }: OverlayProps) => {
   return (
     <div
       id="overlay"
-      className="bl-px-20 bl-py-10 bl-bg-black bl-opacity-75
-        bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
+      style={{
+        backgroundColor: '#000000bf',
+      }}
+      className="bl-px-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
         bl-flex bl-flex-col bl-justify-center bl-items-center"
     >
-      {hasCloseButton && (
-        <div className="bl-flex bl-justify-end bl-w-full">
-          <OvCloseButton onClick={() => { settings.onClose(); }} />
-        </div>
-      )}
-      {hasSpinner && (
-        <div className="bl-py-5">
-          <OvSpinner />
-        </div>
-      )}
-      {message && (
-        <h1 className="bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line">
-          {message}
-        </h1>
-      )}
+      <div
+        className="bl-w-full bl-p-3"
+        style={hasCloseButton ? { backgroundColor: '#00000050' } : {}}
+      >
+        {hasCloseButton && (
+          <div className="bl-flex bl-justify-end bl-w-full">
+            <OvCloseButton onClick={() => { settings.onClose(); }} />
+          </div>
+        )}
+        {hasSpinner && (
+          <div className="bl-py-5">
+            <OvSpinner />
+          </div>
+        )}
+        {message && (
+          <h1 className="bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line">
+            {message}
+          </h1>
+        )}
+      </div>
     </div>
   );
 };
