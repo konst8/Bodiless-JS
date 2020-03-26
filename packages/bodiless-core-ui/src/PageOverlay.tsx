@@ -65,20 +65,19 @@ export const Overlay = ({ ui, settings }: OverlayProps) => {
       style={{
         backgroundColor: '#000000bf',
       }}
-      className="bl-px-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
+      className="bl-p-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
         bl-flex bl-flex-col bl-justify-center bl-items-center"
     >
       <div
-        className="bl-w-full bl-p-5"
-        style={hasCloseButton ? { backgroundColor: '#00000050' } : {}}
+        className={`bl-p-5 bl-rounded ${hasCloseButton && 'bl-bg-black'}`}
       >
         {hasCloseButton && (
-          <div className="bl-flex bl-justify-end bl-w-full">
+          <div className="bl-flex bl-pb-5 bl-justify-end bl-w-full">
             <OvCloseButton onClick={() => { settings.onClose(); }} />
           </div>
         )}
         {hasSpinner && (
-          <div className="bl-py-5">
+          <div className="h-15">
             <OvSpinner />
           </div>
         )}

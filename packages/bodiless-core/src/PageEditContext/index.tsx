@@ -60,6 +60,16 @@ export const reduceRecursively = <T extends any>(
 //    - PageEditContext.Consumer (an observable version of PageEditContext.context.Consumer).
 //    - PageEditContext.Provider (equivalent to PageEditContext.context.Provider).
 // Singleton store.
+
+const defaultOverlaySettings = {
+  isActive: false,
+  hasCloseButton: false,
+  hasSpinner: true,
+  message: '',
+  maxTimeoutInSeconds: null,
+  onClose: () => {},
+};
+
 export class PageEditStore implements PageEditStoreInterface {
   @observable activeContext: PageEditContext | undefined = undefined;
 
@@ -71,11 +81,7 @@ export class PageEditStore implements PageEditStoreInterface {
 
   @observable pageOverlay = {
     data: {
-      isActive: false,
-      hasCloseButton: false,
-      hasSpinner: true,
-      message: '',
-      maxTimeoutInSeconds: null,
+      ...defaultOverlaySettings,
     },
     timeoutId: 0,
   };
@@ -119,15 +125,6 @@ export class PageEditStore implements PageEditStoreInterface {
 }
 
 export const defaultStore = new PageEditStore();
-
-const defaultOverlaySettings = {
-  isActive: false,
-  hasCloseButton: false,
-  hasSpinner: true,
-  message: '',
-  maxTimeoutInSeconds: null,
-  onClose: () => {},
-};
 
 // tslint:disable-next-line:max-line-length
 class PageEditContext implements PageEditContextInterface {
