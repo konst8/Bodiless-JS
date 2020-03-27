@@ -12,104 +12,55 @@
  * limitations under the License.
  */
 
-import React, { ComponentType, HTMLProps } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import { flow } from 'lodash';
-import { observer } from 'mobx-react';
-import { useEditContext } from '@bodiless/core';
 
-import {
-  removeClasses, addProps,
-} from '@bodiless/fclasses';
-import { Spinner, ComponentFormCloseButton } from '@bodiless/ui';
+import { Div, Spinner, ComponentFormCloseButton } from '@bodiless/ui';
+import { PageOverlay as CleanPageOverlay } from '@bodiless/core';
+import { addClasses, removeClasses, addProps } from '@bodiless/fclasses';
 
-type OverlaySettings = {
-  isActive?: boolean,
-  hasCloseButton?: boolean,
-  hasSpinner?: boolean,
-  maxTimeoutInSeconds?: number | null,
-  message?: string,
-  onClose?: any,
-};
+const OverlayWrapper = flow(
+  addClasses([
+    'bl-p-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50',
+    'bl-flex bl-flex-col bl-justify-center bl-items-center',
+  ]),
+  addProps({
+    id: 'page_overlay',
+    style: {
+      backgroundColor: '#000000bf',
+    },
+  }),
+)(Div);
 
-type OverlayProps = {
-  ui: {
-    OvSpinner: ComponentType<HTMLProps<HTMLDivElement>>,
-    OvCloseButton: ComponentType<HTMLProps<HTMLDivElement>>,
-  },
-  settings: OverlaySettings,
-};
+const PopupWrapper = addClasses('bl-p-5 bl-rounded bl-bg-black')(Div);
 
-const DefaultSpinner = () => <Spinner color="bl-bg-white" />;
-
-const DefaultCloseButton = (props: any) => {
-  const context = useEditContext();
-  const Button = flow(
-    addProps({
-      onClick: () => {
-        context.hidePageOverlay();
-        props.onClick();
-      },
-    }),
-    removeClasses('bl-float-right'),
-  )(ComponentFormCloseButton);
-  return <Button />;
-};
-
-export const Overlay = ({ ui, settings }: OverlayProps) => {
-  const { OvSpinner, OvCloseButton } = ui;
-  const { message, hasCloseButton, hasSpinner } = settings;
+const Button = (props: any) => {
+  const ButtonWrapper = addClasses('bl-flex bl-pb-5 bl-justify-end bl-w-full')(Div);
+  const ButtonEl = removeClasses('bl-float-right')(ComponentFormCloseButton);
   return (
-    <div
-      id="overlay"
-      style={{
-        backgroundColor: '#000000bf',
-      }}
-      className="bl-p-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50
-        bl-flex bl-flex-col bl-justify-center bl-items-center"
-    >
-      <div
-        className={`bl-p-5 bl-rounded ${hasCloseButton && 'bl-bg-black'}`}
-      >
-        {hasCloseButton && (
-          <div className="bl-flex bl-pb-5 bl-justify-end bl-w-full">
-            <OvCloseButton onClick={() => { settings.onClose(); }} />
-          </div>
-        )}
-        {hasSpinner && (
-          <div className="h-15">
-            <OvSpinner />
-          </div>
-        )}
-        {message && (
-          <h1 className="bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line">
-            {message}
-          </h1>
-        )}
-      </div>
-    </div>
+    <ButtonWrapper>
+      <ButtonEl {...props} />
+    </ButtonWrapper>
   );
 };
 
-export const OverlayPortal = observer(({ store }) => {
-  const root = typeof window !== 'undefined' ? window.document.body : null;
-  return store.data.isActive
-  && root
-  && ReactDOM.createPortal(
-    <Overlay
-      ui={{
-        OvSpinner: DefaultSpinner,
-        OvCloseButton: DefaultCloseButton,
-      }}
-      settings={{ ...store.data }}
-    />,
-    root,
-  );
-});
-
-export const PageOverlay = () => {
-  const pageOverlayStore = useEditContext().pageOverlay;
-  return <OverlayPortal store={pageOverlayStore} />;
+const WrappedSpinner = () => {
+  const SpinnerWrapper = addClasses('h-15')(Div);
+  return <SpinnerWrapper><Spinner color="bl-bg-white" /></SpinnerWrapper>;
 };
+
+const Message = addClasses([
+  'bl-text-gray-100 bl-text-center bl-text-2xl bl-whitespace-pre-line clear-right',
+])(Div);
+
+const ui = {
+  OverlayWrapper,
+  PopupWrapper,
+  Button,
+  Spinner: WrappedSpinner,
+  Message,
+};
+
+const PageOverlay = () => <CleanPageOverlay ui={ui} />;
 
 export default PageOverlay;

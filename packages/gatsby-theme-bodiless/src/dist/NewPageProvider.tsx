@@ -118,7 +118,6 @@ const useGetMenuOptions = (): () => TMenuOption[] => {
       label: 'Page',
       isHidden: () => !context.isEdit,
       handler: () => formPageAdd(defaultClient, gatsbyPage.subPageTemplate, context),
-      // handler: () => testFormWithOverlay(context),
     },
   ];
 };
