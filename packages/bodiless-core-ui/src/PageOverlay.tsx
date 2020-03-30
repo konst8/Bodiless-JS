@@ -21,8 +21,8 @@ import { addClasses, removeClasses, addProps } from '@bodiless/fclasses';
 
 const OverlayWrapper = flow(
   addClasses([
-    'bl-p-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50',
-    'bl-flex bl-flex-col bl-justify-center bl-items-center bl-bg-black-transparent',
+    'bl-p-20', 'bl-py-10', 'bl-w-full', 'bl-h-full', 'bl-fixed', 'bl-top-0', 'bl-z-50',
+    'bl-flex', 'bl-flex-col', 'bl-justify-center', 'bl-items-center', 'bl-bg-black-transparent',
   ]),
   addProps({
     id: 'page-overlay',
@@ -42,7 +42,7 @@ const Button = (props: any) => {
 };
 
 const WrappedSpinner = () => {
-  const SpinnerWrapper = addClasses('h-15')(Div);
+  const SpinnerWrapper = addClasses('h-20')(Div);
   return <SpinnerWrapper><Spinner color="bl-bg-white" /></SpinnerWrapper>;
 };
 
@@ -58,6 +58,6 @@ const ui = {
   Message,
 };
 
-const PageOverlay = () => <CleanPageOverlay ui={ui} />;
+const PageOverlay = (props: any) => <CleanPageOverlay ui={ui} {...props} />;
 
 export default PageOverlay;

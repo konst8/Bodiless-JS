@@ -46,12 +46,13 @@ export const Overlay = ({ settings, ui }: any) => {
   } = settings;
   const context = useEditContext();
 
-  const CloseButton = () => (
+  const CloseButton = (props: any) => (
     <Button
       onClick={() => {
         context.hidePageOverlay();
         onClose();
       }}
+      {...props}
     />
   );
 
@@ -63,7 +64,7 @@ export const Overlay = ({ settings, ui }: any) => {
     </>
   );
 
-  const WrppedElements = () => (
+  const WrappedElements = () => (
     <PopupWrapper>
       <Elements />
     </PopupWrapper>
@@ -71,7 +72,7 @@ export const Overlay = ({ settings, ui }: any) => {
 
   return (
     <OverlayWrapper>
-      {hasCloseButton ? <WrppedElements /> : <Elements />}
+      {hasCloseButton ? <WrappedElements /> : <Elements />}
     </OverlayWrapper>
   );
 };
@@ -88,7 +89,7 @@ export const OverlayPortal = observer(({ store, ui }) => {
 
 const PageOverlay = ({ ui }: {ui: UI}) => {
   const uiWithDefaults = getUI(ui);
-  const pageOverlayStore = useEditContext().pageOverlay;
+  const { pageOverlay: pageOverlayStore } = useEditContext();
   return <OverlayPortal store={pageOverlayStore} ui={uiWithDefaults} />;
 };
 

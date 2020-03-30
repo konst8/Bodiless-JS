@@ -27,7 +27,6 @@
     "@bodiless/fclasses": "^0.0.43",
     "@bodiless/ui": "^0.0.43",
     "informed": "^2.11.8",
-    "mobx-react": "^5.4.3",
     "lodash": "^4.17.11",
     "rc-tooltip": "^3.7.3"
   },
