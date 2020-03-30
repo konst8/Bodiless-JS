@@ -27,7 +27,7 @@ const OverlayWrapper = flow(
   addProps({
     id: 'page_overlay',
     style: {
-      backgroundColor: '#000000bf',
+      backgroundColor: '#00000066',
     },
   }),
 )(Div);
