@@ -1,5 +1,5 @@
 /**
- * Copyright © 2019 Johnson & Johnson
+ * Copyright © 2020 Johnson & Johnson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,10 @@ import { addClasses, removeClasses, addProps } from '@bodiless/fclasses';
 const OverlayWrapper = flow(
   addClasses([
     'bl-p-20 bl-py-10 bl-w-full bl-h-full bl-fixed bl-top-0 bl-z-50',
-    'bl-flex bl-flex-col bl-justify-center bl-items-center',
+    'bl-flex bl-flex-col bl-justify-center bl-items-center bl-bg-black-transparent',
   ]),
   addProps({
-    id: 'page_overlay',
-    style: {
-      backgroundColor: '#00000066',
-    },
+    id: 'page-overlay',
   }),
 )(Div);
 

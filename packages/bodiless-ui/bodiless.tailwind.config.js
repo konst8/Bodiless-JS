@@ -197,6 +197,8 @@ module.exports = {
 
         red: '#e3342f',
         green: '#309795',
+
+        'black-transparent': '#00000066',
       },
 
       /*
