@@ -16,6 +16,7 @@ import React, { ComponentType, HTMLProps } from 'react';
 import ReactDOM from 'react-dom';
 import { observer } from 'mobx-react';
 import { useEditContext } from '../hooks';
+import { TOverlaySettings } from '../Types/PageOverlayTypes';
 
 type FullUI = {
   OverlayWrapper: ComponentType<HTMLProps<HTMLDivElement>> | string,
@@ -37,7 +38,7 @@ export type UI = Partial<FullUI>;
 
 const getUI = (ui: UI) => ({ ...defaultUI, ...ui });
 
-export const Overlay = ({ settings, ui }: any) => {
+export const Overlay = ({ settings, ui }: { settings: TOverlaySettings, ui: FullUI }) => {
   const {
     OverlayWrapper, PopupWrapper, Button, Spinner, Message,
   } = ui;
@@ -50,7 +51,9 @@ export const Overlay = ({ settings, ui }: any) => {
     <Button
       onClick={() => {
         context.hidePageOverlay();
-        onClose();
+        if (onClose) {
+          onClose();
+        }
       }}
       {...props}
     />

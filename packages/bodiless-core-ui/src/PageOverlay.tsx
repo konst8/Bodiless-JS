@@ -31,7 +31,11 @@ const OverlayWrapper = flow(
 
 const PopupWrapper = addClasses('bl-p-5 bl-rounded bl-bg-black')(Div);
 
-const Button = (props: any) => {
+type ButtonProps = {
+  onClick: () => void,
+};
+
+const Button = (props: ButtonProps) => {
   const ButtonWrapper = addClasses('bl-flex bl-pb-5 bl-justify-end bl-w-full')(Div);
   const ButtonEl = removeClasses('bl-float-right')(ComponentFormCloseButton);
   return (

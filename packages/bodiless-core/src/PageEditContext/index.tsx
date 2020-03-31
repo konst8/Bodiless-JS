@@ -22,7 +22,9 @@ import {
   PageEditStore as PageEditStoreInterface,
   TMenuOption,
   TMenuOptionGetter,
+  TPageOverlayStore,
 } from './types';
+import { TOverlaySettings } from '../Types/PageOverlayTypes';
 import {
   getFromSessionStorage,
   saveToSessionStorage,
@@ -61,7 +63,7 @@ export const reduceRecursively = <T extends any>(
 //    - PageEditContext.Provider (equivalent to PageEditContext.context.Provider).
 // Singleton store.
 
-const defaultOverlaySettings = {
+const defaultOverlaySettings: TOverlaySettings = {
   isActive: false,
   hasCloseButton: false,
   hasSpinner: true,
@@ -79,7 +81,7 @@ export class PageEditStore implements PageEditStoreInterface {
 
   @observable isPositionToggled = getFromSessionStorage('isPositionToggled', false);
 
-  @observable pageOverlay = {
+  @observable pageOverlay: TPageOverlayStore = {
     data: {
       ...defaultOverlaySettings,
     },
@@ -232,8 +234,7 @@ class PageEditContext implements PageEditContextInterface {
     return this.store.pageOverlay;
   }
 
-  // @todo define types
-  showPageOverlay(passedSettings: any) {
+  showPageOverlay(passedSettings: TOverlaySettings | undefined) {
     clearTimeout(this.store.pageOverlay.timeoutId);
     const settings = {
       ...defaultOverlaySettings,
@@ -257,7 +258,7 @@ class PageEditContext implements PageEditContextInterface {
     });
   }
 
-  showError(passedSettings: any) {
+  showError(passedSettings: TOverlaySettings | undefined) {
     const settings = {
       message: 'An error has occurred.',
       hasCloseButton: true,
