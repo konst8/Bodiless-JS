@@ -14,7 +14,7 @@
 
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import CommitsList from '../src/dist/CommitsList';
 
 const mockedGitLogOutput = `
@@ -39,6 +39,10 @@ const mockedClient = {
 };
 
 describe('CommitsList component', () => {
+  it('should show a spinner while a request to the back-end is processed', () => {
+    const wrapper = mount(<CommitsList client={mockedClient} />);
+    expect(wrapper.find('.bodiless-spinner').length > 0).toBe(true);
+  });
   it('should render a list of selectable items once a responce is recieved', async () => {
     const wrapper = shallow(<CommitsList client={mockedClient} />);
     const instance = wrapper.instance();
