@@ -44,7 +44,10 @@ class StaticContext implements PageEditContextInterface {
 
   isInnermostLocalMenu = false;
 
-  pageOverlay = {};
+  pageOverlay = {
+    data: {},
+    timeoutId: 0,
+  };
 
   getMenuOptions = () => [];
 
