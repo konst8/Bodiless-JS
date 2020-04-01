@@ -21,7 +21,7 @@ import fs from 'fs-extra';
 import locateFiles from './locateFiles';
 import { withTreeFromFile } from './tree';
 import {
-  writeTree, writeResources, copyFile, symlinkFile,
+  writeTree, copyFile, symlinkFile,
 } from './write';
 import { writeSideBars, writeNavBar } from './createBar';
 import defaultToc from './defaultToc';
