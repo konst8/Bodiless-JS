@@ -41,7 +41,9 @@ const buildSubTree = async (toc: any, namespace: string) => {
 };
 
 const blDocsBuild = async () => {
-  const copier = process.env.BODILESS_DOCS_COPYFILES ? copyFile : symlinkFile;
+  console.log('blDocsBuild was called');
+  // const copier = process.env.BODILESS_DOCS_COPYFILES ? copyFile : symlinkFile;
+  const copier = copyFile;
   const docPath = './doc';
   let toc: any;
   try {
