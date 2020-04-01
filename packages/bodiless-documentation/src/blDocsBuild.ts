@@ -21,7 +21,7 @@ import fs from 'fs-extra';
 import locateFiles from './locateFiles';
 import { withTreeFromFile } from './tree';
 import {
-  writeTree, copyFile, symlinkFile,
+  writeTree, writeResources, copyFile, symlinkFile,
 } from './write';
 import { writeSideBars, writeNavBar } from './createBar';
 import defaultToc from './defaultToc';
@@ -95,12 +95,12 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing navbar', error);
   }
-  // console.log('Writing resources');
-  // try {
-  //   await writeResources(docPath, copier);
-  // } catch (error) {
-  //   console.warn('Error writing navbar', error);
-  // }
+  console.log('Writing resources');
+  try {
+    await writeResources(docPath, copier);
+  } catch (error) {
+    console.warn('Error writing resources', error);
+  }
   console.log('Done');
 };
 export default blDocsBuild;
