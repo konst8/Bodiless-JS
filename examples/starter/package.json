@@ -49,7 +49,7 @@
   "scripts": {
     "build": "npm-run-all build:env-vars build:lib build:doc",
     "build:lib": "gatsby build",
-    "build:doc": "bl-docs-build",
+    "build:doc": "",
     "build:env-vars": "generate-env-vars",
     "check": "tsc -p ./tsconfig.check.json",
     "clean": "rimraf ./public/* && rimraf ./.cache",

@@ -42,7 +42,7 @@ const buildSubTree = async (toc: any, namespace: string) => {
 
 const blDocsBuild = async () => {
   console.log('blDocsBuild was called');
-  const copier = process.env.BODILESS_DOCS_COPYFILES ? symlinkFile : copyFile;
+  const copier = process.env.BODILESS_DOCS_COPYFILES ? copyFile : symlinkFile;
   const docPath = './doc';
   let toc: any;
   try {
@@ -95,12 +95,12 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing navbar', error);
   }
-  console.log('Writing resources');
-  try {
-    await writeResources(docPath, copier);
-  } catch (error) {
-    console.warn('Error writing navbar', error);
-  }
+  // console.log('Writing resources');
+  // try {
+  //   await writeResources(docPath, copier);
+  // } catch (error) {
+  //   console.warn('Error writing navbar', error);
+  // }
   console.log('Done');
 };
 export default blDocsBuild;
