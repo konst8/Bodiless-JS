@@ -70,6 +70,9 @@ const blDocsBuild = async () => {
     pathsList[0],
   );
 
+  console.log('doc paths', paths);
+  console.log('docPath', docPath);
+
   // Now we use the tree we created above to write symlinks, sidebar and navbar.
   console.log('Writing symlinks');
   try {
