@@ -92,15 +92,15 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing navbar', error);
   }
-  console.log('Waiting 10 seconds...');
-  const testDelay = () => (
-    new Promise(resolve => {
-      setTimeout(() => {
-        resolve('done');
-      }, 10000);
-    })
-  );
-  await testDelay();
+  // console.log('Waiting 10 seconds...');
+  // const testDelay = () => (
+  //   new Promise(resolve => {
+  //     setTimeout(() => {
+  //       resolve('done');
+  //     }, 10000);
+  //   })
+  // );
+  // await testDelay();
   console.log('Writing resources');
   try {
     await writeResources(docPath, copier);
