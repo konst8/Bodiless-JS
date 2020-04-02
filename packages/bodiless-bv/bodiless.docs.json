@@ -3,22 +3,22 @@
     "Bazaarvoice": {
       "Configuration.md": "./doc/Configuration.md",
       "Components": {
-        "BVLoaderProvider.md": "./doc/Components/BVLoaderProvider.md",
+        "BVLoaderProvider.md": "./doc/components/BVLoaderProvider.md",
         "v1": {
-          "BVRatingsSummary.md": "./doc/Components/v1/BVRatingsSummary.md",
-          "BVRatingsSummaryBase.md": "./doc/Components/v1/BVRatingsSummaryBase.md",
-          "BVReviews.md": "./doc/Components/v1/BVReviews.md",
-          "BVReviewsBase.md": "./doc/Components/v1/BVReviewsBase.md",
-          "BVInlineRatings.md": "./doc/Components/v1/BVInlineRatings.md",
-          "BVInlineRatingsBase.md": "./doc/Components/v1/BVInlineRatingsBase.md"
+          "BVRatingsSummary.md": "./doc/components/v1/BVRatingsSummary.md",
+          "BVRatingsSummaryBase.md": "./doc/components/v1/BVRatingsSummaryBase.md",
+          "BVReviews.md": "./doc/components/v1/BVReviews.md",
+          "BVReviewsBase.md": "./doc/components/v1/BVReviewsBase.md",
+          "BVInlineRatings.md": "./doc/components/v1/BVInlineRatings.md",
+          "BVInlineRatingsBase.md": "./doc/components/v1/BVInlineRatingsBase.md"
         },
         "v2": {
-          "BVRatingsSummary.md": "./doc/Components/v2/BVRatingsSummary.md",
-          "BVRatingsSummaryBase.md": "./doc/Components/v2/BVRatingsSummaryBase.md",
-          "BVReviews.md": "./doc/Components/v2/BVReviews.md",
-          "BVReviewsBase.md": "./doc/Components/v2/BVReviewsBase.md",
-          "BVInlineRatings.md": "./doc/Components/v2/BVInlineRatings.md",
-          "BVInlineRatingsBase.md": "./doc/Components/v2/BVInlineRatingsBase.md"
+          "BVRatingsSummary.md": "./doc/components/v2/BVRatingsSummary.md",
+          "BVRatingsSummaryBase.md": "./doc/components/v2/BVRatingsSummaryBase.md",
+          "BVReviews.md": "./doc/components/v2/BVReviews.md",
+          "BVReviewsBase.md": "./doc/components/v2/BVReviewsBase.md",
+          "BVInlineRatings.md": "./doc/components/v2/BVInlineRatings.md",
+          "BVInlineRatingsBase.md": "./doc/components/v2/BVInlineRatingsBase.md"
         }
       },
       "HOCs": {
