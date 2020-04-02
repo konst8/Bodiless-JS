@@ -72,7 +72,10 @@ export const prependPath = (prePend:string) => (tree:Tree):Tree => (
   Object.keys(tree).reduce(
     (acc:Tree, key:string) => {
       if (typeof tree[key] === 'string') {
-        return { [key]: path.join(prePend, tree[key] as string), ...acc } as Tree;
+        const defaultPath = path.join(prePend, tree[key] as string);
+        const nativePath = fs.realpathSync.native(defaultPath);
+        const prePendedTree = { [key]: nativePath, ...acc } as Tree;
+        return prePendedTree;
       }
       const subTree = prependPath(prePend)(tree[key] as Tree);
       return { [key]: subTree, ...acc } as Tree;
