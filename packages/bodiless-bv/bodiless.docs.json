@@ -22,10 +22,10 @@
         }
       },
       "HOCs": {
-        "asBodilessBV.md": "./doc/HOCs/asBodilessBV.md",
-        "asDesignableBVComponent.md": "./doc/HOCs/asDesignableBVComponent.md",
-        "asEditableBV.md": "./doc/HOCs/asEditableBV.md",
-        "withBVLoader.md": "./doc/HOCs/withBVLoader.md"
+        "asBodilessBV.md": "./doc/hocs/asBodilessBV.md",
+        "asDesignableBVComponent.md": "./doc/hocs/asDesignableBVComponent.md",
+        "asEditableBV.md": "./doc/hocs/asEditableBV.md",
+        "withBVLoader.md": "./doc/hocs/withBVLoader.md"
       }
     }
   }
