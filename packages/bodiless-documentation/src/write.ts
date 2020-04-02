@@ -114,8 +114,8 @@ const writeResources = async (loc: string, copier: Copier) => {
   const targetPath = path.join(loc, fn);
   console.log('root path', rootPath);
   const getContent = () => fs.readFileSync(targetPath, 'utf8').substr(0, 100);
-  await copier(rootPath, targetPath);
-  console.log('readme content 1', getContent());
+  // await copier(rootPath, targetPath);
+  // console.log('readme content 1', getContent());
   setTimeout(async () => {
     await copier(resourcePath, targetPath);
     console.log('readme content 2', getContent());

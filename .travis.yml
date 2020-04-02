@@ -29,7 +29,7 @@ defaults: &defaults
     # - npm run lint
     # - npm run test
     # - npm run test:ci
-    - echo "test build"
+    - cat README.md
     - cat examples/test-site/doc/README.md
 
 jobs:
