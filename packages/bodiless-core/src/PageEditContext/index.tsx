@@ -246,7 +246,8 @@ class PageEditContext implements PageEditContextInterface {
     if (settings.maxTimeoutInSeconds) {
       this.store.pageOverlay.timeoutId = window.setTimeout(() => {
         this.showError({
-          message: 'The operation has timed out.',
+          message: `The application encountered an issue.
+Please try your operation again if it was not successful.`,
         });
       }, settings.maxTimeoutInSeconds * 1000);
     }
