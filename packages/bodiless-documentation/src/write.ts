@@ -32,10 +32,9 @@ type Copier = (docPath: string, filePath: string) => Promise<void>;
  * @param filePath The path of the target document relative to `process.cwd`
  */
 const copyFile: Copier = (docPath: string, filePath: string) => {
-  console.log('copy file', docPath, filePath);
   const relPath = path.relative(process.cwd(), docPath);
   try {
-    return fs.copy(relPath, filePath, { overwrite: true });
+    return fs.copy(relPath, filePath, { overwrite: false });
   } catch (error) {
     console.warn('Error writing', filePath, relPath, error);
     return Promise.resolve();
@@ -101,9 +100,8 @@ const writeTree = (props: Props, copier: Copier) => {
  */
 const writeResources = (loc: string, copier: Copier) => {
   const resourceDir = path.dirname(require.resolve(path.join('..', 'resources', 'index.html')));
-  // const resources = fs.readdirSync(resourceDir)
-  //   .filter(fn => fs.statSync(path.join(resourceDir, fn)).isFile());
-  const resources = ['README.md'];
+  const resources = fs.readdirSync(resourceDir)
+    .filter(fn => fs.statSync(path.join(resourceDir, fn)).isFile());
   return resources.map(fn => copier(
     path.join(resourceDir, fn),
     path.join(loc, fn),

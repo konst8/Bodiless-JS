@@ -22,7 +22,6 @@ import locateFiles from './locateFiles';
 import { withTreeFromFile } from './tree';
 import {
   writeTree, writeResources, copyFile, symlinkFile,
-  // writeTree, copyFile, symlinkFile,
 } from './write';
 import { writeSideBars, writeNavBar } from './createBar';
 import defaultToc from './defaultToc';
@@ -40,6 +39,26 @@ const buildSubTree = async (toc: any, namespace: string) => {
   const paths = flow(updates)(toc) as Tree;
   return paths;
 };
+
+const getContent = (pathToFile: string) => {
+  if (fs.existsSync(pathToFile)) {
+    return fs.readFileSync(path.resolve(pathToFile), 'utf8').substr(0, 100);
+  }
+  return `file ${pathToFile} does not exist`;
+};
+
+// const testDelay = (delayInSec: number) => {
+//   console.log(`waiting ${delayInSec} sec...`);
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve('done');
+//     }, delayInSec * 1000);
+//   });
+// };
+
+const readmePath = path.resolve('doc/README.md');
+console.log('readme content 1', getContent(readmePath));
+
 
 const blDocsBuild = async () => {
   const copier = process.env.BODILESS_DOCS_COPYFILES ? copyFile : symlinkFile;
@@ -80,6 +99,7 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing symlinks', error);
   }
+  console.log('readme content 2', getContent(readmePath));
   console.log('Writing sidebars');
   try {
     await writeSideBars(docPath, paths);
@@ -92,21 +112,13 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing navbar', error);
   }
-  // console.log('Waiting 10 seconds...');
-  // const testDelay = () => (
-  //   new Promise(resolve => {
-  //     setTimeout(() => {
-  //       resolve('done');
-  //     }, 10000);
-  //   })
-  // );
-  // await testDelay();
   console.log('Writing resources');
   try {
     await writeResources(docPath, copier);
   } catch (error) {
     console.warn('Error writing navbar', error);
   }
+  console.log('readme content 3', getContent(readmePath));
   console.log('Done');
 };
 export default blDocsBuild;
