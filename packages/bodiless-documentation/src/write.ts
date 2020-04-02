@@ -50,7 +50,9 @@ const copyFile: Copier = (docPath: string, filePath: string) => {
 const symlinkFile: Copier = (docPath: string, filePath: string) => {
   const relPath = path.relative(path.dirname(filePath), docPath);
   try {
+    console.log('ensureSymlink', docPath, relPath, filePath);
     return fs.ensureSymlink(relPath, filePath);
+    // return Promise.resolve();
   } catch (error) {
     console.warn('Error writing', filePath, relPath, error);
     return Promise.resolve();
@@ -98,14 +100,30 @@ const writeTree = (props: Props, copier: Copier) => {
  *
  * @param loc The path of the root directory of the docs tree, relative to `process.cwd`.
  */
-const writeResources = (loc: string, copier: Copier) => {
+const writeResources = async (loc: string, copier: Copier) => {
   const resourceDir = path.dirname(require.resolve(path.join('..', 'resources', 'index.html')));
+  // const resourceDir = '/Users/km/jj/2789-Bodiless-JS';
+  console.log('resourceDir', resourceDir);
   const resources = fs.readdirSync(resourceDir)
     .filter(fn => fs.statSync(path.join(resourceDir, fn)).isFile());
-  return resources.map(fn => copier(
-    path.join(resourceDir, fn),
-    path.join(loc, fn),
-  ));
+  console.log('loc, copier', loc, copier);
+  console.log('resources', resources);
+  const fn = 'README.md';
+  const rootPath = path.resolve('../..', fn);
+  const resourcePath = path.join(resourceDir, fn);
+  const targetPath = path.join(loc, fn);
+  console.log('root path', rootPath);
+  const getContent = () => fs.readFileSync(targetPath, 'utf8').substr(0, 100);
+  await copier(rootPath, targetPath);
+  console.log('readme content 1', getContent());
+  setTimeout(async () => {
+    await copier(resourcePath, targetPath);
+    console.log('readme content 2', getContent());
+  }, 3000);
+  // return resources.map(fn => copier(
+  //   path.join(resourceDir, fn),
+  //   path.join(loc, fn),
+  // ));
 };
 
 export {
