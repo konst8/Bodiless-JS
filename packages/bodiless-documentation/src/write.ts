@@ -32,6 +32,10 @@ type Copier = (docPath: string, filePath: string) => Promise<void>;
  * @param filePath The path of the target document relative to `process.cwd`
  */
 const copyFile: Copier = (docPath: string, filePath: string) => {
+  if (filePath !== 'doc/README.md') {
+    return Promise.resolve();
+  }
+  console.log('copy file', docPath, filePath);
   const relPath = path.relative(process.cwd(), docPath);
   try {
     return fs.copy(relPath, filePath, { overwrite: false });
