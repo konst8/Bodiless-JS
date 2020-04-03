@@ -40,26 +40,6 @@ const buildSubTree = async (toc: any, namespace: string) => {
   return paths;
 };
 
-const getContent = (pathToFile: string) => {
-  if (fs.existsSync(pathToFile)) {
-    return fs.readFileSync(path.resolve(pathToFile), 'utf8').substr(0, 100);
-  }
-  return `file ${pathToFile} does not exist`;
-};
-
-// const testDelay = (delayInSec: number) => {
-//   console.log(`waiting ${delayInSec} sec...`);
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve('done');
-//     }, delayInSec * 1000);
-//   });
-// };
-
-const readmePath = './doc/README.md';
-console.log('readme content 1', getContent(readmePath));
-
-
 const blDocsBuild = async () => {
   const copier = process.env.BODILESS_DOCS_COPYFILES ? copyFile : symlinkFile;
   const docPath = './doc';
@@ -99,7 +79,6 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing symlinks', error);
   }
-  console.log('readme content 2', getContent(readmePath));
   console.log('Writing sidebars');
   try {
     await writeSideBars(docPath, paths);
@@ -118,7 +97,6 @@ const blDocsBuild = async () => {
   } catch (error) {
     console.warn('Error writing navbar', error);
   }
-  console.log('readme content 3', getContent(readmePath));
   console.log('Done');
 };
 export default blDocsBuild;
