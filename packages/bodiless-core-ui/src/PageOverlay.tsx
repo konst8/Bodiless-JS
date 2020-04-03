@@ -21,7 +21,7 @@ import { addClasses, removeClasses, addProps } from '@bodiless/fclasses';
 
 const OverlayWrapper = flow(
   addClasses([
-    'bl-p-20', 'bl-py-10', 'bl-w-full', 'bl-h-full', 'bl-fixed', 'bl-top-0', 'bl-z-50',
+    'bl-p-20', 'bl-py-10', 'bl-w-full', 'bl-h-full', 'bl-fixed', 'bl-top-0', 'bl-z-max',
     'bl-flex', 'bl-flex-col', 'bl-justify-center', 'bl-items-center', 'bl-bg-black-transparent',
   ]),
   addProps({
