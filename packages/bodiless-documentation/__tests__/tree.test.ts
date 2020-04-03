@@ -20,6 +20,7 @@ import {
   prependPath,
   withDeepValue,
   getTreeFromDir,
+  getSimplePaths,
 } from '../lib/tree';
 import { TreeHO } from '../lib/type';
 
@@ -181,5 +182,19 @@ describe('getTreeFromDir', () => {
       expect(result(startTree)).toStrictEqual({ 'file1.md': file1, ...startTree });
       done();
     });
+  });
+});
+describe('getSimplePaths', () => {
+  it('Should create a list of path from nested tree', () => {
+    const input = {
+      a: {
+        b: {
+          c: 'd',
+        },
+      },
+      z: 'z',
+    };
+    const expectResult = ['d', 'z'];
+    expect(getSimplePaths(input)).toStrictEqual(expectResult);
   });
 });
