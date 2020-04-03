@@ -29,7 +29,6 @@ defaults: &defaults
     - npm run lint
     - npm run test
     - npm run test:ci
-    - cat examples/test-site/doc/README.md
 
 jobs:
   include:
