@@ -74,6 +74,15 @@ export const prependPath = (prePend:string) => (tree:Tree):Tree => (
       if (typeof tree[key] === 'string') {
         const defaultPath = path.join(prePend, tree[key] as string);
         const nativePath = fs.realpathSync.native(defaultPath);
+        if (defaultPath !== nativePath) {
+          const errorMessage = `
+            The file path specified in docs.json is not equal to the real file path.
+            ${defaultPath}
+            !==
+            ${nativePath}
+          `;
+          throw new Error(errorMessage);
+        }
         const prePendedTree = { [key]: nativePath, ...acc } as Tree;
         return prePendedTree;
       }
