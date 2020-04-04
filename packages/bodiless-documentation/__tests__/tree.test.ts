@@ -21,6 +21,7 @@ import {
   withDeepValue,
   getTreeFromDir,
   getSimplePaths,
+  validatePaths,
 } from '../lib/tree';
 import { TreeHO } from '../lib/type';
 
@@ -196,5 +197,15 @@ describe('getSimplePaths', () => {
     };
     const expectResult = ['d', 'z'];
     expect(getSimplePaths(input)).toStrictEqual(expectResult);
+  });
+});
+describe('validatePaths', () => {
+  it('Should throw an error if passed path has letter case typos', () => {
+    const input = [
+      path.resolve('PackAge.json'),
+    ];
+    expect(() => validatePaths(input)).toThrow(
+      /Make sure the path is case-sensitively correct/,
+    );
   });
 });
