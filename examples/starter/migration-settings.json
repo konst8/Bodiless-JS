@@ -1,5 +1,5 @@
 {
-  "url": "https://example.com/",
+  "url": "http://localhost:3008/404",
   "crawler": {
     "maxDepth": 1,
     "maxConcurrency": 1
