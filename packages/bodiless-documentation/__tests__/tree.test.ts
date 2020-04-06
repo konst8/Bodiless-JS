@@ -202,7 +202,7 @@ describe('getSimplePaths', () => {
 describe('validatePaths', () => {
   it('Should throw an error if passed path has letter case typos', () => {
     const input = [
-      path.resolve('PackAge.json'),
+      path.resolve(`${process.cwd()}/PackAge.json`),
     ];
     expect(() => validatePaths(input)).toThrow(
       /Make sure the path is case-sensitively correct/,
