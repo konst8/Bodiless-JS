@@ -199,13 +199,15 @@ describe('getSimplePaths', () => {
     expect(getSimplePaths(input)).toStrictEqual(expectResult);
   });
 });
-// describe('validatePaths', () => {
-//   it('Should throw an error if passed path has letter case typos', () => {
-//     const input = [
-//       path.resolve(`${process.cwd()}/PaCkAge.json`),
-//     ];
-//     expect(() => validatePaths(input)).toThrow(
-//       /Make sure the path is case-sensitively correct/,
-//     );
-//   });
-// });
+describe('validatePaths', () => {
+  it('Should throw an error if passed path has letter case typos', () => {
+    const input = [
+      path.resolve('PackAge.json'),
+    ];
+    // 'no such file error' on Linux.
+    // The file is found but the path is not case-sensitively equial on Mac.
+    expect(() => validatePaths(input)).toThrow(
+      /no such file or directory|Make sure the path is case-sensitively correct/,
+    );
+  });
+});
