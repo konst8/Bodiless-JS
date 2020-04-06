@@ -204,7 +204,7 @@ describe('validatePaths', () => {
     const input = [
       path.resolve('PackAge.json'),
     ];
-    // 'no such file error' on Linux.
+    // 'no such file' error on Linux.
     // The file is found but the path is not case-sensitively equial on Mac.
     expect(() => validatePaths(input)).toThrow(
       /no such file or directory|Make sure the path is case-sensitively correct/,
