@@ -199,13 +199,13 @@ describe('getSimplePaths', () => {
     expect(getSimplePaths(input)).toStrictEqual(expectResult);
   });
 });
-describe('validatePaths', () => {
-  it('Should throw an error if passed path has letter case typos', () => {
-    const input = [
-      path.resolve(`${process.cwd()}/PaCkAge.json`),
-    ];
-    expect(() => validatePaths(input)).toThrow(
-      /Make sure the path is case-sensitively correct/,
-    );
-  });
-});
+// describe('validatePaths', () => {
+//   it('Should throw an error if passed path has letter case typos', () => {
+//     const input = [
+//       path.resolve(`${process.cwd()}/PaCkAge.json`),
+//     ];
+//     expect(() => validatePaths(input)).toThrow(
+//       /Make sure the path is case-sensitively correct/,
+//     );
+//   });
+// });
