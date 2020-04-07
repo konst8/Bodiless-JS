@@ -193,9 +193,9 @@ describe('getSimplePaths', () => {
           c: 'd',
         },
       },
-      z: 'z',
+      y: 'y',
     };
-    const expectResult = ['d', 'z'];
+    const expectResult = ['d', 'y'];
     expect(getSimplePaths(input)).toStrictEqual(expectResult);
   });
 });
