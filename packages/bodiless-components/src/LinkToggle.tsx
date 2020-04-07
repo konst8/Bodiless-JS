@@ -24,7 +24,6 @@ const EmptyToggle = flowRight(
   ifEditable(
     withWrapOnSubmit,
     asBodilessLink(),
-    addProps({ 'aria-label': 'Link Toggle' }),
     replaceWith(asComponent<JSX.IntrinsicElements['span']>('span')),
   ),
   ifReadOnly(
@@ -34,6 +33,9 @@ const EmptyToggle = flowRight(
 )(Fragment);
 
 const withLinkToggle = flowRight(
+  ifEditable(
+    addProps({ 'aria-label': 'Link Toggle' }),
+  ),
   withNode,
   withToggleTo(EmptyToggle),
 );
