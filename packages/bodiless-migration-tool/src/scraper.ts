@@ -42,7 +42,7 @@ export interface ScrapedPage {
 }
 
 interface Events {
-  success(result: ScrapedPage): void,
+  pageReceived(result: ScrapedPage): void,
   fileReceived(file: string): void,
   requestStarted(file: string): void,
   error(error: Error): void
@@ -91,21 +91,26 @@ export class Scraper extends EE<Events> {
       // Function to be called with evaluated results from browsers
       onSuccess: (async successResult => {
         try {
-          const { result, response } = successResult;
           // we can get an external url here
           // when an internal url is redirected to the external
           if (isUrlExternal(this.params.pageUrl, successResult.response.url)) {
+            console.log(`external url ${successResult.response.url} received. skipping`);
             return;
           }
-          const isPath404 = response.url.replace(/.*\//, '') === '404';
-          if (response.status.toString() === '404' && !isPath404) {
-            console.warn(`Page ${response.url} was not found`);
-            return;
+          // decide if we get page or resource response
+          if (successResult.isHtmlResponse) {
+            const { result, response } = successResult;
+            const isPath404 = response.url.replace(/.*\//, '') === '404';
+            if (response.status.toString() === '404' && !isPath404) {
+              console.warn(`Page ${response.url} was not found`);
+              return;
+            }
+            result.pageUrl = successResult.response.url;
+            result.rawHtml = await successResult.responseText;
+            this.emit('pageReceived', result);
+          } else {
+            this.emit('fileReceived', successResult.response.url);
           }
-          result.pageUrl = successResult.response.url;
-          // @ts-ignore
-          result.rawHtml = await successResult.rawHtml;
-          this.emit('success', result);
         } catch (error) {
           debug(error);
         }
