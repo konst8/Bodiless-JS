@@ -1,5 +1,5 @@
 {
-  "url": "https://www.bengay.com/",
+  "url": "https://example.com/",
   "crawler": {
     "maxDepth": 1,
     "maxConcurrency": 1
