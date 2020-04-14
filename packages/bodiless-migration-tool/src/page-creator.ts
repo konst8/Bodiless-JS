@@ -63,6 +63,7 @@ export interface PageCreatorParams {
   htmlToComponentsSettings?: HtmlToComponentsSettings,
   reservedPaths?: Array<string>,
   allowFallbackHtml?: boolean,
+  is404Source?: boolean,
 }
 
 export class PageCreator {
@@ -196,12 +197,13 @@ export class PageCreator {
   private createJsxPage() {
     let content = this.processTemplate();
     this.convertToComponents();
-    const pageFilePath = path.join(
+    const pageFilePath = this.params.is404Source ? '/404' : this.params.pageUrl;
+    const finalPageFilePath = path.join(
       this.params.pagesDir,
-      this.getPageFilePath(this.params.pageUrl),
+      this.getPageFilePath(pageFilePath),
     );
     content = formatJsx(content);
-    this.writeContent(pageFilePath, content);
+    this.writeContent(finalPageFilePath, content);
   }
 
   private writeContent(targetPath: string, content: string) {

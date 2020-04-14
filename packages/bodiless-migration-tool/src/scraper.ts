@@ -91,10 +91,15 @@ export class Scraper extends EE<Events> {
       // Function to be called with evaluated results from browsers
       onSuccess: (async successResult => {
         try {
-          const { result } = successResult;
+          const { result, response } = successResult;
           // we can get an external url here
           // when an internal url is redirected to the external
           if (isUrlExternal(this.params.pageUrl, successResult.response.url)) {
+            return;
+          }
+          const isPath404 = response.url.replace(/.*\//, '') === '404';
+          if (response.status.toString() === '404' && !isPath404) {
+            console.warn(`Page ${response.url} was not found`);
             return;
           }
           result.pageUrl = successResult.response.url;

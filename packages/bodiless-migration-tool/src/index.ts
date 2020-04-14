@@ -87,8 +87,25 @@ class MigrationTool extends Command {
       allowFallbackHtml: settings.allowFallbackHtml === undefined
         ? true
         : (settings.allowFallbackHtml === true),
+      is404Source: false,
     };
     const flattener = new SiteFlattener(flattenerParams);
+    if (!settings.isPageNotFoundDisabled) {
+      const pageNotFoundSourceUrl = settings.pageNotFoundAbsoluteUrl
+        || `${flattenerParams.websiteUrl}/404`;
+      const page404flattener = new SiteFlattener({
+        ...flattenerParams,
+        scraperParams: {
+          ...flattenerParams.scraperParams,
+          pageUrl: pageNotFoundSourceUrl,
+          maxDepth: 1,
+          maxConcurrency: 1,
+        },
+        is404Source: true,
+      });
+      console.log(`Flattening 404 page from ${pageNotFoundSourceUrl}`);
+      await page404flattener.start();
+    }
     await flattener.start();
   }
 
