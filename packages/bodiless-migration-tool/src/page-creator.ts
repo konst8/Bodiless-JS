@@ -46,6 +46,7 @@ export interface PageCreatorParams {
   templatePath: string,
   templateDangerousHtml: string,
   pageUrl: string,
+  page404Url: string,
   headHtml: string,
   bodyHtml: string,
   metatags: Array<string>,
@@ -63,7 +64,6 @@ export interface PageCreatorParams {
   htmlToComponentsSettings?: HtmlToComponentsSettings,
   reservedPaths?: Array<string>,
   allowFallbackHtml?: boolean,
-  is404Source?: boolean,
 }
 
 export class PageCreator {
@@ -197,20 +197,29 @@ export class PageCreator {
   private createJsxPage() {
     let content = this.processTemplate();
     this.convertToComponents();
-    const pageFilePath = this.params.is404Source ? '/404' : this.params.pageUrl;
-    const finalPageFilePath = path.join(
+    const pageFilePath = path.join(
       this.params.pagesDir,
-      this.getPageFilePath(pageFilePath),
+      this.getPageFilePath(this.params.pageUrl),
     );
     content = formatJsx(content);
-    this.writeContent(finalPageFilePath, content);
+    this.writeContent(pageFilePath, content);
   }
 
   private writeContent(targetPath: string, content: string) {
     // eslint-disable-next-line no-console
-    debug(`trying writing to ${targetPath}`);
-    ensureDirectoryExistence(targetPath);
-    fs.writeFileSync(targetPath, content);
+    const { pageUrl, page404Url } = this.params;
+    let finalTargetPath = targetPath;
+    if (pageUrl === page404Url) {
+      finalTargetPath = path.join(
+        this.params.pagesDir,
+        this.getPageFilePath('/404'),
+      );
+      debug(`trying writing default 404 page from ${page404Url} to ${finalTargetPath}`);
+    } else {
+      debug(`trying writing to ${finalTargetPath}`);
+    }
+    ensureDirectoryExistence(finalTargetPath);
+    fs.writeFileSync(finalTargetPath, content);
   }
 
   private wrapHtmlDangerously(content: string) {

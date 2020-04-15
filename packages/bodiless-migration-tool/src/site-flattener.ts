@@ -85,9 +85,6 @@ export interface SiteFlattenerParams {
   disableTailwind?: boolean,
   reservedPaths?: Array<string>,
   allowFallbackHtml?: boolean,
-  isPageNotFoundDisabled?: boolean,
-  pageNotFoundAbsoluteUrl?: string,
-  is404Source?: boolean,
 }
 
 export class SiteFlattener {
@@ -296,6 +293,7 @@ export class SiteFlattener {
       templatePath: this.getPageTemplate(),
       templateDangerousHtml: this.getComponentTemplate('template_dangerous_html.jsx'),
       pageUrl: transformedScrapedPage.pageUrl,
+      page404Url: scrapedPage.page404Url,
       headHtml: htmlParser.getHeadHtml(),
       bodyHtml: htmlParser.getBodyHtml(),
       metatags: transformedScrapedPage.metatags,
@@ -313,7 +311,6 @@ export class SiteFlattener {
       allowFallbackHtml: this.params.allowFallbackHtml,
       htmlToComponentsSettings,
       reservedPaths: this.params.reservedPaths,
-      is404Source: this.params.is404Source,
     };
     return pageCreatorParams;
   }

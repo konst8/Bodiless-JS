@@ -22,6 +22,7 @@ import {
   TrailingSlash,
 } from './site-flattener';
 import postBuild from './post-build';
+import { addTrailingSlashToUrl } from './helpers';
 
 enum CommandType {
   Flatten = 'flatten',
@@ -60,7 +61,13 @@ class MigrationTool extends Command {
   }
 
   async flatten() {
-    const settings = this.getDefaultSettings();
+    const userSettings = this.getDefaultSettings();
+    const urlWithTrailingSlash = addTrailingSlashToUrl(userSettings.url);
+    const settings = {
+      page404Url: `${urlWithTrailingSlash}404`,
+      isPage404Disabled: false,
+      ...userSettings,
+    };
     const flattenerParams: SiteFlattenerParams = {
       websiteUrl: settings.url,
       workDir: this.getWorkDir(),
@@ -68,6 +75,8 @@ class MigrationTool extends Command {
       reservedPaths: ['404'],
       scraperParams: {
         pageUrl: settings.url,
+        page404Url: settings.page404Url,
+        isPage404Disabled: settings.isPage404Disabled,
         maxDepth: settings.crawler.maxDepth,
         maxConcurrency: settings.crawler.maxConcurrency || 1,
         obeyRobotsTxt: settings.crawler.ignoreRobotsTxt !== true,
@@ -87,25 +96,8 @@ class MigrationTool extends Command {
       allowFallbackHtml: settings.allowFallbackHtml === undefined
         ? true
         : (settings.allowFallbackHtml === true),
-      is404Source: false,
     };
     const flattener = new SiteFlattener(flattenerParams);
-    if (!settings.isPageNotFoundDisabled) {
-      const pageNotFoundSourceUrl = settings.pageNotFoundAbsoluteUrl
-        || `${flattenerParams.websiteUrl}/404`;
-      const page404flattener = new SiteFlattener({
-        ...flattenerParams,
-        scraperParams: {
-          ...flattenerParams.scraperParams,
-          pageUrl: pageNotFoundSourceUrl,
-          maxDepth: 1,
-          maxConcurrency: 1,
-        },
-        is404Source: true,
-      });
-      console.log(`Flattening 404 page from ${pageNotFoundSourceUrl}`);
-      await page404flattener.start();
-    }
     await flattener.start();
   }
 
