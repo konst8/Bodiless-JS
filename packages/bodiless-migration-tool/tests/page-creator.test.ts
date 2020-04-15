@@ -34,6 +34,7 @@ function getDefaultPageParams(): PageCreatorParams {
     templatePath: path.resolve(__dirname, 'data/canvasx_template.jsx'),
     templateDangerousHtml: path.resolve(__dirname, 'data/template_dangerous_html.jsx'),
     pageUrl: 'https://localhost',
+    page404Url: 'https://localhost/404',
     bodyHtml: '<h1>Hello World</h1>',
     metatags: [
       '<meta name = "MobileOptimized" content = "width">',
