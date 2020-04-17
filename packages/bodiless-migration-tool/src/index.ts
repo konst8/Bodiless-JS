@@ -75,7 +75,7 @@ class MigrationTool extends Command {
       reservedPaths: ['404'],
       scraperParams: {
         pageUrls: [
-          ...[page404Urls],
+          ...page404Urls,
           settings.url,
         ],
         maxDepth: settings.crawler.maxDepth,
