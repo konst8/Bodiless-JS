@@ -99,7 +99,7 @@ export class Scraper extends EE<Events> {
           }
           // decide if we get page or resource response
           if (successResult.isHtmlResponse) {
-            const { result } = successResult;
+            const { result, response } = successResult;
             // const { page404Url } = this.params;
             // const isDefault404Page = addTrailingSlashToUrl(response.url)
             //   === addTrailingSlashToUrl(page404Url);
@@ -109,6 +109,7 @@ export class Scraper extends EE<Events> {
             //   return;
             // }
             // result.page404Url = page404Url;
+            result.status = response.status;
             result.pageUrl = successResult.response.url;
             result.rawHtml = await successResult.responseText;
             this.emit('pageReceived', result);

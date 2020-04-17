@@ -62,15 +62,11 @@ class MigrationTool extends Command {
 
   async flatten() {
     const settings = this.getDefaultSettings();
-    const workDir = this.getWorkDir();
-    const page404Params = page404Handler.getParams({
-      ...settings,
-      workDir,
-    });
+    const page404Params = page404Handler.getParams(settings);
     const page404Urls = page404Params.page404Url ? [page404Params.page404Url] : [];
     const flattenerParams: SiteFlattenerParams = {
       websiteUrl: settings.url,
-      workDir,
+      workDir: this.getWorkDir(),
       gitRepository: this.getGitRepo(),
       reservedPaths: ['404'],
       scraperParams: {
@@ -83,6 +79,7 @@ class MigrationTool extends Command {
         obeyRobotsTxt: settings.crawler.ignoreRobotsTxt !== true,
         javascriptEnabled: true,
       },
+      page404Params,
       steps: {
         setup: false,
         scrape: true,
