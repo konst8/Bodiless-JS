@@ -205,19 +205,7 @@ export class PageCreator {
   }
 
   private writeContent(targetPath: string, content: string) {
-    // eslint-disable-next-line no-console
-    // const { pageUrl, page404Url } = this.params;
-    // let finalTargetPath = targetPath;
-    // if (pageUrl === page404Url) {
-    //   const fileName = finalTargetPath.replace(/.*\//, '');
-    //   finalTargetPath = path.join(
-    //     this.params.pagesDir,
-    //     this.getPageFilePath('/404', fileName),
-    //   );
-    //   debug(`trying writing default 404 page from ${page404Url} to ${finalTargetPath}`);
-    // } else {
     debug(`trying writing to ${targetPath}`);
-    // }
     ensureDirectoryExistence(targetPath);
     fs.writeFileSync(targetPath, content);
   }
