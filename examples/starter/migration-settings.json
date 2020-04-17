@@ -1,5 +1,5 @@
 {
-  "url": "https://example.com/zzz",
+  "url": "https://example.com/",
   "crawler": {
     "maxDepth": 1,
     "maxConcurrency": 1
