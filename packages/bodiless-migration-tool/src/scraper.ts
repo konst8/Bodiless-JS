@@ -29,6 +29,7 @@ import HCCrawler = require('@bodiless/headless-chrome-crawler');
 export interface ScrapedPage {
   pageUrl: string,
   rawHtml: string,
+  status: number,
   processedHtml: string,
   metatags: Array<string>,
   scripts: Array<string>,
@@ -93,7 +94,10 @@ export class Scraper extends EE<Events> {
         try {
           // we can get an external url here
           // when an internal url is redirected to the external
-          if (isUrlExternal(this.params.pageUrls[0], successResult.response.url)) {
+          const externalUrl = this.params.pageUrls.some(url => (
+            isUrlExternal(url, successResult.response.url)
+          ));
+          if (externalUrl) {
             console.log(`external url ${successResult.response.url} received. skipping`);
             return;
           }

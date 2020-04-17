@@ -143,8 +143,8 @@ export class SiteFlattener {
     scraper.on('pageReceived', async result => {
       try {
         debug(`scraped page from ${result.pageUrl}.`);
-        const validatedResult = page404Handler.validateScrapedPage(result, page404Params);
-        const pageCreator = new PageCreator(this.getPageCreatorParams(validatedResult));
+        const processedResult = page404Handler.processScrapedPage(result, page404Params);
+        const pageCreator = new PageCreator(this.getPageCreatorParams(processedResult));
         debug(`creating page for ${result.pageUrl}.`);
         await pageCreator.createPage();
       } catch (error) {

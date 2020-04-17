@@ -1,6 +1,18 @@
+import { ScrapedPage } from './scraper';
 import debug from './debug';
 
-function isCurrentPage404(url: string, page404Url:string) {
+export interface Page404initialSettings {
+  url: string,
+  isPage404Disabled?: boolean,
+  page404Url?: string,
+}
+
+export interface Page404Params {
+  isPage404Disabled: boolean,
+  page404Url: string,
+}
+
+function isCurrentPage404(url: string, page404Url: string) {
   return url === page404Url;
 }
 
@@ -8,7 +20,7 @@ function getPage404DefaultUrl(url: string) {
   return `${new URL(url).origin}/404`;
 }
 
-function getParams(settings: any) {
+function getParams(settings: Page404initialSettings): Page404Params {
   const defaultSettings = {
     isPage404Disabled: false,
     page404Url: getPage404DefaultUrl(settings.url),
@@ -24,7 +36,7 @@ function getParams(settings: any) {
   };
 }
 
-function validateScrapedPage(result: any, page404Params: any) {
+function processScrapedPage(result: ScrapedPage, page404Params: Page404Params) {
   const { pageUrl, status } = result;
   const { page404Url, isPage404Disabled } = page404Params;
   const isCurrentPageDefault404 = isCurrentPage404(pageUrl, page404Url);
@@ -46,7 +58,7 @@ function validateScrapedPage(result: any, page404Params: any) {
 
 const page404Handler = {
   getParams,
-  validateScrapedPage,
+  processScrapedPage,
 };
 
 export default page404Handler;
