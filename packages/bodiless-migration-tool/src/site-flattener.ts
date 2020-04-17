@@ -42,7 +42,7 @@ import {
   ComponentScope,
   HtmlToComponentsSettings,
 } from './html-to-components';
-import page404Handler from './page404-handler';
+import page404Handler, { Page404Params } from './page404-handler';
 import debug from './debug';
 
 export enum TrailingSlash {
@@ -73,7 +73,7 @@ export interface SiteFlattenerParams {
   gitRepository?: string,
   trailingSlash?: TrailingSlash,
   scraperParams: ScraperParams,
-  page404Params: any,
+  page404Params: Page404Params,
   steps: {
     setup: boolean,
     scrape: boolean,
