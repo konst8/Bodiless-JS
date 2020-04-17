@@ -22,7 +22,7 @@ import {
   TrailingSlash,
 } from './site-flattener';
 import postBuild from './post-build';
-import { addTrailingSlashToUrl } from './helpers';
+import page404Handler from './page404-handler';
 
 enum CommandType {
   Flatten = 'flatten',
@@ -61,22 +61,23 @@ class MigrationTool extends Command {
   }
 
   async flatten() {
-    const userSettings = this.getDefaultSettings();
-    const urlWithTrailingSlash = addTrailingSlashToUrl(userSettings.url);
-    const settings = {
-      page404Url: `${urlWithTrailingSlash}404`,
-      isPage404Disabled: false,
-      ...userSettings,
-    };
+    const settings = this.getDefaultSettings();
+    const workDir = this.getWorkDir();
+    const page404Params = page404Handler.getParams({
+      ...settings,
+      workDir,
+    });
+    const page404Urls = page404Params.page404Url ? [page404Params.page404Url] : [];
     const flattenerParams: SiteFlattenerParams = {
       websiteUrl: settings.url,
-      workDir: this.getWorkDir(),
+      workDir,
       gitRepository: this.getGitRepo(),
       reservedPaths: ['404'],
       scraperParams: {
-        pageUrl: settings.url,
-        page404Url: settings.page404Url,
-        isPage404Disabled: settings.isPage404Disabled,
+        pageUrls: [
+          ...[page404Urls],
+          settings.url,
+        ],
         maxDepth: settings.crawler.maxDepth,
         maxConcurrency: settings.crawler.maxConcurrency || 1,
         obeyRobotsTxt: settings.crawler.ignoreRobotsTxt !== true,

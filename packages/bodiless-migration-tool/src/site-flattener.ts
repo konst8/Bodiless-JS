@@ -100,7 +100,7 @@ export class SiteFlattener {
       trailingSlash: params.trailingSlash || TrailingSlash.Add,
       scraperParams: {
         ...params.scraperParams,
-        pageUrl: prependProtocolToBareUrl(params.scraperParams.pageUrl),
+        pageUrls: params.scraperParams.pageUrls.map(pageUrl => prependProtocolToBareUrl(pageUrl)),
       },
     };
 
@@ -293,7 +293,6 @@ export class SiteFlattener {
       templatePath: this.getPageTemplate(),
       templateDangerousHtml: this.getComponentTemplate('template_dangerous_html.jsx'),
       pageUrl: transformedScrapedPage.pageUrl,
-      page404Url: scrapedPage.page404Url,
       headHtml: htmlParser.getHeadHtml(),
       bodyHtml: htmlParser.getBodyHtml(),
       metatags: transformedScrapedPage.metatags,
