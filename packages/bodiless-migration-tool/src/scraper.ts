@@ -100,15 +100,6 @@ export class Scraper extends EE<Events> {
           // decide if we get page or resource response
           if (successResult.isHtmlResponse) {
             const { result, response } = successResult;
-            // const { page404Url } = this.params;
-            // const isDefault404Page = addTrailingSlashToUrl(response.url)
-            //   === addTrailingSlashToUrl(page404Url);
-            // if (response.status.toString() === '404' && !isDefault404Page) {
-            //   console.warn(`Page ${response.url} was not found.`);
-            //   console.warn('Users will be redirected to the default "Page Not Found" page.');
-            //   return;
-            // }
-            // result.page404Url = page404Url;
             result.status = response.status;
             result.pageUrl = successResult.response.url;
             result.rawHtml = await successResult.responseText;
