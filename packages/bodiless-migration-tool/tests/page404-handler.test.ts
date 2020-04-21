@@ -1,7 +1,6 @@
-import { 
+import page404Handler, {
   isCurrentPage404,
   getPage404DefaultUrl,
-  getParams,
 } from '../src/page404-handler';
 
 describe('isCurrentPage404', () => {
@@ -16,19 +15,19 @@ describe('isCurrentPage404', () => {
 describe('getPage404DefaultUrl', () => {
   it('should return default 404 url, based on the main url', () => {
     const input = 'https://example.com/zzzz/dddd';
-    const expected = 'https://example.com/404'
+    const expected = 'https://example.com/404';
     expect(getPage404DefaultUrl(input)).toBe(expected);
   });
 });
 
-describe('getParams', () => {
+describe('page404Handler.getParams', () => {
   it('should return an object with default page 404 params', () => {
     const input = {
       url: 'https://example.com/',
     };
     const expected = {
       isPage404Disabled: false,
-      page404Url: 'https://example.com/404' 
+      page404Url: 'https://example.com/404',
     };
     const input1 = {
       url: 'https://example.com/',
@@ -36,15 +35,15 @@ describe('getParams', () => {
     };
     const expected1 = {
       isPage404Disabled: false,
-      page404Url: 'https://example.com/custom-404' 
+      page404Url: 'https://example.com/custom-404',
     };
-    expect(getParams(input)).toEqual(expected);
-    expect(getParams(input1)).toEqual(expected1);
+    expect(page404Handler.getParams(input)).toEqual(expected);
+    expect(page404Handler.getParams(input1)).toEqual(expected1);
   });
 });
 
 // @ TBD
-// describe('processScrapedPage', () => {
+// describe('page404Handler.processScrapedPage', () => {
 //   it('should ...', () => {
 //   });
 // });

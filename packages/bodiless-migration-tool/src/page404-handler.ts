@@ -20,7 +20,7 @@ export function getPage404DefaultUrl(url: string) {
   return `${new URL(url).origin}/404`;
 }
 
-export function getParams(settings: Page404initialSettings): Page404Params {
+function getParams(settings: Page404initialSettings): Page404Params {
   const defaultSettings = {
     isPage404Disabled: false,
     page404Url: getPage404DefaultUrl(settings.url),
@@ -36,7 +36,7 @@ export function getParams(settings: Page404initialSettings): Page404Params {
   };
 }
 
-export function processScrapedPage(result: ScrapedPage, page404Params: Page404Params) {
+function processScrapedPage(result: ScrapedPage, page404Params: Page404Params) {
   const { pageUrl, status } = result;
   const { page404Url, isPage404Disabled } = page404Params;
   const isCurrentPageDefault404 = isCurrentPage404(pageUrl, page404Url);
