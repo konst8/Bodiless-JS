@@ -1,5 +1,5 @@
 /**
- * Copyright © 2019 Johnson & Johnson
+ * Copyright © 2020 Johnson & Johnson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,23 +12,15 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { graphql } from 'gatsby';
-import { Page } from '@bodiless/gatsby-theme-bodiless';
-import Layout from '../components/Layout';
-import { FlowContainerDefault } from '../components/FlowContainer';
+import {
+  addClasses,
+  withDesign,
+} from '@bodiless/fclasses';
 
-export default props => (
-  <Page {...props}>
-    <Layout>
-      <FlowContainerDefault nodeKey="page" />
-    </Layout>
-  </Page>
-);
+// Currently doesn't add any classes but used as example to where to put them.
+const asCarouselDefaultStyle = withDesign({
+  Wrapper: addClasses(''),
+  Slider: addClasses(''),
+});
 
-export const query = graphql`
-  query($slug: String!) {
-    ...PageQuery,
-    ...SiteQuery
-  }
-`;
+export default asCarouselDefaultStyle;
