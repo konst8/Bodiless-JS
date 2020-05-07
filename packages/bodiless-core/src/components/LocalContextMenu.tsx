@@ -44,7 +44,7 @@ const LocalContextMenu: FC = ({ children }) => {
       overlay={<Menu options={options} />}
       trigger={[]}
       destroyTooltipOnHide
-      placement="bottom"
+      placement="bottomLeft"
       onPopupAlign={onPopupAlign}
     >
       {children}
