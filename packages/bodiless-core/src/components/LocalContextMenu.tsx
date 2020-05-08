@@ -32,7 +32,7 @@ const LocalContextMenu: FC = ({ children }) => {
   // of the screen.
   const onPopupAlign = (domNode: Element) => {
     const element = domNode as HTMLElement;
-    if (element.getBoundingClientRect().left < 0) {
+    if (element.getBoundingClientRect().left <= 0) {
       element.style.visibility = 'hidden';
     } else {
       element.style.visibility = 'visible';
