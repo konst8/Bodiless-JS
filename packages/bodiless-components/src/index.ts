@@ -14,10 +14,14 @@
 
 import Editable, { withPlaceholder, asEditable } from './Editable';
 import { asBodilessLink } from './Link';
-import Image, { asBodilessImage } from './Image';
+import Image, {
+  asBodilessImage,
+  TImagePickerUI,
+  withImagePlaceholder,
+} from './Image';
 import NodeViewer from './NodeViewer';
 import withLinkToggle from './LinkToggle';
-import List from './List';
+import List, { asTestableList } from './List';
 import asTaggableItem from './Taggable/asTaggableItem';
 import withListTitle from './List/withListTitle';
 import asEditableList from './List/asEditableList';
@@ -45,12 +49,15 @@ export {
   asBodilessLink,
   Image,
   asBodilessImage,
+  withImagePlaceholder,
+  TImagePickerUI,
   Editable,
   NodeViewer,
   withLinkToggle,
   List,
   asEditableList,
   asBasicSublist,
+  asTestableList,
   withBasicSublist,
   withSublist,
   withDeleteSublistOnUnwrap,
