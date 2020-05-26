@@ -88,6 +88,8 @@ export class PageEditStore implements PageEditStoreInterface {
     timeoutId: 0,
   };
 
+  @observable areLocalTooltipsDisabled = false;
+
   @action
   setActiveContext(context?: PageEditContext) {
     if (context) this.activeContext = context;
@@ -119,6 +121,14 @@ export class PageEditStore implements PageEditStoreInterface {
     }
 
     saveToSessionStorage('isPositionToggled', this.isPositionToggled);
+  }
+
+  @action disableLocalTooltips() {
+    this.areLocalTooltipsDisabled = true;
+  }
+
+  @action enableLocalTooltips() {
+    this.areLocalTooltipsDisabled = false;
   }
 
   @computed get contextTrail() {
@@ -267,6 +277,18 @@ Please try your operation again if it was not successful.`,
       ...passedSettings,
     };
     this.showPageOverlay(settings);
+  }
+
+  get areLocalTooltipsDisabled() {
+    return this.store.areLocalTooltipsDisabled;
+  }
+
+  enableLocalTooltips() {
+    this.store.enableLocalTooltips();
+  }
+
+  disableLocalTooltips() {
+    this.store.disableLocalTooltips();
   }
 }
 
