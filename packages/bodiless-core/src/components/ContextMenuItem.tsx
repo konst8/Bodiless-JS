@@ -16,7 +16,6 @@ import React, { useState, ComponentType } from 'react';
 import ReactTooltip from 'rc-tooltip';
 import { getUI as getFormUI, FormProps } from '../contextMenuForm';
 import { UI, IContextMenuItemProps as IProps } from '../Types/ContextMenuTypes';
-import { useEditContext } from '../hooks';
 
 const defaultUI = {
   Icon: 'span',
@@ -36,7 +35,6 @@ export const getUI = (ui: UI = {}) => ({
 const ContextMenuItem = ({ option, index, ui }: IProps) => {
   const [Form, setForm] = useState<ComponentType<FormProps>>();
   const [isToolTipShown, setIsToolTipShown] = useState(false);
-  const context = useEditContext();
   const {
     ToolbarDivider,
     Icon,
@@ -51,7 +49,6 @@ const ContextMenuItem = ({ option, index, ui }: IProps) => {
 
   const onToolbarButtonClick = (event: React.MouseEvent<HTMLDivElement>): void => {
     const menuForm = option.handler ? option.handler(event) : undefined;
-    context.disableLocalTooltips();
     if (menuForm) {
       setIsToolTipShown(!isToolTipShown);
       // We have to pass a function to setForm b/c menuForm is itself a function
