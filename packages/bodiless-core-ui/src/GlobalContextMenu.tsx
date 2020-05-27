@@ -53,7 +53,7 @@ export const GlobalTooltip: FC<ReactTooltip['props']> = props => {
       placement="rightTop"
       overlayStyle={{ position: 'fixed', opacity: 1 }}
       // Hide all local tooltips outside the main toolbar.
-      onPopupAlign={() => { context.disableLocalTooltips(); }}
+      onPopupAlign={() => { context.toggleLocalTooltipsDisabled(true); }}
       getTooltipContainer={() => {
         let el = document.getElementById('global-tooltip-container');
 

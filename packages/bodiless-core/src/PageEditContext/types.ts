@@ -52,8 +52,7 @@ export interface CanControlPageOverlay {
 }
 export interface CanControlLocalTooltipsVisibility {
   areLocalTooltipsDisabled: boolean;
-  enableLocalTooltips: () => void;
-  disableLocalTooltips: () => void;
+  toggleLocalTooltipsDisabled: (isDisabled?: boolean) => void;
 }
 export interface CanGetContextMenuOptions {
   contextMenuOptions: TMenuOption[];
@@ -80,8 +79,7 @@ export interface PageEditStore {
   togglePosition(): void;
   contextTrail: string[];
   areLocalTooltipsDisabled: boolean;
-  enableLocalTooltips(): void;
-  disableLocalTooltips(): void;
+  toggleLocalTooltipsDisabled(isDisabled?: boolean): void;
 }
 
 export interface PageEditContextInterface extends

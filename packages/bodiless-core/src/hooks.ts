@@ -36,7 +36,7 @@ export const useContextActivator = (
     const preventDefault = e && e.currentTarget && e.currentTarget.getAttribute('bl-prevent') !== 'false';
     if (handler) handler(e);
     context.activate();
-    context.enableLocalTooltips();
+    context.toggleLocalTooltipsDisabled(false);
     if (e && e.stopPropagation) e.stopPropagation();
     // @TODO: We may want to remove next line entirely and do a Regression Testing
     if (preventDefault && e && e.preventDefault && context.name !== 'page') e.preventDefault();

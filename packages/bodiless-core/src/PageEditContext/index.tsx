@@ -123,12 +123,12 @@ export class PageEditStore implements PageEditStoreInterface {
     saveToSessionStorage('isPositionToggled', this.isPositionToggled);
   }
 
-  @action disableLocalTooltips() {
-    this.areLocalTooltipsDisabled = true;
-  }
-
-  @action enableLocalTooltips() {
-    this.areLocalTooltipsDisabled = false;
+  @action toggleLocalTooltipsDisabled(isDisabled?: boolean) {
+    if (isDisabled === undefined) {
+      this.areLocalTooltipsDisabled = !this.areLocalTooltipsDisabled;
+    } else {
+      this.areLocalTooltipsDisabled = isDisabled;
+    }
   }
 
   @computed get contextTrail() {
@@ -283,12 +283,8 @@ Please try your operation again if it was not successful.`,
     return this.store.areLocalTooltipsDisabled;
   }
 
-  enableLocalTooltips() {
-    this.store.enableLocalTooltips();
-  }
-
-  disableLocalTooltips() {
-    this.store.disableLocalTooltips();
+  toggleLocalTooltipsDisabled(isDisabled?: boolean) {
+    this.store.toggleLocalTooltipsDisabled(isDisabled);
   }
 }
 

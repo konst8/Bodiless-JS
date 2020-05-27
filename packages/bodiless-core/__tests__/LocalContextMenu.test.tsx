@@ -187,7 +187,7 @@ describe('LocalContextMenu', () => {
       const context = useEditContext();
       // disabling eslint warning 'eslintreact/destructuring-assignment' due to mobx limitations.
       // eslint-disable-next-line
-      context.disableLocalTooltips();
+      context.toggleLocalTooltipsDisabled(true);
       return <div />;
     };
     mount(<FooToolbar />);

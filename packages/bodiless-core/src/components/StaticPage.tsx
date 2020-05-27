@@ -59,9 +59,7 @@ class StaticContext implements PageEditContextInterface {
 
   areLocalTooltipsDisabled = false;
 
-  enableLocalTooltips = () => undefined;
-
-  disableLocalTooltips = () => undefined;
+  toggleLocalTooltipsDisabled = () => undefined;
 
   // Normally spawn returns a new context instance, but in a static page there is only a single
   // constext, so we just return ourselves.
