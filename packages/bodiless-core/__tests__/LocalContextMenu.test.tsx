@@ -20,7 +20,7 @@ import PageEditContext from '../src/PageEditContext';
 import LocalContextMenu from '../src/components/LocalContextMenu';
 import ContextMenu from '../src/components/ContextMenu';
 import { TMenuOptionGetter } from '../src/PageEditContext/types';
-import { useUUID } from '../src/hooks';
+import { useUUID, useEditContext } from '../src/hooks';
 import PageEditor from '../src/components/PageEditor';
 
 const options = () => [
@@ -180,5 +180,23 @@ describe('LocalContextMenu', () => {
     );
 
     expect(wrapper.find('Tooltip').get(0).props.visible).toBe(true);
+  });
+
+  it('renders invisible Tooltip when local tooltips are disabled via edit context.', () => {
+    const FooToolbar = () => {
+      const context = useEditContext();
+      // disabling eslint warning 'eslintreact/destructuring-assignment' due to mobx limitations.
+      // eslint-disable-next-line
+      context.disableLocalTooltips();
+      return <div />;
+    };
+    mount(<FooToolbar />);
+    const wrapper = mount(
+      <MockContextProvider active getMenuOptions={options} id="t8" name="toolbarActive">
+        <LocalContextMenu><Foo /></LocalContextMenu>
+      </MockContextProvider>,
+    );
+
+    expect(wrapper.find('Tooltip').get(0).props.visible).toBe(false);
   });
 });
