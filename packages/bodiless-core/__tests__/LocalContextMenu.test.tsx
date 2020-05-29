@@ -20,7 +20,7 @@ import PageEditContext from '../src/PageEditContext';
 import LocalContextMenu from '../src/components/LocalContextMenu';
 import ContextMenu from '../src/components/ContextMenu';
 import { TMenuOptionGetter } from '../src/PageEditContext/types';
-import { useUUID, useEditContext } from '../src/hooks';
+import { useUUID } from '../src/hooks';
 import PageEditor from '../src/components/PageEditor';
 
 const options = () => [
@@ -36,18 +36,24 @@ type Props = {
   id?: string;
   name?: string;
   active?: boolean;
+  tooltipsDisabled?: boolean;
 };
 
 const fooText = Math.random().toString();
 const Foo: React.FC<any> = props => <span {...props}>{fooText}</span>;
 
 const MockContextProvider: FC<Props> = ({
-  active, children, getMenuOptions, id, name,
+  active, children, getMenuOptions, id, name, tooltipsDisabled,
 }) => {
   class MockPageEditContext extends PageEditContext {
     // Overides PageEditContext.isInnermost to test LocalContextMenu Tooltip behavior.
     get isInnermost() {
       return Boolean(active);
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    get areLocalTooltipsDisabled() {
+      return Boolean(tooltipsDisabled);
     }
   }
 
@@ -183,16 +189,8 @@ describe('LocalContextMenu', () => {
   });
 
   it('renders invisible Tooltip when local tooltips are disabled via edit context.', () => {
-    const FooToolbar = () => {
-      const context = useEditContext();
-      // disabling eslint warning 'eslintreact/destructuring-assignment' due to mobx limitations.
-      // eslint-disable-next-line
-      context.toggleLocalTooltipsDisabled(true);
-      return <div />;
-    };
-    mount(<FooToolbar />);
     const wrapper = mount(
-      <MockContextProvider active getMenuOptions={options} id="t8" name="toolbarActive">
+      <MockContextProvider active getMenuOptions={options} id="t8" name="toolbarActive" tooltipsDisabled>
         <LocalContextMenu><Foo /></LocalContextMenu>
       </MockContextProvider>,
     );

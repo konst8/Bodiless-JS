@@ -219,7 +219,6 @@ class PageEditContext implements PageEditContextInterface {
     );
   }
 
-
   get isEdit() {
     return this.store.isEdit;
   }
