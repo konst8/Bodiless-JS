@@ -280,7 +280,7 @@ Please try your operation again if it was not successful.`,
   }
 
   get areLocalTooltipsDisabled() {
-    return this.store.areLocalTooltipsDisabled;
+    return this.store.areLocalTooltipsDisabled || !this.store.isEdit;
   }
 
   toggleLocalTooltipsDisabled(isDisabled?: boolean) {
