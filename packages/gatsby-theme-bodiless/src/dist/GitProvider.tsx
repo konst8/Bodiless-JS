@@ -203,7 +203,7 @@ const getMenuOptions = (client: GitClient = defaultClient, context: any): TMenuO
 };
 
 const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
-  const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([] as any);
   const context = useEditContext();
 
   useNotify(notifications);
