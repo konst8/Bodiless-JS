@@ -212,11 +212,16 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
     const checkUpstreamChanges = async () => {
       try {
         const response = await client.getChanges();
-        if (response.status === 200 && response.data.upstream.commits.length > 0) {
-          setNotifications([
-            ...notifications,
-            { id: 'upstreamChanges', message: 'You branch is outdated. Please pull remote changes.' },
-          ]);
+        if (response.status === 200) {
+          const isBranchOutdated = Object.keys(response.data).filter(branch => (
+            ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
+          ));
+          if (isBranchOutdated) {
+            setNotifications([
+              ...notifications,
+              { id: 'upstreamChanges', message: 'You branch is outdated. Please pull remote changes.' },
+            ]);
+          }
         }
       } catch {
         console.error('Fetching upstream changes failed');
