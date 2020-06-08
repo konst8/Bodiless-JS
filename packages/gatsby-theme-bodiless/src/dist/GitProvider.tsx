@@ -13,7 +13,7 @@
  */
 
 /* eslint-disable no-alert */
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import {
   contextMenuForm,
@@ -21,6 +21,7 @@ import {
   PageContextProvider,
   TMenuOption,
   useEditContext,
+  useNotify,
 } from '@bodiless/core';
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
@@ -201,8 +202,30 @@ const getMenuOptions = (client: GitClient = defaultClient, context: any): TMenuO
   ];
 };
 
-const GitProvider: FC<Props> = ({ children, client }) => {
+const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
+  const [notifications, setNotifications] = useState([]);
   const context = useEditContext();
+
+  useNotify(notifications);
+
+  useEffect(() => {
+    const checkUpstreamChanges = async () => {
+      try {
+        const response = await client.getChanges();
+        if (response.status === 200 && response.data.upstream.commits.length > 0) {
+          setNotifications([
+            ...notifications,
+            { id: 'upstreamChanges', message: 'You branch is outdated. Please pull remote changes.' },
+          ]);
+        }
+      } catch {
+        console.error('Fetching upstream changes failed');
+      }
+    };
+    if (context.isEdit) {
+      checkUpstreamChanges();
+    }
+  }, []);
 
   return (
     <PageContextProvider
