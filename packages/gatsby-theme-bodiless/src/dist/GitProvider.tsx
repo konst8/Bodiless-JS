@@ -13,7 +13,9 @@
  */
 
 /* eslint-disable no-alert */
-import React, { FC, useState, useEffect } from 'react';
+import React, {
+  FC, useState, useEffect,
+} from 'react';
 import Cookies from 'universal-cookie';
 import {
   contextMenuForm,
@@ -26,7 +28,7 @@ import {
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
 import CommitsList from './CommitsList';
-import RemoteChanges from './RemoteChanges';
+import RemoteChanges, { checkUpstreamChanges } from './RemoteChanges';
 import { GitClient } from './types';
 
 const backendFilePath = process.env.BODILESS_BACKEND_DATA_FILE_PATH || '';
@@ -206,30 +208,14 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   const [notifications, setNotifications] = useState([] as any);
   const context = useEditContext();
 
-  useNotify(notifications);
+  const notifySettings = {
+    owner: 'upstreamChangesNotifier',
+    destroyOnUnmout: false,
+  };
+  useNotify(notifications, notifySettings);
 
   useEffect(() => {
-    const checkUpstreamChanges = async () => {
-      try {
-        const response = await client.getChanges();
-        if (response.status === 200) {
-          const isBranchOutdated = Object.keys(response.data).filter(branch => (
-            ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
-          ));
-          if (isBranchOutdated) {
-            setNotifications([
-              ...notifications,
-              { id: 'upstreamChanges', message: 'You branch is outdated. Please pull remote changes.' },
-            ]);
-          }
-        }
-      } catch {
-        console.error('Fetching upstream changes failed');
-      }
-    };
-    if (context.isEdit) {
-      checkUpstreamChanges();
-    }
+    checkUpstreamChanges(setNotifications, client);
   }, []);
 
   return (

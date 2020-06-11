@@ -13,10 +13,11 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useEditContext } from '@bodiless/core';
+import { useEditContext, useNotify } from '@bodiless/core';
 import { ComponentFormSpinner } from '@bodiless/ui';
 import { isEmpty } from 'lodash';
 import { useFormApi } from 'informed';
+import { GitClient } from './types';
 
 type GitBranchType = {
   branch: string | null,
@@ -36,6 +37,33 @@ type PropsWithGitClient = {
 
 type PropsWithFormApi = {
   formApi: any;
+};
+
+type SetNotificationsType = React.Dispatch<React.SetStateAction<{}[]>>;
+
+const checkUpstreamChanges = async (setNotifications: SetNotificationsType, client: GitClient) => {
+  try {
+    const response = await client.getChanges();
+    if (response.status !== 200) {
+      throw new Error('Fetching upstream changes failed');
+    }
+    const updatedRemoteBranches = Object.keys(response.data).filter(branch => (
+      ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
+    ));
+    const isBranchOutdated = Boolean(updatedRemoteBranches.length);
+    if (isBranchOutdated) {
+      setNotifications([
+        {
+          id: 'upstreamChanges',
+          message: 'Your branch is outdated. Please pull remote changes.',
+        },
+      ]);
+    } else {
+      setNotifications([]);
+    }
+  } catch {
+    // Fail silently.
+  }
 };
 
 /**
@@ -141,6 +169,14 @@ const FetchChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient
     status: ChangeState.Pending,
     masterStatus: ChangeState.NoneAvailable,
   });
+
+  const [notifications, setNotifications] = useState([] as any);
+  const notifySettings = {
+    owner: 'upstreamChangesNotifier',
+    destroyOnUnmount: false,
+  };
+  useNotify(notifications, notifySettings);
+
   const context = useEditContext();
   useEffect(() => {
     (async () => {
@@ -187,6 +223,7 @@ const FetchChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient
           errorMessage: error.message,
         });
       } finally {
+        checkUpstreamChanges(setNotifications, client);
         context.hidePageOverlay();
       }
     })();
@@ -213,6 +250,14 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
     complete: false,
     error: '',
   });
+
+  const [notifications, setNotifications] = useState([] as any);
+  const notifySettings = {
+    owner: 'upstreamChangesNotifier',
+    destroyOnUnmount: false,
+  };
+  useNotify(notifications, notifySettings);
+
   const context = useEditContext();
   useEffect(() => {
     (async () => {
@@ -242,6 +287,7 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
       } finally {
         formApi.setValue('keepOpen', false);
         context.hidePageOverlay();
+        checkUpstreamChanges(setNotifications, client);
       }
     })();
   }, []);
@@ -255,4 +301,4 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
 };
 
 export default RemoteChanges;
-export { PullChanges, FetchChanges };
+export { PullChanges, FetchChanges, checkUpstreamChanges };
