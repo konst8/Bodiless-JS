@@ -359,6 +359,7 @@ class Backend {
         if (backendFilePath && backendStaticPath) {
           const gitCleanResponse = await GitCmd.cmd()
             .add('clean', '-df', backendFilePath, backendStaticPath)
+            .add('clean', '-dfx', 'public')
             .exec();
           res.send(gitCleanResponse.stdout);
         }
