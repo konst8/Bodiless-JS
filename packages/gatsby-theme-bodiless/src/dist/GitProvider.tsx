@@ -174,7 +174,11 @@ const formGitReset = (client: GitClient, context: any) => contextMenuForm({
 
 const defaultClient = new BackendClient();
 
-const getMenuOptions = (client: GitClient = defaultClient, context: any, notifyOfRemoteChanges): TMenuOption[] => {
+const getMenuOptions = (
+  client: GitClient = defaultClient,
+  context: any,
+  notifyOfRemoteChanges,
+): TMenuOption[] => {
   const saveChanges = canCommit ? formGitCommit(client) : undefined;
   return [
     {

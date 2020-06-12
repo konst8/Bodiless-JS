@@ -45,13 +45,25 @@ type PropsWithFormApi = {
  * @param {BackendClient} client
  * @constructor
  */
-const RemoteChanges = ({ client, notifyOfRemoteChanges }: PropsWithGitClient) => {
+const RemoteChanges = ({ client, notifyOfRemoteChanges }: PropsWithGitClient & any) => {
   const formApi = useFormApi();
   // @Todo revise the use of formState, possibly use informed multistep.
   if (formApi.getState().submits === 0) {
-    return (<FetchChanges client={client} formApi={formApi} notifyOfRemoteChanges={notifyOfRemoteChanges} />);
+    return (
+      <FetchChanges
+        client={client}
+        formApi={formApi}
+        notifyOfRemoteChanges={notifyOfRemoteChanges}
+      />
+    );
   }
-  return <PullChanges client={client} formApi={formApi} notifyOfRemoteChanges={notifyOfRemoteChanges} />;
+  return (
+    <PullChanges
+      client={client}
+      formApi={formApi}
+      notifyOfRemoteChanges={notifyOfRemoteChanges}
+    />
+  );
 };
 
 enum ChangeState {
@@ -136,7 +148,9 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
  * @param formApi
  * @constructor
  */
-const FetchChanges = ({ client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient) => {
+const FetchChanges = (
+  { client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient & any,
+) => {
   const [state, setState] = useState<ContentProps>({
     status: ChangeState.Pending,
     masterStatus: ChangeState.NoneAvailable,
@@ -209,7 +223,9 @@ type PullStatus = {
  * @param formApi
  * @constructor
  */
-const PullChanges = ({ client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient) => {
+const PullChanges = (
+  { client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient & any,
+) => {
   const [pullStatus, setPullStatus] = useState<PullStatus>({
     complete: false,
     error: '',
