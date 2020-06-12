@@ -13,11 +13,10 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { useEditContext, useNotify } from '@bodiless/core';
+import { useEditContext } from '@bodiless/core';
 import { ComponentFormSpinner } from '@bodiless/ui';
 import { isEmpty } from 'lodash';
 import { useFormApi } from 'informed';
-import { GitClient } from './types';
 
 type GitBranchType = {
   branch: string | null,
@@ -39,33 +38,6 @@ type PropsWithFormApi = {
   formApi: any;
 };
 
-type SetNotificationsType = React.Dispatch<React.SetStateAction<{}[]>>;
-
-const checkUpstreamChanges = async (setNotifications: SetNotificationsType, client: GitClient) => {
-  try {
-    const response = await client.getChanges();
-    if (response.status !== 200) {
-      throw new Error('Fetching upstream changes failed');
-    }
-    const updatedRemoteBranches = Object.keys(response.data).filter(branch => (
-      ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
-    ));
-    const isBranchOutdated = Boolean(updatedRemoteBranches.length);
-    if (isBranchOutdated) {
-      setNotifications([
-        {
-          id: 'upstreamChanges',
-          message: 'Your branch is outdated. Please pull remote changes.',
-        },
-      ]);
-    } else {
-      setNotifications([]);
-    }
-  } catch {
-    // Fail silently.
-  }
-};
-
 /**
  * Component for showing and pulling remote changes.
  *
@@ -73,13 +45,13 @@ const checkUpstreamChanges = async (setNotifications: SetNotificationsType, clie
  * @param {BackendClient} client
  * @constructor
  */
-const RemoteChanges = ({ client }: PropsWithGitClient) => {
+const RemoteChanges = ({ client, notifyOfRemoteChanges }: PropsWithGitClient) => {
   const formApi = useFormApi();
   // @Todo revise the use of formState, possibly use informed multistep.
   if (formApi.getState().submits === 0) {
-    return (<FetchChanges client={client} formApi={formApi} />);
+    return (<FetchChanges client={client} formApi={formApi} notifyOfRemoteChanges={notifyOfRemoteChanges} />);
   }
-  return <PullChanges client={client} formApi={formApi} />;
+  return <PullChanges client={client} formApi={formApi} notifyOfRemoteChanges={notifyOfRemoteChanges} />;
 };
 
 enum ChangeState {
@@ -164,19 +136,11 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
  * @param formApi
  * @constructor
  */
-const FetchChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient) => {
+const FetchChanges = ({ client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient) => {
   const [state, setState] = useState<ContentProps>({
     status: ChangeState.Pending,
     masterStatus: ChangeState.NoneAvailable,
   });
-
-  const [notifications, setNotifications] = useState([] as any);
-  const notifySettings = {
-    owner: 'upstreamChangesNotifier',
-    destroyOnUnmount: false,
-  };
-  useNotify(notifications, notifySettings);
-
   const context = useEditContext();
   useEffect(() => {
     (async () => {
@@ -223,7 +187,7 @@ const FetchChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient
           errorMessage: error.message,
         });
       } finally {
-        checkUpstreamChanges(setNotifications, client);
+        notifyOfRemoteChanges();
         context.hidePageOverlay();
       }
     })();
@@ -245,18 +209,11 @@ type PullStatus = {
  * @param formApi
  * @constructor
  */
-const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient) => {
+const PullChanges = ({ client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient) => {
   const [pullStatus, setPullStatus] = useState<PullStatus>({
     complete: false,
     error: '',
   });
-
-  const [notifications, setNotifications] = useState([] as any);
-  const notifySettings = {
-    owner: 'upstreamChangesNotifier',
-    destroyOnUnmount: false,
-  };
-  useNotify(notifications, notifySettings);
 
   const context = useEditContext();
   useEffect(() => {
@@ -287,7 +244,7 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
       } finally {
         formApi.setValue('keepOpen', false);
         context.hidePageOverlay();
-        checkUpstreamChanges(setNotifications, client);
+        notifyOfRemoteChanges();
       }
     })();
   }, []);
@@ -301,4 +258,4 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
 };
 
 export default RemoteChanges;
-export { PullChanges, FetchChanges, checkUpstreamChanges };
+export { PullChanges, FetchChanges };

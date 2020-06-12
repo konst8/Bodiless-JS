@@ -28,7 +28,7 @@ import {
 import { AxiosPromise } from 'axios';
 import BackendClient from './BackendClient';
 import CommitsList from './CommitsList';
-import RemoteChanges, { checkUpstreamChanges } from './RemoteChanges';
+import RemoteChanges from './RemoteChanges';
 import { GitClient } from './types';
 
 const backendFilePath = process.env.BODILESS_BACKEND_DATA_FILE_PATH || '';
@@ -119,7 +119,7 @@ const formGitCommit = (client: GitClient) => contextMenuForm({
   );
 });
 
-const formGitPull = (client: GitClient) => contextMenuForm({
+const formGitPull = (client: GitClient, notifyOfRemoteChanges) => contextMenuForm({
   submitValues: (values : any) => {
     const { keepOpen } = values;
     return keepOpen;
@@ -131,7 +131,7 @@ const formGitPull = (client: GitClient) => contextMenuForm({
       <ComponentFormTitle>Pull Changes</ComponentFormTitle>
       <ComponentFormText type="hidden" field="keepOpen" initialValue={false} />
       <ComponentFormText type="hidden" field="mergeMaster" initialValue={false} />
-      <RemoteChanges client={client} />
+      <RemoteChanges client={client} notifyOfRemoteChanges={notifyOfRemoteChanges} />
     </>
   );
 });
@@ -174,7 +174,7 @@ const formGitReset = (client: GitClient, context: any) => contextMenuForm({
 
 const defaultClient = new BackendClient();
 
-const getMenuOptions = (client: GitClient = defaultClient, context: any): TMenuOption[] => {
+const getMenuOptions = (client: GitClient = defaultClient, context: any, notifyOfRemoteChanges): TMenuOption[] => {
   const saveChanges = canCommit ? formGitCommit(client) : undefined;
   return [
     {
@@ -193,7 +193,7 @@ const getMenuOptions = (client: GitClient = defaultClient, context: any): TMenuO
       name: 'Pull',
       label: 'Pull',
       icon: 'cloud_download',
-      handler: () => formGitPull(client),
+      handler: () => formGitPull(client, notifyOfRemoteChanges),
     },
     {
       name: 'resetchanges',
@@ -208,19 +208,43 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   const [notifications, setNotifications] = useState([] as any);
   const context = useEditContext();
 
-  const notifySettings = {
-    owner: 'upstreamChangesNotifier',
-    destroyOnUnmout: false,
+  useNotify(notifications);
+
+  // Quickly [double-]check for changes in the upstream and master branches
+  // and send notifications to the "Alerts" section.
+  // Will perform on page load and after each fetch or push action initiated from UI.
+  const notifyOfRemoteChanges = async () => {
+    try {
+      const response = await client.getChanges();
+      if (response.status !== 200) {
+        throw new Error('Fetching upstream changes failed');
+      }
+      const updatedRemoteBranches = Object.keys(response.data).filter(branch => (
+        ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
+      ));
+      const isBranchOutdated = Boolean(updatedRemoteBranches.length);
+      if (isBranchOutdated) {
+        setNotifications([
+          {
+            id: 'upstreamChanges',
+            message: 'Your branch is outdated. Please pull remote changes.',
+          },
+        ]);
+      } else {
+        setNotifications([]);
+      }
+    } catch {
+      // Fail silently.
+    }
   };
-  useNotify(notifications, notifySettings);
 
   useEffect(() => {
-    checkUpstreamChanges(setNotifications, client);
+    notifyOfRemoteChanges();
   }, []);
 
   return (
     <PageContextProvider
-      getMenuOptions={() => getMenuOptions(client, context)}
+      getMenuOptions={() => getMenuOptions(client, context, notifyOfRemoteChanges)}
       name="Git"
     >
       {children}

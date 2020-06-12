@@ -90,25 +90,13 @@ const NotificationProvider: FC = ({ children }) => {
  *
  * @param notifications An array of Notification objects which should be displayed.
  */
-type notifySettings = {
-  owner?: string,
-  destroyOnUnmount?: boolean,
-};
-
-const useNotify = (notifications: Notification[], settings?: notifySettings) => {
-  const { owner, destroyOnUnmount } = {
-    owner: useRef(v1()).current,
-    destroyOnUnmount: true,
-    ...settings,
-  };
+const useNotify = (notifications: Notification[]) => {
+  const owner = useRef(v1()).current;
   const { notify } = useContext(NotifyContext);
   useEffect(
     () => {
       notify(owner, notifications || []);
-      if (destroyOnUnmount) {
-        return () => notify(owner, []);
-      }
-      return () => {};
+      return () => notify(owner, []);
     },
     [notify, owner, notifications],
   );
