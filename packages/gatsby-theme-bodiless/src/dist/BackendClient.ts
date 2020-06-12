@@ -141,37 +141,6 @@ export default class BackendClient {
 
   getChanges() {
     return this.get(`${this.prefix}/changes`);
-    // return {
-    //   status: 200,
-    //   data: {
-    //     upstream: {
-    //       branch: 'origin/notify_of_upstream_changes',
-    //       commits: [],
-    //       files: [],
-    //     },
-    //     production: {
-    //       branch: 'origin/master',
-    //       commits: [],
-    //       files: [],
-    //     },
-    //     local: {
-    //       branch: 'notify_of_upstream_changes',
-    //       commits: [
-    //         '8b715e4 Check for upstream changes after pull/push and show or clean up alerts',
-    //         "3d79407 Merge remote-tracking branch 'origin/master' into",
-    //         'd25f85b fix typescript error',
-    //         '345c810 Filter upstream and master branches',
-    //         '9ac70ca feat(core, ui): Notify of Upstream Changes in Edit Environment',
-    //       ],
-    //       files: [
-    //         'package.json',
-    //         'packages/bodiless-core/src/NotificationProvider.tsx',
-    //         'packages/gatsby-theme-bodiless/src/dist/GitProvider.tsx',
-    //         'packages/gatsby-theme-bodiless/src/dist/RemoteChanges.tsx',
-    //       ],
-    //     },
-    //   },
-    // };
   }
 
   getConflicts() {
