@@ -65,7 +65,7 @@ describe('Fetch Changes component', () => {
       <FetchChanges
         client={mockChangesClient}
         formApi={mockFormApi}
-        notifyOfRemoteChanges={jest.fn()}
+        notifyOfChanges={jest.fn()}
       />,
     );
     expect(wrapper.find('.bodiless-spinner').length > 0).toBe(true);
@@ -75,7 +75,7 @@ describe('Fetch Changes component', () => {
       <FetchChanges
         client={mockChangesClient}
         formApi={mockFormApi}
-        notifyOfRemoteChanges={jest.fn()}
+        notifyOfChanges={jest.fn()}
       />,
     );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
@@ -91,7 +91,7 @@ describe('Fetch Changes component', () => {
       <FetchChanges
         client={noChangesClient}
         formApi={mockFormApi}
-        notifyOfRemoteChanges={jest.fn()}
+        notifyOfChanges={jest.fn()}
       />,
     );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
@@ -105,7 +105,7 @@ describe('Fetch Changes component', () => {
       <FetchChanges
         client={nonPullableChangesClient}
         formApi={mockFormApi}
-        notifyOfRemoteChanges={jest.fn()}
+        notifyOfChanges={jest.fn()}
       />,
     );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
@@ -123,7 +123,7 @@ describe('Pull Changes component', () => {
       <PullChanges
         client={mockChangesClient}
         formApi={mockFormApi}
-        notifyOfRemoteChanges={jest.fn()}
+        notifyOfChanges={jest.fn()}
       />,
     );
     expect(wrapper.find('.bodiless-spinner').length > 0).toBe(true);
@@ -133,7 +133,7 @@ describe('Pull Changes component', () => {
       <PullChanges
         client={mockChangesClient}
         formApi={mockFormApi}
-        notifyOfRemoteChanges={jest.fn()}
+        notifyOfChanges={jest.fn()}
       />,
     );
     return new Promise(resolve => setImmediate(resolve)).then(() => {

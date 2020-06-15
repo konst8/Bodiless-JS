@@ -119,7 +119,9 @@ const formGitCommit = (client: GitClient) => contextMenuForm({
   );
 });
 
-const formGitPull = (client: GitClient, notifyOfRemoteChanges: any) => contextMenuForm({
+type TNotifyOfChanges = () => Promise<void>;
+
+const formGitPull = (client: GitClient, notifyOfChanges: TNotifyOfChanges) => contextMenuForm({
   submitValues: (values : any) => {
     const { keepOpen } = values;
     return keepOpen;
@@ -131,7 +133,7 @@ const formGitPull = (client: GitClient, notifyOfRemoteChanges: any) => contextMe
       <ComponentFormTitle>Pull Changes</ComponentFormTitle>
       <ComponentFormText type="hidden" field="keepOpen" initialValue={false} />
       <ComponentFormText type="hidden" field="mergeMaster" initialValue={false} />
-      <RemoteChanges client={client} notifyOfRemoteChanges={notifyOfRemoteChanges} />
+      <RemoteChanges client={client} notifyOfChanges={notifyOfChanges} />
     </>
   );
 });
@@ -177,7 +179,7 @@ const defaultClient = new BackendClient();
 const getMenuOptions = (
   client: GitClient = defaultClient,
   context: any,
-  notifyOfRemoteChanges: any,
+  notifyOfChanges: TNotifyOfChanges,
 ): TMenuOption[] => {
   const saveChanges = canCommit ? formGitCommit(client) : undefined;
   return [
@@ -198,7 +200,7 @@ const getMenuOptions = (
       name: 'Pull',
       label: 'Pull',
       icon: 'cloud_download',
-      handler: () => formGitPull(client, notifyOfRemoteChanges),
+      handler: () => formGitPull(client, notifyOfChanges),
     },
     {
       name: 'resetchanges',
@@ -219,7 +221,7 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   // Quickly [double-]check for changes in the upstream and master branches
   // and send notifications to the "Alerts" section.
   // Will perform on page load and after each fetch or push action initiated from UI.
-  const notifyOfRemoteChanges = async () => {
+  const notifyOfChanges = async (): Promise<void> => {
     try {
       const response = await client.getChanges();
       if (response.status !== 200) {
@@ -246,13 +248,13 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      notifyOfRemoteChanges();
-    }, 10000);
+      notifyOfChanges();
+    }, 30000);
   }, []);
 
   return (
     <PageContextProvider
-      getMenuOptions={() => getMenuOptions(client, context, notifyOfRemoteChanges)}
+      getMenuOptions={() => getMenuOptions(client, context, notifyOfChanges)}
       name="Git"
     >
       {children}

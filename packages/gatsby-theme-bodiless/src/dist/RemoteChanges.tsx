@@ -38,6 +38,10 @@ type PropsWithFormApi = {
   formApi: any;
 };
 
+type PropsWithNotify = {
+  notifyOfChanges: () => Promise<void>;
+};
+
 /**
  * Component for showing and pulling remote changes.
  *
@@ -45,7 +49,7 @@ type PropsWithFormApi = {
  * @param {BackendClient} client
  * @constructor
  */
-const RemoteChanges = ({ client, notifyOfRemoteChanges }: PropsWithGitClient & any) => {
+const RemoteChanges = ({ client, notifyOfChanges }: PropsWithGitClient & PropsWithNotify) => {
   const formApi = useFormApi();
   // @Todo revise the use of formState, possibly use informed multistep.
   if (formApi.getState().submits === 0) {
@@ -53,7 +57,7 @@ const RemoteChanges = ({ client, notifyOfRemoteChanges }: PropsWithGitClient & a
       <FetchChanges
         client={client}
         formApi={formApi}
-        notifyOfRemoteChanges={notifyOfRemoteChanges}
+        notifyOfChanges={notifyOfChanges}
       />
     );
   }
@@ -61,7 +65,7 @@ const RemoteChanges = ({ client, notifyOfRemoteChanges }: PropsWithGitClient & a
     <PullChanges
       client={client}
       formApi={formApi}
-      notifyOfRemoteChanges={notifyOfRemoteChanges}
+      notifyOfChanges={notifyOfChanges}
     />
   );
 };
@@ -149,7 +153,7 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
  * @constructor
  */
 const FetchChanges = (
-  { client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient & any,
+  { client, formApi, notifyOfChanges }: PropsWithFormApi & PropsWithGitClient & PropsWithNotify,
 ) => {
   const [state, setState] = useState<ContentProps>({
     status: ChangeState.Pending,
@@ -201,7 +205,7 @@ const FetchChanges = (
           errorMessage: error.message,
         });
       } finally {
-        notifyOfRemoteChanges();
+        notifyOfChanges();
         context.hidePageOverlay();
       }
     })();
@@ -224,7 +228,7 @@ type PullStatus = {
  * @constructor
  */
 const PullChanges = (
-  { client, formApi, notifyOfRemoteChanges }: PropsWithFormApi & PropsWithGitClient & any,
+  { client, formApi, notifyOfChanges }: PropsWithFormApi & PropsWithGitClient & PropsWithNotify,
 ) => {
   const [pullStatus, setPullStatus] = useState<PullStatus>({
     complete: false,
@@ -260,7 +264,7 @@ const PullChanges = (
       } finally {
         formApi.setValue('keepOpen', false);
         context.hidePageOverlay();
-        notifyOfRemoteChanges();
+        notifyOfChanges();
       }
     })();
   }, []);
