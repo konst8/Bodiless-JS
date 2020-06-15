@@ -31,6 +31,7 @@ const backendFilePath = process.env.BODILESS_BACKEND_DATA_FILE_PATH || '';
 const defaultBackendPagePath = path.resolve(backendFilePath, 'pages');
 const backendPagePath = process.env.BODILESS_BACKEND_DATA_PAGE_PATH || defaultBackendPagePath;
 const backendStaticPath = process.env.BODILESS_BACKEND_STATIC_PATH || '';
+const backendPublicPath = process.env.BODILESS_BACKEND_PUBLIC_PAGE_PATH || 'public/page-data';
 const isExtendedLogging = (process.env.BODILESS_BACKEND_EXTENDED_LOGGING_ENABLED || '0') === '1';
 const canCommit = (process.env.BODILESS_BACKEND_COMMIT_ENABLED || '0') === '1';
 
@@ -355,19 +356,37 @@ class Backend {
     route.post(async (req, res) => {
       logger.log('Start reset');
       try {
-        // Clean up untracked files first.
+        // Clean up untracked files.
         if (backendFilePath && backendStaticPath) {
-          const gitCleanResponse = await GitCmd.cmd()
-            .add('clean', '-df', backendFilePath, backendStaticPath)
-            .add('clean', '-dfx', 'public')
+          // Clean up public folder.
+          const gitStatus = await GitCmd.cmd()
+            .add('status', '--porcelain', backendPagePath)
             .exec();
-          res.send(gitCleanResponse.stdout);
+          const reGetDeletedAndUntracked = /(?<= D |\?\? ).*/gm;
+          const deletedAndUntracked = gitStatus.stdout.match(reGetDeletedAndUntracked);
+          if (deletedAndUntracked !== null) {
+            const dataPagePath = path.join(backendFilePath, 'pages');
+            const obsoletePublicPages = deletedAndUntracked.map(gitPath => {
+              const publicPagePath = gitPath.replace(dataPagePath, backendPublicPath);
+              return path.resolve('../..', publicPagePath);
+            });
+            const obsoletePublicPagesString = obsoletePublicPages.join(' ');
+            const cleanPublic = await GitCmd.cmd()
+              .add('clean', '-dfx', obsoletePublicPagesString)
+              .exec();
+            res.send(cleanPublic.stdout);
+          }
+          // Clean up data folder.
+          const cleanData = await GitCmd.cmd()
+            .add('clean', '-df', backendFilePath, backendStaticPath)
+            .exec();
+          res.send(cleanData.stdout);
         }
         // Discard changes in existing files.
-        const gitResetResponse = await GitCmd.cmd()
+        const cleanExisting = await GitCmd.cmd()
           .add('reset', '--hard', 'HEAD')
           .exec();
-        res.send(gitResetResponse.stdout);
+        res.send(cleanExisting.stdout);
       } catch (error) {
         // Need to inform user of merge operation fails.
         Backend.exitWithErrorResponse(error, res);
