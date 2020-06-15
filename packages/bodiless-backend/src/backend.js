@@ -370,9 +370,9 @@ class Backend {
               const publicPagePath = gitPath.replace(dataPagePath, backendPublicPath);
               return path.resolve('../..', publicPagePath);
             });
-            const obsoletePublicPagesString = obsoletePublicPages.join(' ');
             const cleanPublic = await GitCmd.cmd()
-              .add('clean', '-dfx', obsoletePublicPagesString)
+              .add('clean', '-dfx')
+              .addFiles(...obsoletePublicPages)
               .exec();
             res.send(cleanPublic.stdout);
           }
