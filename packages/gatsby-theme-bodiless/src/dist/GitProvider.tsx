@@ -245,7 +245,7 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   };
 
   useEffect(() => {
-    notifyOfRemoteChanges();
+    // notifyOfRemoteChanges();
   }, []);
 
   return (
