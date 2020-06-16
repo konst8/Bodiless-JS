@@ -241,7 +241,7 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
               message: 'Your branch is outdated. Please pull remote changes.',
             },
           ]);
-        } else if (notifications.length) {
+        } else {
           setNotifications([]);
         }
       } catch {
