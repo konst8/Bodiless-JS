@@ -17,6 +17,7 @@ import { useEditContext } from '@bodiless/core';
 import { ComponentFormSpinner } from '@bodiless/ui';
 import { isEmpty } from 'lodash';
 import { useFormApi } from 'informed';
+import type { ChangeNotifier } from './GitProvider';
 
 type GitBranchType = {
   branch: string | null,
@@ -39,7 +40,7 @@ type PropsWithFormApi = {
 };
 
 type PropsWithNotify = {
-  notifyOfChanges: () => Promise<void>;
+  notifyOfChanges: ChangeNotifier;
 };
 
 /**

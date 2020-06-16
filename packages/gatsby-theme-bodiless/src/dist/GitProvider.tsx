@@ -212,6 +212,8 @@ const getMenuOptions = (
   ];
 };
 
+export type ChangeNotifier = () => Promise<void>;
+
 const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   const [notifications, setNotifications] = useState([] as any);
   const context = useEditContext();
@@ -221,7 +223,7 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   // Quickly [double-]check for changes in the upstream and master branches
   // and send notifications to the "Alerts" section.
   // Will perform on page load and after each fetch or push action initiated from UI.
-  const notifyOfChanges = async (): Promise<void> => {
+  const notifyOfChanges: ChangeNotifier = async () => {
     try {
       const response = await client.getChanges();
       if (response.status !== 200) {
@@ -247,9 +249,7 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      notifyOfChanges();
-    }, 30000);
+    notifyOfChanges();
   }, []);
 
   return (
