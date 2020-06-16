@@ -14,7 +14,7 @@
 
 /* eslint-disable no-alert */
 import React, {
-  FC, useState, useEffect,
+  FC, useState, useEffect, useCallback,
 } from 'react';
 import Cookies from 'universal-cookie';
 import {
@@ -223,30 +223,33 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   // Quickly [double-]check for changes in the upstream and master branches
   // and send notifications to the "Alerts" section.
   // Will perform on page load and after each fetch or push action initiated from UI.
-  const notifyOfChanges: ChangeNotifier = async () => {
-    try {
-      const response = await client.getChanges();
-      if (response.status !== 200) {
-        throw new Error('Fetching upstream changes failed');
+  const notifyOfChanges: ChangeNotifier = useCallback(
+    async () => {
+      try {
+        const response = await client.getChanges();
+        if (response.status !== 200) {
+          throw new Error('Fetching upstream changes failed');
+        }
+        const updatedRemoteBranches = Object.keys(response.data).filter(branch => (
+          ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
+        ));
+        const isBranchOutdated = Boolean(updatedRemoteBranches.length);
+        if (isBranchOutdated) {
+          setNotifications([
+            {
+              id: 'upstreamChanges',
+              message: 'Your branch is outdated. Please pull remote changes.',
+            },
+          ]);
+        } else {
+          setNotifications([]);
+        }
+      } catch {
+        // Fail silently.
       }
-      const updatedRemoteBranches = Object.keys(response.data).filter(branch => (
-        ['upstream', 'production'].includes(branch) && response.data[branch].commits.length
-      ));
-      const isBranchOutdated = Boolean(updatedRemoteBranches.length);
-      if (isBranchOutdated) {
-        setNotifications([
-          {
-            id: 'upstreamChanges',
-            message: 'Your branch is outdated. Please pull remote changes.',
-          },
-        ]);
-      } else {
-        setNotifications([]);
-      }
-    } catch {
-      // Fail silently.
-    }
-  };
+    },
+    [notifications, setNotifications],
+  );
 
   useEffect(() => {
     notifyOfChanges();
