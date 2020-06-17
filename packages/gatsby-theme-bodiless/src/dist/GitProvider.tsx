@@ -43,6 +43,7 @@ const backendStaticPath = process.env.BODILESS_BACKEND_STATIC_PATH || '';
  * https://www.gatsbyjs.org/docs/environment-variables/#example.
  */
 const canCommit = (process.env.BODILESS_BACKEND_COMMIT_ENABLED || '0') === '1';
+const canAlertOnLoad = process.env.BODILESS_ALERT_ON_PAGE_LOAD_ENABLED || 1;
 
 type Props = {
   client?: GitClient,
@@ -252,7 +253,9 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
   );
 
   useEffect(() => {
-    notifyOfChanges();
+    if (canAlertOnLoad) {
+      notifyOfChanges();
+    }
   }, []);
 
   return (
