@@ -120,9 +120,7 @@ const formGitCommit = (client: GitClient) => contextMenuForm({
   );
 });
 
-type TNotifyOfChanges = () => Promise<void>;
-
-const formGitPull = (client: GitClient, notifyOfChanges: TNotifyOfChanges) => contextMenuForm({
+const formGitPull = (client: GitClient, notifyOfChanges: ChangeNotifier) => contextMenuForm({
   submitValues: (values : any) => {
     const { keepOpen } = values;
     return keepOpen;
@@ -242,7 +240,7 @@ const GitProvider: FC<Props> = ({ children, client = defaultClient }) => {
               message: 'Your branch is outdated. Please pull remote changes.',
             },
           ]);
-        } else if (notifications.length) {
+        } else {
           setNotifications([]);
         }
       } catch {
