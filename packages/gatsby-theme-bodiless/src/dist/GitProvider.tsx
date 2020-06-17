@@ -178,7 +178,7 @@ const defaultClient = new BackendClient();
 const getMenuOptions = (
   client: GitClient = defaultClient,
   context: any,
-  notifyOfChanges: TNotifyOfChanges,
+  notifyOfChanges: ChangeNotifier,
 ): TMenuOption[] => {
   const saveChanges = canCommit ? formGitCommit(client) : undefined;
   return [
