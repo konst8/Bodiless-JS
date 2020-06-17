@@ -46,7 +46,6 @@ jobs:
     - stage: test
       env:
         - STAGE_NAME="1x-chrome Travis CI"
-        - BODILESS_ALERT_ON_PAGE_LOAD_ENABLED=0
       <<: *defaults
     # run tests in parallel by including several test jobs with same name variable
     # - stage: test

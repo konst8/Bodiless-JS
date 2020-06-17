@@ -29,7 +29,11 @@ const defaultEnvValues: Tree = {
 };
 
 const defaultEnvConfig: Tree = {
-  production: { ...defaultEnvValues, BODILESS_BACKEND_SAVE_ENABLED: '0' },
+  production: { 
+    ...defaultEnvValues,
+    BODILESS_BACKEND_SAVE_ENABLED: '0',
+    BODILESS_ALERT_ON_PAGE_LOAD_ENABLED: '0',
+  },
   changeset: { ...defaultEnvValues, BODILESS_BACKEND_COMMIT_ENABLED: '1' },
   default: { ...defaultEnvValues },
 };
