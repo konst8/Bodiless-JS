@@ -29,7 +29,7 @@ const defaultEnvValues: Tree = {
 };
 
 const defaultEnvConfig: Tree = {
-  production: { 
+  production: {
     ...defaultEnvValues,
     BODILESS_BACKEND_SAVE_ENABLED: '0',
     BODILESS_ALERT_ON_PAGE_LOAD_ENABLED: '0',
