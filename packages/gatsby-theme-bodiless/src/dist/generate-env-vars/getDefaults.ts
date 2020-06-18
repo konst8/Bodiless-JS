@@ -22,18 +22,14 @@ const defaultEnvValues: Tree = {
   BODILESS_BACKEND_STATIC_PATH: 'static',
   BODILESS_BACKEND_COMMIT_ENABLED: '0',
   BODILESS_BACKEND_SAVE_ENABLED: '1',
-  BODILESS_ALERT_ON_PAGE_LOAD_ENABLED: '1',
+  BODILESS_ALERT_ON_PAGE_LOAD_ENABLED: '0',
   BODILESS_BACKEND_PORT: '8006',
   APP_GIT_PATH: '.',
   BODILESS_DOCS_URL: '/___docs',
 };
 
 const defaultEnvConfig: Tree = {
-  production: {
-    ...defaultEnvValues,
-    BODILESS_BACKEND_SAVE_ENABLED: '0',
-    BODILESS_ALERT_ON_PAGE_LOAD_ENABLED: '0',
-  },
+  production: { ...defaultEnvValues, BODILESS_BACKEND_SAVE_ENABLED: '0' },
   changeset: { ...defaultEnvValues, BODILESS_BACKEND_COMMIT_ENABLED: '1' },
   default: { ...defaultEnvValues },
 };
