@@ -370,17 +370,16 @@ class Backend {
               const publicPagePath = gitPath.replace(dataPagePath, backendPublicPath);
               return path.resolve('../..', publicPagePath);
             });
-            const cleanPublic = await GitCmd.cmd()
-              .add('clean', '-dfx')
-              .addFiles(...obsoletePublicPages)
-              .exec();
-            res.send(cleanPublic.stdout);
+            // Have to loop through every path since 'git clean' can work incorrectly when passing
+            // all the paths at once.
+            await Promise.all(obsoletePublicPages.map(
+              async (gitPath) => GitCmd.cmd().add('clean', '-dfx').addFiles(gitPath).exec(),
+            ));
           }
           // Clean up data folder.
-          const cleanData = await GitCmd.cmd()
-            .add('clean', '-df', backendFilePath, backendStaticPath)
-            .exec();
-          res.send(cleanData.stdout);
+          await Promise.all([backendFilePath, backendStaticPath].map(
+            async (gitPath) => GitCmd.cmd().add('clean', '-df').addFiles(gitPath).exec(),
+          ));
         }
         // Discard changes in existing files.
         const cleanExisting = await GitCmd.cmd()
