@@ -61,21 +61,39 @@ const nonPullableChangesClient = mockClient({
 
 describe('Fetch Changes component', () => {
   it('should show a spinner while a request to the back-end is processed', () => {
-    const wrapper = mount(<FetchChanges client={mockChangesClient} formApi={mockFormApi} />);
+    const wrapper = mount(
+      <FetchChanges
+        client={mockChangesClient}
+        formApi={mockFormApi}
+        notifyOfChanges={jest.fn()}
+      />,
+    );
     expect(wrapper.find('.bodiless-spinner').length > 0).toBe(true);
   });
   it('should detect changes are available', async () => {
-    const wrapper = mount(<FetchChanges client={mockChangesClient} formApi={mockFormApi} />);
+    const wrapper = mount(
+      <FetchChanges
+        client={mockChangesClient}
+        formApi={mockFormApi}
+        notifyOfChanges={jest.fn()}
+      />,
+    );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
       wrapper.update();
       expect(wrapper.text()).toBe(
-        'There are changes ready to be pulled. Click check (✓) to initiate.',
+        'There are updates available to be pulled. Click check (✓) to initiate.',
       );
     });
   });
 
   it('should detect changes are not available', async () => {
-    const wrapper = mount(<FetchChanges client={noChangesClient} formApi={mockFormApi} />);
+    const wrapper = mount(
+      <FetchChanges
+        client={noChangesClient}
+        formApi={mockFormApi}
+        notifyOfChanges={jest.fn()}
+      />,
+    );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
       wrapper.update();
       expect(wrapper.text()).toBe('There are no changes to download.');
@@ -83,7 +101,13 @@ describe('Fetch Changes component', () => {
   });
 
   it('should detect changes are available but cannot be pulled', async () => {
-    const wrapper = mount(<FetchChanges client={nonPullableChangesClient} formApi={mockFormApi} />);
+    const wrapper = mount(
+      <FetchChanges
+        client={nonPullableChangesClient}
+        formApi={mockFormApi}
+        notifyOfChanges={jest.fn()}
+      />,
+    );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
       wrapper.update();
       expect(wrapper.text()).toBe(
@@ -95,15 +119,27 @@ describe('Fetch Changes component', () => {
 
 describe('Pull Changes component', () => {
   it('should show a spinner while a request to the back-end is processed', () => {
-    const wrapper = mount(<PullChanges client={mockChangesClient} formApi={mockFormApi} />);
+    const wrapper = mount(
+      <PullChanges
+        client={mockChangesClient}
+        formApi={mockFormApi}
+        notifyOfChanges={jest.fn()}
+      />,
+    );
     expect(wrapper.find('.bodiless-spinner').length > 0).toBe(true);
   });
   it('should pull changes', async () => {
-    const wrapper = mount(<PullChanges client={mockChangesClient} formApi={mockFormApi} />);
+    const wrapper = mount(
+      <PullChanges
+        client={mockChangesClient}
+        formApi={mockFormApi}
+        notifyOfChanges={jest.fn()}
+      />,
+    );
     return new Promise(resolve => setImmediate(resolve)).then(() => {
       wrapper.update();
       expect(wrapper.text()).toBe(
-        'Operation completed.',
+        'Operation complete, page will refresh.',
       );
     });
   });

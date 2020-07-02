@@ -17,6 +17,7 @@ import { useEditContext } from '@bodiless/core';
 import { ComponentFormSpinner } from '@bodiless/ui';
 import { isEmpty } from 'lodash';
 import { useFormApi } from 'informed';
+import type { ChangeNotifier } from './GitProvider';
 
 type GitBranchType = {
   branch: string | null,
@@ -38,6 +39,10 @@ type PropsWithFormApi = {
   formApi: any;
 };
 
+type PropsWithNotify = {
+  notifyOfChanges: ChangeNotifier;
+};
+
 /**
  * Component for showing and pulling remote changes.
  *
@@ -45,13 +50,25 @@ type PropsWithFormApi = {
  * @param {BackendClient} client
  * @constructor
  */
-const RemoteChanges = ({ client }: PropsWithGitClient) => {
+const RemoteChanges = ({ client, notifyOfChanges }: PropsWithGitClient & PropsWithNotify) => {
   const formApi = useFormApi();
   // @Todo revise the use of formState, possibly use informed multistep.
   if (formApi.getState().submits === 0) {
-    return (<FetchChanges client={client} formApi={formApi} />);
+    return (
+      <FetchChanges
+        client={client}
+        formApi={formApi}
+        notifyOfChanges={notifyOfChanges}
+      />
+    );
   }
-  return <PullChanges client={client} formApi={formApi} />;
+  return (
+    <PullChanges
+      client={client}
+      formApi={formApi}
+      notifyOfChanges={notifyOfChanges}
+    />
+  );
 };
 
 enum ChangeState {
@@ -95,7 +112,7 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
           {
             // eslint-disable-next-line no-nested-ternary
             masterStatus === ChangeState.CanBePulled
-              ? 'There are changes ready to be pulled. Click check (✓) to initiate.'
+              ? 'There are master changes available to be pulled. Click check (✓) to initiate.'
               : masterStatus === ChangeState.CanNotBePulled
                 ? 'There are changes on production which cannot be merged from the UI.'
                 : 'There are no changes to download.'
@@ -105,7 +122,7 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
     case ChangeState.CanBePulled:
       return (
         <>
-          There are changes ready to be pulled. Click check (✓) to initiate.
+          There are updates available to be pulled. Click check (✓) to initiate.
           {
             masterStatus === ChangeState.CanNotBePulled
               ? '\nThere are changes on production which cannot be merged from the UI.'
@@ -136,7 +153,9 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
  * @param formApi
  * @constructor
  */
-const FetchChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient) => {
+const FetchChanges = (
+  { client, formApi, notifyOfChanges }: PropsWithFormApi & PropsWithGitClient & PropsWithNotify,
+) => {
   const [state, setState] = useState<ContentProps>({
     status: ChangeState.Pending,
     masterStatus: ChangeState.NoneAvailable,
@@ -187,6 +206,7 @@ const FetchChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient
           errorMessage: error.message,
         });
       } finally {
+        notifyOfChanges();
         context.hidePageOverlay();
       }
     })();
@@ -208,11 +228,14 @@ type PullStatus = {
  * @param formApi
  * @constructor
  */
-const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient) => {
+const PullChanges = (
+  { client, formApi, notifyOfChanges }: PropsWithFormApi & PropsWithGitClient & PropsWithNotify,
+) => {
   const [pullStatus, setPullStatus] = useState<PullStatus>({
     complete: false,
     error: '',
   });
+
   const context = useEditContext();
   useEffect(() => {
     (async () => {
@@ -234,6 +257,7 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
           throw new Error(`Error pulling changes, status=${response.status}`);
         }
         setPullStatus({ complete: true });
+        formApi.setValue('refreshWhenDone', true);
       } catch (error) {
         setPullStatus({
           complete: false,
@@ -242,6 +266,7 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
       } finally {
         formApi.setValue('keepOpen', false);
         context.hidePageOverlay();
+        notifyOfChanges();
       }
     })();
   }, []);
@@ -249,7 +274,7 @@ const PullChanges = ({ client, formApi }: PropsWithFormApi & PropsWithGitClient)
   const { complete, error } = pullStatus;
   if (error) return <>{error}</>;
   if (complete) {
-    return <>Operation completed.</>;
+    return <>Operation complete, page will refresh.</>;
   }
   return <ComponentFormSpinner />;
 };
