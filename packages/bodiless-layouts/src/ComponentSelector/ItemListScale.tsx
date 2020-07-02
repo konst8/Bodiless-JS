@@ -65,15 +65,17 @@ const ItemList: React.FC<ItemListProps> = props => {
 
   useEffect(() => {
     // Imitate nextTick() functionality to make sure components are fully mounted.
-    setTimeout(() => {
-      // We are in useEffect so we know document exists
-      // eslint-disable-next-line no-undef
-      document.querySelectorAll('.bl-outerTransform').forEach(element => {
-        // we have to cast this so that we can use style and offsetHeight
-        const htmlElement = element as HTMLElement;
+    // We are in useEffect so we know document exists
+    // eslint-disable-next-line no-undef
+    document.querySelectorAll('.bl-outerTransform').forEach(element => {
+      // we have to cast this so that we can use style and offsetHeight
+      const htmlElement = element as HTMLElement;
+      if (scale === 1) {
+        htmlElement.style.height = 'auto';
+      } else {
         htmlElement.style.height = '100%';
         htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
-      });
+      }
     });
   });
   const elems: ReactNode[] = components.slice(0, 50).map(
