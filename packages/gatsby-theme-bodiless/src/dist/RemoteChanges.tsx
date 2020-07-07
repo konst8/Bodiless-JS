@@ -105,7 +105,7 @@ type ContentProps = {
 
 const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) => {
   switch (status) {
-    case ChangeState.x:
+    case ChangeState.NoneAvailable:
       if (masterStatus === ChangeState.CanBePulled) {
         return (<>There are master changes available to be pulled. Click check (✓) to initiate.</>);
       }
@@ -118,7 +118,7 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
       }
       return (<>There are no changes to download.</>);
 
-    case ChangeState.NoneAvailable:
+    case ChangeState.CanBePulled:
       if (masterStatus === ChangeState.CanNotBePulled) {
         return (
           <>

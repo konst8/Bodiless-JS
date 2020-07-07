@@ -118,15 +118,15 @@ export const ResizeHandle = addClasses(
   'bl-block bl-text-2xl bl-absolute material-icons bl-z-1 bl-text-red bl-rotate-45deg bl-bottom-grid-0 bl-right-grid-0',
 )(Span);
 
-const WarningIcon = flow(
+export const Warning = flow(
   addClasses('bl-w-grid-7'),
-)(Icon);
+)(() => <Icon>report_problem_outlined</Icon>);
 
 export const ComponentFormWarning = flow(
   addClasses('bl-float-left bl-flex bl-items-center'),
 )(({ children, ...rest }) => (
   <Div {...rest}>
-    <WarningIcon>report_problem_outlined</WarningIcon>
+    <Warning />
     {children}
   </Div>
 ));
