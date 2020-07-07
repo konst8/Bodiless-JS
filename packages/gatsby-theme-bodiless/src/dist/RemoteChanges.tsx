@@ -105,7 +105,7 @@ type ContentProps = {
 
 const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) => {
   switch (status) {
-    case ChangeState.NoneAvailable:
+    case ChangeState.x:
       if (masterStatus === ChangeState.CanBePulled) {
         return (<>There are master changes available to be pulled. Click check (✓) to initiate.</>);
       }
@@ -118,7 +118,7 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
       }
       return (<>There are no changes to download.</>);
 
-    case ChangeState.CanBePulled:
+    case ChangeState.NoneAvailable:
       if (masterStatus === ChangeState.CanNotBePulled) {
         return (
           <>
@@ -147,9 +147,9 @@ const ChangeContent = ({ status, masterStatus, errorMessage } : ContentProps) =>
       );
     case ChangeState.Errored:
       return errorMessage ? (
-        <>{errorMessage}</>
+        <ComponentFormWarning>{errorMessage}</ComponentFormWarning>
       ) : (
-        <>An unexpected error has occurred</>
+        <ComponentFormWarning>An unexpected error has occurred</ComponentFormWarning>
       );
     default:
       return <ComponentFormSpinner />;
@@ -169,7 +169,7 @@ const FetchChanges = (
 ) => {
   const [state, setState] = useState<ContentProps>({
     status: ChangeState.Pending,
-    masterStatus: ChangeState.NoneAvailable,
+    masterStatus: ChangeState.CanNotBePulled,
   });
   const context = useEditContext();
   useEffect(() => {
