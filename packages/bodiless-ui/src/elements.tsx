@@ -120,7 +120,9 @@ export const ResizeHandle = addClasses(
 
 export const Warning = flow(
   addClasses('bl-w-grid-7'),
-)(() => <Icon>report_problem_outlined</Icon>);
+)((props: JSX.IntrinsicAttributes) => (
+  <Icon {...props}>report_problem_outlined</Icon>
+));
 
 export const ComponentFormWarning = flow(
   addClasses('bl-float-left bl-flex bl-items-center'),

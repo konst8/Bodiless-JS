@@ -169,7 +169,7 @@ const FetchChanges = (
 ) => {
   const [state, setState] = useState<ContentProps>({
     status: ChangeState.Pending,
-    masterStatus: ChangeState.CanNotBePulled,
+    masterStatus: ChangeState.NoneAvailable,
   });
   const context = useEditContext();
   useEffect(() => {
