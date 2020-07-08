@@ -70,11 +70,14 @@ const ItemList: React.FC<ItemListProps> = props => {
     document.querySelectorAll('.bl-outerTransform').forEach(element => {
       // we have to cast this so that we can use style and offsetHeight
       const htmlElement = element as HTMLElement;
-      if (scale === 1) {
-        htmlElement.style.height = 'auto';
-      } else {
-        htmlElement.style.height = '100%';
-        htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
+      htmlElement.style.height = '100%';
+      htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
+      const img = htmlElement.querySelector('img');
+      if (img) {
+        img.addEventListener('load', () => {
+          htmlElement.style.height = '100%';
+          htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
+        });
       }
     });
   });
