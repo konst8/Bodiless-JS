@@ -64,7 +64,6 @@ const ItemList: React.FC<ItemListProps> = props => {
   const { transformStyle, boxStyle } = styles[scale];
 
   useEffect(() => {
-    // Imitate nextTick() functionality to make sure components are fully mounted.
     // We are in useEffect so we know document exists
     // eslint-disable-next-line no-undef
     document.querySelectorAll('.bl-outerTransform').forEach(element => {
@@ -72,13 +71,13 @@ const ItemList: React.FC<ItemListProps> = props => {
       const htmlElement = element as HTMLElement;
       htmlElement.style.height = '100%';
       htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
-      const img = htmlElement.querySelector('img');
-      if (img) {
-        img.addEventListener('load', () => {
+      const assets = htmlElement.querySelectorAll('[src]');
+      assets.forEach(asset => {
+        asset.addEventListener('load', () => {
           htmlElement.style.height = '100%';
           htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
         });
-      }
+      });
     });
   });
   const elems: ReactNode[] = components.slice(0, 50).map(
