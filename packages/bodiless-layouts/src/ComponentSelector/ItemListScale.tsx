@@ -14,7 +14,6 @@
 
 import React, {
   useContext,
-  useEffect,
   ReactNode,
   useState,
   Fragment,
@@ -36,50 +35,23 @@ const ItemList: React.FC<ItemListProps> = props => {
   const [scale, setScale] = useState(Scale.Full);
   const styles = {
     1: {
-      transformStyle: {
-      },
       boxStyle: {
         width: '100%',
       },
     },
     2: {
-      transformStyle: {
-        width: '200%',
-        transform: 'scale(.5) translate(-50%, -50%)',
-      },
       boxStyle: {
         width: '50%',
       },
     },
     4: {
-      transformStyle: {
-        width: '400%',
-        transform: 'scale(.25) translate(-150%, -150%)',
-      },
       boxStyle: {
         width: '25%',
       },
     },
   };
-  const { transformStyle, boxStyle } = styles[scale];
+  const { boxStyle } = styles[scale];
 
-  useEffect(() => {
-    // We are in useEffect so we know document exists
-    // eslint-disable-next-line no-undef
-    document.querySelectorAll('.bl-outerTransform').forEach(element => {
-      // we have to cast this so that we can use style and offsetHeight
-      const htmlElement = element as HTMLElement;
-      htmlElement.style.height = '100%';
-      htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
-      const assets = htmlElement.querySelectorAll('[src]');
-      assets.forEach(asset => {
-        asset.addEventListener('load', () => {
-          htmlElement.style.height = '100%';
-          htmlElement.style.height = `${htmlElement.offsetHeight / scale}px`;
-        });
-      });
-    });
-  });
   const elems: ReactNode[] = components.slice(0, 50).map(
     (Component: ComponentWithMeta<any>, index: number) => (
       <finalUI.ItemBoxWrapper style={boxStyle} key={Component.displayName}>
@@ -88,9 +60,7 @@ const ItemList: React.FC<ItemListProps> = props => {
             {Component.title || Component.displayName || 'Untitled'}
           </finalUI.TitleWrapper>
           <div className="bl-outerTransform bl-w-full bl-bg-white">
-            <div
-              style={transformStyle}
-            >
+            <div>
               <Component
                 node={DefaultContentNode.dummy(String(index), [])}
               />
