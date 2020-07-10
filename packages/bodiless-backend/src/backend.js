@@ -372,11 +372,10 @@ class Backend {
             const obsoletePublicPages = deletedAndUntracked.map(gitPath => {
               const publicPagePath = gitPath.replace(dataPagePath, backendPublicPath);
               // Get absolute path considering location of .git folder
-              const absolutePublicPagePath = path.resolve(
+              return path.resolve(
                 gitRootRelPath.stdout.trim(),
                 publicPagePath,
               );
-              return absolutePublicPagePath;
             });
             // Have to loop through every path since 'git clean' can work incorrectly when passing
             // all the paths at once.
