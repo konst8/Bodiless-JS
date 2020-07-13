@@ -35,36 +35,56 @@ const ItemList: React.FC<ItemListProps> = props => {
   const [scale, setScale] = useState(Scale.Full);
   const styles = {
     1: {
+      transformStyle: {
+      },
       boxStyle: {
         width: '100%',
       },
+      outerStyle: {
+      },
     },
     2: {
+      transformStyle: {
+        width: '200%',
+        height: '200%',
+        transform: 'scale(.5) translate(-50%, -50%)',
+      },
       boxStyle: {
         width: '50%',
       },
+      outerStyle: {
+        fontSize: '200%',
+      },
     },
     4: {
+      transformStyle: {
+        width: '400%',
+        height: '400%',
+        transform: 'scale(.25) translate(-150%, -150%)',
+      },
       boxStyle: {
         width: '25%',
       },
+      outerStyle: {
+        fontSize: '400%',
+      },
     },
   };
-  const { boxStyle } = styles[scale];
+  const { transformStyle, boxStyle, outerStyle } = styles[scale];
 
   const elems: ReactNode[] = components.slice(0, 50).map(
     (Component: ComponentWithMeta<any>, index: number) => (
       <finalUI.ItemBoxWrapper style={boxStyle} key={Component.displayName}>
         <finalUI.ItemBox key={Component.displayName}>
-          <finalUI.TitleWrapper>
+          <finalUI.TitleWrapper style={outerStyle}>
             {Component.title || Component.displayName || 'Untitled'}
           </finalUI.TitleWrapper>
-          <div className="bl-outerTransform bl-w-full bl-bg-white">
-            <div>
-              <Component
-                node={DefaultContentNode.dummy(String(index), [])}
-              />
-            </div>
+          <div
+            className="bl-outerTransform bl-relative bl-w-full bl-bg-white"
+          >
+            <Component
+              node={DefaultContentNode.dummy(String(index), [])}
+            />
           </div>
           <Tooltip
             placement="rightBottom"
@@ -81,7 +101,7 @@ const ItemList: React.FC<ItemListProps> = props => {
               </finalUI.ComponentDescriptionWrapper>
           )}
           >
-            <finalUI.ComponentDescriptionIcon>
+            <finalUI.ComponentDescriptionIcon style={outerStyle}>
               info
             </finalUI.ComponentDescriptionIcon>
           </Tooltip>
@@ -119,14 +139,16 @@ const ItemList: React.FC<ItemListProps> = props => {
           onClick={() => setScale(Scale.Quarter)}
         />
       </finalUI.ScalingHeader>
-      <finalUI.GridListBoxInner>
-        {elems}
-        {
-          components.length > 50
-            ? <MoreItems />
-            : Fragment
-        }
-      </finalUI.GridListBoxInner>
+      <div style={{ height: '500px' }}>
+        <finalUI.GridListBoxInner style={transformStyle} id="gridlistboxinner">
+          {elems}
+          {
+            components.length > 50
+              ? <MoreItems />
+              : Fragment
+          }
+        </finalUI.GridListBoxInner>
+      </div>
     </finalUI.GridListBox>
   );
 };
