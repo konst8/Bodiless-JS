@@ -139,6 +139,8 @@ const ItemList: React.FC<ItemListProps> = props => {
           onClick={() => setScale(Scale.Quarter)}
         />
       </finalUI.ScalingHeader>
+      {/* Set static height to make the wrapper scrollable.
+      This follows the static size of .bl-form-wrapper. */}
       <div style={{ height: '500px' }}>
         <finalUI.GridListBoxInner style={transformStyle} id="gridlistboxinner">
           {elems}
