@@ -14,19 +14,17 @@
 
 import { AxiosPromise } from 'axios';
 
-export enum ItemStateEvent {
-  UpdateFromServer,
-  UpdateFromBrowser,
-  DeleteFromBrowser,
-  OnLockTimeout,
-  OnRequestEnd,
-  OnRequestStart,
-}
+
+
 
 export type ConflictsResponseType = {
   hasConflict: boolean,
   files?: string[],
 };
+
+
+
+
 
 export type GitClient = {
   commit: (
@@ -42,3 +40,19 @@ export type GitClient = {
   pull: () => AxiosPromise<any>,
   reset: () => AxiosPromise<any>,
 };
+
+
+
+export enum ItemStateEvent {
+  UpdateFromServer,
+  UpdateFromBrowser,
+  DeleteFromBrowser,
+  OnLockTimeout,
+  OnRequestEnd,
+  OnRequestStart,
+  OnRequestError,
+}
+
+
+
+
