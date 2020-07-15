@@ -33,9 +33,16 @@ const ItemList: React.FC<ItemListProps> = props => {
   const { components, onSelect } = props;
   const finalUI = useContext(uiContext);
   const [scale, setScale] = useState(Scale.Full);
+  const getRowHeight = () => {
+    if (components.length <= scale) {
+      return 'auto';
+    }
+    return `${scale * 100}%`;
+  };
   const styles = {
     1: {
       transformStyle: {
+        height: getRowHeight(),
       },
       boxStyle: {
         width: '100%',
@@ -46,7 +53,7 @@ const ItemList: React.FC<ItemListProps> = props => {
     2: {
       transformStyle: {
         width: '200%',
-        height: '200%',
+        height: getRowHeight(),
         transform: 'scale(.5) translate(-50%, -50%)',
       },
       boxStyle: {
@@ -59,7 +66,7 @@ const ItemList: React.FC<ItemListProps> = props => {
     4: {
       transformStyle: {
         width: '400%',
-        height: '400%',
+        height: getRowHeight(),
         transform: 'scale(.25) translate(-150%, -150%)',
       },
       boxStyle: {
@@ -139,9 +146,7 @@ const ItemList: React.FC<ItemListProps> = props => {
           onClick={() => setScale(Scale.Quarter)}
         />
       </finalUI.ScalingHeader>
-      {/* Set static height to make the wrapper scrollable.
-      This follows the static size of .bl-form-wrapper. */}
-      <div style={{ height: '500px' }}>
+      <finalUI.GridListBoxWrapper>
         <finalUI.GridListBoxInner style={transformStyle} id="gridlistboxinner">
           {elems}
           {
@@ -150,7 +155,7 @@ const ItemList: React.FC<ItemListProps> = props => {
               : Fragment
           }
         </finalUI.GridListBoxInner>
-      </div>
+      </finalUI.GridListBoxWrapper>
     </finalUI.GridListBox>
   );
 };
