@@ -14,15 +14,15 @@
 
 import React, { FC, HTMLProps } from 'react';
 import { flow } from 'lodash';
-import { 
+import {
   Text as BaseText,
   TextArea as BaseTextArea,
   RadioGroup as BaseRadioGroup,
   Radio as BaseRadio,
-  Checkbox as BaseCheckbox,
+  Checkbox as BaseCheckBox,
   Select as BaseSelect,
   Option as BaseOption,
-  FieldProps
+  FieldProps,
 } from 'informed';
 import {
   Li, Ul, stylable, addClasses, StylableProps, withoutProps, flowIf, hasProp, addProps,
@@ -45,13 +45,10 @@ export const Text = stylable<FieldProps<any, any>>(BaseText);
 export const TextArea = stylable<FieldProps<any, any>>(BaseTextArea);
 export const RadioGroup = stylable<FieldProps<any, any>>(BaseRadioGroup);
 export const Radio = stylable<HTMLProps<HTMLInputElement>>(BaseRadio);
-export const Checkbox = stylable<FieldProps<any, any>>(BaseCheckbox);
+export const CheckBox = stylable<any>(BaseCheckBox);
 export const Select = stylable<FieldProps<any, any>>(BaseSelect);
 export const Option = stylable<HTMLProps<HTMLInputElement>>(BaseOption);
 export const Anchor = stylable<HTMLProps<HTMLAnchorElement>>('a');
-
-// const CheckBoxBase: FC<HTMLProps<HTMLInputElement>> = props => <input {...props} type="checkbox" />;
-// export const CheckBox = stylable(CheckBoxBase);
 
 export const Icon = flow(
   addClasses('bl-rounded bl-p-grid-1 material-icons'),
@@ -104,20 +101,20 @@ export const ComponentFormTextArea = addClasses(
 )(TextArea);
 
 export const ComponentFormRadioGroup = addClasses(
-  'bl-mb-grid-2'
+  'bl-mb-grid-2',
 )(RadioGroup);
 
 export const ComponentFormRadio = addClasses(
-  'bl-mr-grid-2 bl-mb-grid-2 align-baseline'
+  'bl-mr-grid-2 bl-mb-grid-2 align-baseline',
 )(Radio);
 
-export const ComponentFormCheckbox = addClasses(
-  'bl-mr-grid-2 bl-mb-grid-2 align-baseline'
-)(Checkbox);
+export const ComponentFormCheckBox = addClasses(
+  'bl-mr-grid-2 bl-mb-grid-2 align-baseline',
+)(CheckBox);
 
 export const ComponentFormSelect = addClasses(
   `bl-text-grey-900 bg-grey-100 bl-text-xs bl-w-full
-  bl-min-w-xl-grid-1 bl-block bl-my-grid-2 bl-p-grid-1`
+  bl-min-w-xl-grid-1 bl-block bl-my-grid-2 bl-p-grid-1`,
 )(Select);
 
 export const ComponentFormOption = Option;
