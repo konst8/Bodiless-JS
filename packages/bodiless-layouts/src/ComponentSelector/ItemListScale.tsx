@@ -43,6 +43,7 @@ const ItemList: React.FC<ItemListProps> = props => {
     1: {
       transformStyle: {
         height: getRowHeight(),
+        maxHeight: '100%',
       },
       boxStyle: {
         width: '100%',
