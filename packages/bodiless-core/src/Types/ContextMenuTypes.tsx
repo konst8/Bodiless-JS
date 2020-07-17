@@ -47,13 +47,17 @@ export type UI = {
   ComponentFormUnwrapButton?: ComponentType<HTMLProps<HTMLButtonElement>> | string;
   ComponentFormText?: ComponentType<FieldProps<any, any>>;
   ComponentFormTextArea?: ComponentType<FieldProps<any, any>>;
+  ComponentFormRadioGroup?: ComponentType<FieldProps<any, any>>;
+  ComponentFormRadio?: ComponentType<HTMLProps<HTMLInputElement>>;
+  ComponentFormCheckbox?: ComponentType<FieldProps<any, any>>;
+  ComponentFormSelect?: ComponentType<FieldProps<any, any>>;
+  ComponentFormOption?: ComponentType<HTMLProps<HTMLInputElement>>;
   ComponentFormError?: ComponentType<HTMLProps<HTMLDivElement>> | string;
   Form?: ComponentType<HTMLProps<HTMLFormElement>> | string;
   Tooltip?: ComponentType<Tooltip['props']>;
   ReactTags?: ComponentType<ReactTagsFieldProps>;
   ComponentFormList?: ComponentType<HTMLProps<HTMLUListElement>> | string;
   ComponentFormListItem?: ComponentType<HTMLProps<HTMLLIElement>> | string;
-  // @TODO: Add other controls from informed.
 };
 
 export type IContextMenuProps = {
