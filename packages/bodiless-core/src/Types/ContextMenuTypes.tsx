@@ -17,7 +17,11 @@ import {
   HTMLProps,
   ReactNode,
 } from 'react';
-import { FieldProps } from 'informed';
+import {
+  FieldProps,
+  ChildFieldProps,
+  SelectFieldProps,
+} from 'informed';
 import Tooltip from 'rc-tooltip';
 import { TMenuOption } from '../PageEditContext/types';
 import { ReactTagsFieldProps } from '../components/ReactTagsField';
@@ -48,10 +52,10 @@ export type UI = {
   ComponentFormText?: ComponentType<FieldProps<any, any>>;
   ComponentFormTextArea?: ComponentType<FieldProps<any, any>>;
   ComponentFormRadioGroup?: ComponentType<FieldProps<any, any>>;
-  ComponentFormRadio?: ComponentType<HTMLProps<HTMLInputElement>>;
+  ComponentFormRadio?: ComponentType<ChildFieldProps<any, any>>;
   ComponentFormCheckbox?: ComponentType<FieldProps<any, any>>;
-  ComponentFormSelect?: ComponentType<FieldProps<any, any>>;
-  ComponentFormOption?: ComponentType<HTMLProps<HTMLInputElement>>;
+  ComponentFormSelect?: ComponentType<SelectFieldProps<any, any>>;
+  ComponentFormOption?: ComponentType<ChildFieldProps<any, any>>;
   ComponentFormError?: ComponentType<HTMLProps<HTMLDivElement>> | string;
   Form?: ComponentType<HTMLProps<HTMLFormElement>> | string;
   Tooltip?: ComponentType<Tooltip['props']>;

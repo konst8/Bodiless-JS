@@ -23,6 +23,8 @@ import {
   Select as BaseSelect,
   Option as BaseOption,
   FieldProps,
+  ChildFieldProps,
+  SelectFieldProps,
 } from 'informed';
 import {
   Li, Ul, stylable, addClasses, StylableProps, withoutProps, flowIf, hasProp, addProps,
@@ -44,10 +46,10 @@ export const Hr = stylable<HTMLProps<HTMLHRElement>>('hr');
 export const Text = stylable<FieldProps<any, any>>(BaseText);
 export const TextArea = stylable<FieldProps<any, any>>(BaseTextArea);
 export const RadioGroup = stylable<FieldProps<any, any>>(BaseRadioGroup);
-export const Radio = stylable<HTMLProps<HTMLInputElement>>(BaseRadio);
-export const CheckBox = stylable<any>(BaseCheckBox);
-export const Select = stylable<FieldProps<any, any>>(BaseSelect);
-export const Option = stylable<HTMLProps<HTMLInputElement>>(BaseOption);
+export const Radio = stylable<ChildFieldProps<any, any>>(BaseRadio);
+export const CheckBox = stylable<FieldProps<any, any>>(BaseCheckBox);
+export const Select = stylable<SelectFieldProps<any, any>>(BaseSelect);
+export const Option = stylable<ChildFieldProps<any, any>>(BaseOption);
 export const Anchor = stylable<HTMLProps<HTMLAnchorElement>>('a');
 
 export const Icon = flow(
