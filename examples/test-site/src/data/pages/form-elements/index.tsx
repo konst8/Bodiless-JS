@@ -12,11 +12,12 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { FC } from 'react';
 import { graphql } from 'gatsby';
 import { addClasses } from '@bodiless/fclasses';
+import { PageContextProvider } from '@bodiless/core';
 import {
-  ComponentFormWrapper as BaseComponentFormWapper,
+  Form,
   ComponentFormFieldWrapper,
   ComponentFormFieldTitle,
   ComponentFormDescription,
@@ -33,12 +34,22 @@ import {
 import { Page } from '@bodiless/gatsby-theme-bodiless';
 import Layout from '../../../components/Layout';
 
-const ComponentFormWrapper = addClasses(
-  'bl-mt-grid-10 bl-mb-grid-10 bl-w-1/4 bl-rounded',
-)(BaseComponentFormWapper);
+const ExampleFormButtonProvider: FC = ({ children }) => {
+    const getMenuOptions = () => [{
+      name: 'Example Form',
+      label: 'Test',
+      icon: 'article',
+      handler: () => ExampleForm,
+    }];
+    return (
+      <PageContextProvider getMenuOptions={getMenuOptions}>
+        {children}
+      </PageContextProvider>
+    );
+  };
 
 const ExampleForm = () => (
-  <ComponentFormWrapper>
+  <Form>
     <ComponentFormTitle>Multi-Field Example Form</ComponentFormTitle>
 
     <ComponentFormFieldWrapper>
@@ -116,15 +127,19 @@ const ExampleForm = () => (
       <ComponentFormFieldTitle>Number</ComponentFormFieldTitle>
       <ComponentFormText field="number-text-field" type="number" placeholder="100" />
     </ComponentFormFieldWrapper>
-  </ComponentFormWrapper>
+  </Form>
 );
 
 export default props => (
-  <Page {...props}>
-    <Layout>
-      <ExampleForm />
-    </Layout>
-  </Page>
+  <ExampleFormButtonProvider>
+    <Page {...props}>
+      <Layout>
+        <h1 className="bl-p-8">
+          Click the 'Test' button in the toolbar in order to see the example form.
+        </h1>
+      </Layout>
+    </Page>
+  </ExampleFormButtonProvider>
 );
 
 export const query = graphql`

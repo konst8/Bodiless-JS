@@ -43,6 +43,7 @@ export const Div = stylable<HTMLProps<HTMLDivElement>>('div');
 export const Span = stylable<HTMLProps<HTMLSpanElement>>('span');
 export const Button = stylable<HTMLProps<HTMLButtonElement>>('button');
 export const Hr = stylable<HTMLProps<HTMLHRElement>>('hr');
+export const Form = stylable<HTMLProps<HTMLFormElement>>('form');
 export const Text = stylable<FieldProps<any, any>>(BaseText);
 export const TextArea = stylable<FieldProps<any, any>>(BaseTextArea);
 export const RadioGroup = stylable<FieldProps<any, any>>(BaseRadioGroup);
@@ -62,16 +63,12 @@ export const Icon = flow(
   addProps({ 'aria-hidden': true }),
 )(Span);
 
-export const ComponentFormWrapper = addClasses(
-  'bl-bg-black bl-p-grid-5',
-)(Div);
-
 export const ComponentFormTitle = addClasses(
   'bl-text-lg bl-font-bold bl-text-grey-100 bl-block bl-mb-grid-2',
 )(Title);
 
 export const ComponentFormFieldWrapper = addClasses(
-  'bl-mb-grid-3',
+  'bl-mb-grid-3 bl-w-full',
 )(Div);
 
 export const ComponentFormFieldTitle = addClasses(
