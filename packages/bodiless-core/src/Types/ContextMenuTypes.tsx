@@ -42,6 +42,7 @@ export type UI = {
   ToolbarButton?: ComponentType<ButtonVariantProps> | string;
   FormWrapper?: ComponentType<HTMLProps<HTMLDivElement>> | string;
   ToolbarDivider?: ComponentType<HTMLProps<HTMLHRElement>> | string;
+  ComponentFormFieldWrapper?: ComponentType<HTMLProps<HTMLDivElement>> | string;
   ComponentFormTitle?: ComponentType<HTMLProps<HTMLHeadingElement>> | string;
   ComponentFormLabel?: ComponentType<HTMLProps<HTMLLabelElement>> | string;
   ComponentFormDescription?: ComponentType<HTMLProps<HTMLDivElement>> | string;
@@ -52,8 +53,9 @@ export type UI = {
   ComponentFormText?: ComponentType<FieldProps<any, any>>;
   ComponentFormTextArea?: ComponentType<FieldProps<any, any>>;
   ComponentFormRadioGroup?: ComponentType<FieldProps<any, any>>;
+  ComponentFormFieldTitle?: ComponentType<HTMLProps<HTMLDivElement>> | string;
   ComponentFormRadio?: ComponentType<ChildFieldProps<any, any>>;
-  ComponentFormCheckbox?: ComponentType<FieldProps<any, any>>;
+  ComponentFormCheckBox?: ComponentType<FieldProps<any, any>>;
   ComponentFormSelect?: ComponentType<SelectFieldProps<any, any>>;
   ComponentFormOption?: ComponentType<ChildFieldProps<any, any>>;
   ComponentFormError?: ComponentType<HTMLProps<HTMLDivElement>> | string;
