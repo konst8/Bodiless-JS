@@ -14,7 +14,6 @@
 
 import React, { FC } from 'react';
 import { graphql } from 'gatsby';
-import { addClasses } from '@bodiless/fclasses';
 import { PageContextProvider } from '@bodiless/core';
 import {
   Form,
@@ -33,20 +32,6 @@ import {
 } from '@bodiless/ui';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
 import Layout from '../../../components/Layout';
-
-const ExampleFormButtonProvider: FC = ({ children }) => {
-    const getMenuOptions = () => [{
-      name: 'Example Form',
-      label: 'Test',
-      icon: 'article',
-      handler: () => ExampleForm,
-    }];
-    return (
-      <PageContextProvider getMenuOptions={getMenuOptions}>
-        {children}
-      </PageContextProvider>
-    );
-  };
 
 const ExampleForm = () => (
   <Form>
@@ -130,12 +115,26 @@ const ExampleForm = () => (
   </Form>
 );
 
+const ExampleFormButtonProvider: FC = ({ children }) => {
+  const getMenuOptions = () => [{
+    name: 'Example Form',
+    label: 'Test',
+    icon: 'article',
+    handler: () => ExampleForm,
+  }];
+  return (
+    <PageContextProvider getMenuOptions={getMenuOptions}>
+      {children}
+    </PageContextProvider>
+  );
+};
+
 export default props => (
   <ExampleFormButtonProvider>
     <Page {...props}>
       <Layout>
         <h1 className="bl-p-8">
-          Click the 'Test' button in the toolbar in order to see the example form.
+          Click the &apos;Test&lsquo; button in the toolbar in order to see the example form.
         </h1>
       </Layout>
     </Page>
