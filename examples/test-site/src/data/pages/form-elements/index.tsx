@@ -14,105 +14,100 @@
 
 import React, { FC } from 'react';
 import { graphql } from 'gatsby';
-import { PageContextProvider } from '@bodiless/core';
-import {
-  Form,
-  ComponentFormFieldWrapper,
-  ComponentFormFieldTitle,
-  ComponentFormDescription,
-  ComponentFormLabel,
-  ComponentFormTitle,
-  ComponentFormText,
-  ComponentFormTextArea,
-  ComponentFormRadioGroup,
-  ComponentFormRadio,
-  ComponentFormCheckBox,
-  ComponentFormSelect,
-  ComponentFormOption,
-} from '@bodiless/ui';
+import { PageContextProvider, contextMenuForm, getUI } from '@bodiless/core';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
 import Layout from '../../../components/Layout';
 
-const ExampleForm = () => (
-  <Form>
-    <ComponentFormTitle>Multi-Field Example Form</ComponentFormTitle>
+const ExampleForm = () => contextMenuForm()(
+  ({ ui }: any) => {
+    const {
+      ComponentFormTitle, ComponentFormFieldWrapper, ComponentFormDescription,
+      ComponentFormFieldTitle, ComponentFormText, ComponentFormTextArea,
+      ComponentFormRadioGroup, ComponentFormLabel, ComponentFormRadio,
+      ComponentFormCheckBox, ComponentFormSelect, ComponentFormOption
+    } = getUI(ui);
+    return (
+      <>
+        <ComponentFormTitle>Multi-Field Example Form</ComponentFormTitle>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormDescription>
-        Description or instructions.
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </ComponentFormDescription>
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormDescription>
+            Description or instructions.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </ComponentFormDescription>
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Text</ComponentFormFieldTitle>
-      <ComponentFormText field="text-field" placeholder="Name" />
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Text</ComponentFormFieldTitle>
+          <ComponentFormText field="text-field" placeholder="Name" />
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Text Area</ComponentFormFieldTitle>
-      <ComponentFormTextArea field="text-area" placeholder="Comments" />
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Text Area</ComponentFormFieldTitle>
+          <ComponentFormTextArea field="text-area" placeholder="Comments" />
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Radio Button Group</ComponentFormFieldTitle>
-      <ComponentFormRadioGroup field="gender" style={{ backgroundColor: 'blue' }}>
-        <ComponentFormLabel>
-          <ComponentFormRadio value="male" />
-          Male
-        </ComponentFormLabel>
-        <ComponentFormLabel>
-          <ComponentFormRadio value="female" />
-          Female
-        </ComponentFormLabel>
-        <ComponentFormLabel>
-          <ComponentFormRadio value="other" />
-          Other
-        </ComponentFormLabel>
-      </ComponentFormRadioGroup>
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Radio Button Group</ComponentFormFieldTitle>
+          <ComponentFormRadioGroup field="gender" style={{ backgroundColor: 'blue' }}>
+            <ComponentFormLabel>
+              <ComponentFormRadio value="male" />
+              Male
+            </ComponentFormLabel>
+            <ComponentFormLabel>
+              <ComponentFormRadio value="female" />
+              Female
+            </ComponentFormLabel>
+            <ComponentFormLabel>
+              <ComponentFormRadio value="other" />
+              Other
+            </ComponentFormLabel>
+          </ComponentFormRadioGroup>
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Checkbox</ComponentFormFieldTitle>
-      <ComponentFormLabel>
-        <ComponentFormCheckBox field="checkbox" />
-        I agree
-      </ComponentFormLabel>
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Checkbox</ComponentFormFieldTitle>
+          <ComponentFormLabel>
+            <ComponentFormCheckBox field="checkbox" />
+            I agree
+          </ComponentFormLabel>
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Select</ComponentFormFieldTitle>
-      <ComponentFormSelect field="city">
-        <ComponentFormOption value="" disabled>
-          Select
-        </ComponentFormOption>
-        <ComponentFormOption value="ny">NY</ComponentFormOption>
-        <ComponentFormOption value="nj">NJ</ComponentFormOption>
-        <ComponentFormOption value="ct">CT</ComponentFormOption>
-      </ComponentFormSelect>
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Select</ComponentFormFieldTitle>
+          <ComponentFormSelect field="city">
+            <ComponentFormOption value="" disabled>
+              Select
+            </ComponentFormOption>
+            <ComponentFormOption value="ny">NY</ComponentFormOption>
+            <ComponentFormOption value="nj">NJ</ComponentFormOption>
+            <ComponentFormOption value="ct">CT</ComponentFormOption>
+          </ComponentFormSelect>
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Multi-Select</ComponentFormFieldTitle>
-      <ComponentFormSelect
-        field="colors"
-        id="select-colors"
-        multiple
-      >
-        <ComponentFormOption value="red">Red</ComponentFormOption>
-        <ComponentFormOption value="green">Green</ComponentFormOption>
-        <ComponentFormOption value="blue">Blue</ComponentFormOption>
-        <ComponentFormOption value="yellow">Yellow</ComponentFormOption>
-        <ComponentFormOption value="orange">Orange</ComponentFormOption>
-        <ComponentFormOption value="purple">Purple</ComponentFormOption>
-      </ComponentFormSelect>
-    </ComponentFormFieldWrapper>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Multi-Select</ComponentFormFieldTitle>
+          <ComponentFormSelect
+            field="colors"
+            id="select-colors"
+            multiple
+          >
+            <ComponentFormOption value="red">Red</ComponentFormOption>
+            <ComponentFormOption value="green">Green</ComponentFormOption>
+            <ComponentFormOption value="blue">Blue</ComponentFormOption>
+            <ComponentFormOption value="yellow">Yellow</ComponentFormOption>
+            <ComponentFormOption value="orange">Orange</ComponentFormOption>
+            <ComponentFormOption value="purple">Purple</ComponentFormOption>
+          </ComponentFormSelect>
+        </ComponentFormFieldWrapper>
 
-    <ComponentFormFieldWrapper>
-      <ComponentFormFieldTitle>Number</ComponentFormFieldTitle>
-      <ComponentFormText field="number-text-field" type="number" placeholder="100" />
-    </ComponentFormFieldWrapper>
-  </Form>
+        <ComponentFormFieldWrapper>
+          <ComponentFormFieldTitle>Number</ComponentFormFieldTitle>
+          <ComponentFormText field="number-text-field" type="number" placeholder="100" />
+        </ComponentFormFieldWrapper>
+      </>
+    );
+  },
 );
 
 const ExampleFormButtonProvider: FC = ({ children }) => {
@@ -120,7 +115,7 @@ const ExampleFormButtonProvider: FC = ({ children }) => {
     name: 'Example Form',
     label: 'Test',
     icon: 'article',
-    handler: () => ExampleForm,
+    handler: ExampleForm,
   }];
   return (
     <PageContextProvider getMenuOptions={getMenuOptions}>
