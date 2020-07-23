@@ -24,7 +24,7 @@ const ExampleForm = () => contextMenuForm()(
       ComponentFormTitle, ComponentFormFieldWrapper, ComponentFormDescription,
       ComponentFormFieldTitle, ComponentFormText, ComponentFormTextArea,
       ComponentFormRadioGroup, ComponentFormLabel, ComponentFormRadio,
-      ComponentFormCheckBox, ComponentFormSelect, ComponentFormOption
+      ComponentFormCheckBox, ComponentFormSelect, ComponentFormOption,
     } = getUI(ui);
     return (
       <>
