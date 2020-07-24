@@ -43,11 +43,13 @@ const SortableListWrapper = SortableContainer(
         const { FlowContainerEmpty } = getUI(ui);
         const context = useEditContext();
         const activeClassName = context.isActive ? 'bl-border-orange-400' : 'hover:bl-border-orange-400';
-
+        const classNames = `bl-flex bl-w-full bl-justify-center bl-flex-wrap bl-py-grid-3 ${activeClassName}`;
         return (
-          <FlowContainerEmpty {...rest} className={`bl-flex bl-justify-center bl-flex-wrap bl-py-grid-3 ${activeClassName}`} {...useContextActivator()}>
-            Empty FlowContainer
-          </FlowContainerEmpty>
+          <section {...rest} {...useContextActivator()}>
+            <FlowContainerEmpty className={classNames}>
+              Empty FlowContainer
+            </FlowContainerEmpty>
+          </section>
         );
       }
       return (
