@@ -19,7 +19,7 @@ import {
   NodeViewer,
 } from '@bodiless/components';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
-
+import resolveConfig from 'tailwindcss/resolveConfig';
 import Layout from '../../../components/Layout';
 import tailWindConfig from '../../../../tailwind.config';
 import { FlowContainerDefault } from '../../../components/FlowContainer';
@@ -27,7 +27,7 @@ import { FlowContainerDefault } from '../../../components/FlowContainer';
 const FLOW_CONTAINER_PAGE_PATH = 'flowContainer';
 
 const options = getSnapFrom(
-  withTailwindClasses(tailWindConfig)('w-full sm:w-1/2 sm:w-full lg:w-1/2 lg:w-full'),
+  withTailwindClasses(resolveConfig(tailWindConfig))('w-full sm:w-1/2 sm:w-full lg:w-1/2 lg:w-full'),
 );
 const FlowContainerPage = (props: any) => (
   <Page {...props}>
