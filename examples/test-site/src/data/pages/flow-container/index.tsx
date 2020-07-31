@@ -40,7 +40,9 @@ const FlowContainerPage = (props: any) => (
       />
       <h3 className="text-lg font-bold">This shows the json content of the grid:</h3>
       <NodeViewer nodeKey={FLOW_CONTAINER_PAGE_PATH} />
-      <h2 className="text-2xl font-bold mt-4">FlowContainer with constrained widths</h2>
+      <h2 className="text-2xl font-bold mt-4">
+        FlowContainer with constrained widths of 50% & 100% only
+      </h2>
       <FlowContainerDefault
         id="constrained_widths"
         nodeKey="constrained_widths"
