@@ -1,0 +1,7 @@
+{
+  "Components": {
+    "Editors": {
+      "Editors.md": "./doc/Editors.md"
+    }
+  }
+}

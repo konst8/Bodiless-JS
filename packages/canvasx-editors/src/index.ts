@@ -1,5 +1,5 @@
 /**
- * Copyright © 2019 Johnson & Johnson
+ * Copyright © 2021 Johnson & Johnson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,28 +11,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import React from 'react';
-import { graphql } from 'gatsby';
-import { Page } from '@bodiless/gatsby-theme-bodiless';
-
-import {
-  EditorPlainText,
-  EditorRichTextBasic,
-  EditorRichTextFull,
-} from '@canvasx/editors';
-
-const HomePage = (props: any) => (
-  <Page {...props}>
-    <EditorPlainText />
-  </Page>
-);
-
-export const query = graphql`
-  query($slug: String!) {
-    ...PageQuery
-    ...SiteQuery
-  }
-`;
-
-export default HomePage;
+export * from './EditorsClean';
+export * from './Editors.schema';
+export * from './Editors.token';

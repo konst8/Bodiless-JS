@@ -1,0 +1,35 @@
+{
+  "name": "@canvasx/editors",
+  "version": "0.0.58",
+  "description": "",
+  "author": "Konstantin Mishur <kmishur@its.jnj.com>",
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "files": [
+    "/lib",
+    "/canvasx.docs.json",
+    "/doc"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://sourcecode.jnj.com/scm/asx-nbfp/canvasx.git"
+  },
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json && npm run build:api-doc",
+    "build:watch": "npm run build -- --watch",
+    "build:api-doc": "typedoc --out doc/api --mode file",
+    "lint": "tslint ./src/**/*.ts?x",
+    "clean": "rimraf \"lib/*\" && rimraf tsconfig.tsbuildinfo"
+  },
+  "peerDependencies": {
+    "react": "^16.11.0",
+    "lodash": "^4.17.19"
+  },
+  "dependencies": {
+    "@bodiless/core": "^0.0.68",
+    "@bodiless/components": "^0.0.68",
+    "@bodiless/fclasses": "^0.0.68",
+    "@bodiless/richtext-ui": "^0.0.68"
+  }
+}
