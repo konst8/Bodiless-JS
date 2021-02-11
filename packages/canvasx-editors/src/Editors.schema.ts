@@ -1,4 +1,4 @@
- /**
+/**
  * Copyright © 2021 Johnson & Johnson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,56 +14,53 @@
 
 import { flow } from 'lodash';
 import { WithNodeKeyProps } from '@bodiless/core';
+import {
+  asBlock,
+  withKey,
+  withButton,
+} from '@bodiless/richtext';
 import { RichText } from '@bodiless/richtext-ui';
 import {
-  // Div,
   withDesign,
+  replaceWith,
+  P,
 } from '@bodiless/fclasses';
 import {
   asEditable as asBodilessEditable,
 } from '@bodiless/components';
 import withEditor from './withEditor';
 import { EditorClean } from './EditorsClean';
-import {
-  asBold,
-  asItalic,
-  asLink,
-  asUnderline,
-  asAlignLeft,
-  asAlignRight,
-  asAlignCenter,
-  asAlignJustify,
-  asSuperScript,
-  asHeader1,
-  asHeader2,
-  asHeader3,
-  asIndent,
-  asParagraph,
-} from './Editors.token';
 
-const simpleDesign = {
-  SuperScript: asSuperScript,
-};
+const asIndent = flow(
+  withKey('indent'),
+  withButton('format_indent_increase'),
+  asBlock,
+);
 
-const basicDesign = {
-  Bold: asBold,
-  Italic: asItalic,
-  Underline: asUnderline,
-  Link: asLink,
-  ...simpleDesign,
-  AlignLeft: asAlignLeft,
-  AlignRight: asAlignRight,
-  AlignJustify: asAlignJustify,
-  AlignCenter: asAlignCenter,
-  H2: asHeader2,
-  H3: asHeader3,
-};
+const asParagraph = flow(
+  replaceWith(P),
+  asBlock,
+);
 
-const fullDesign = {
-  ...basicDesign,
+const basicSchema = {
+  Bold: flow(),
+  Italic: flow(),
+  Underline: flow(),
+  Link: flow(),
+  SuperScript: flow(),
+  AlignLeft: flow(),
+  AlignRight: flow(),
+  AlignJustify: flow(),
+  AlignCenter: flow(),
+  H2: flow(),
+  H3: flow(),
   paragraph: asParagraph,
-  H1: asHeader1,
   Indent: asIndent,
+};
+
+const fullSchema = {
+  ...basicSchema,
+  H1: flow(),
 };
 
 const asEditorPlainText = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asBodilessEditable(
@@ -80,14 +77,24 @@ const asEditorPlainText = (nodeKeys?: WithNodeKeyProps, placeholder?: string) =>
 
 const EditorPlainText = flow(
   withDesign({
-    Editor: asEditorPlainText('testEditorPlainText', 'edit plain text'),
+    Editor: asEditorPlainText(),
   }),
 )(EditorClean);
 
-// @ts-ignore
-const EditorRichTextBasic = withDesign(basicDesign)(RichText);
-// @ts-ignore
-const EditorRichTextFull = withDesign(fullDesign)(RichText);
+const EditorRichTextBasicBase = withDesign(basicSchema)(RichText as any);
+const EditorRichTextBasic = flow(
+  withDesign({
+    Editor: replaceWith(EditorRichTextBasicBase),
+  }),
+)(EditorClean);
+
+const EditorRichTextFullBase = withDesign(fullSchema)(RichText as any);
+const EditorRichTextFull = flow(
+  withDesign({
+    Editor: replaceWith(EditorRichTextFullBase),
+  }),
+)(EditorClean);
+
 const withEditorPlainText = withEditor(EditorPlainText);
 const withEditorRichTextBasic = withEditor(EditorRichTextBasic);
 const withEditorRichTextFull = withEditor(EditorRichTextFull);

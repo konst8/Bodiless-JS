@@ -24,7 +24,9 @@ import {
 
 const HomePage = (props: any) => (
   <Page {...props}>
-    <EditorPlainText />
+    <EditorPlainText className="p-10" nodeKey="plain" placeholder="plain" />
+    <EditorRichTextBasic className="p-10" nodeKey="basic" placeholder="basic" />
+    <EditorRichTextFull className="p-10" nodeKey="full" placeholder="full" />
   </Page>
 );
 

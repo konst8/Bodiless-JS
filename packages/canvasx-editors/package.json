@@ -30,6 +30,7 @@
     "@bodiless/core": "^0.0.68",
     "@bodiless/components": "^0.0.68",
     "@bodiless/fclasses": "^0.0.68",
+    "@bodiless/richtext": "^0.0.68",
     "@bodiless/richtext-ui": "^0.0.68"
   }
 }
