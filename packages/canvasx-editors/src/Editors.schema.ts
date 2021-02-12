@@ -25,6 +25,7 @@ import {
   replaceWith,
   P,
   Div,
+  stylable,
 } from '@bodiless/fclasses';
 import {
   asEditable as asBodilessEditable,
@@ -78,9 +79,13 @@ const fullSchema = {
   H1: flow(),
 };
 
-const EditorRichTextBasicBase = withDesign(basicSchema)(RichText as any);
+const StylableRichText = flow(
+  stylable,
+)(RichText);
 
-const EditorRichTextFullBase = withDesign(fullSchema)(RichText as any);
+const EditorRichTextBasicBase = withDesign(basicSchema)(StylableRichText);
+
+const EditorRichTextFullBase = withDesign(fullSchema)(StylableRichText);
 
 export {
   EditorPlainTextBase,

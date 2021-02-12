@@ -12,27 +12,39 @@
  * limitations under the License.
  */
 import { flow } from 'lodash';
-import { stylable } from '@bodiless/fclasses';
+import { replaceWith, withDesign } from '@bodiless/fclasses';
 import {
   EditorPlainTextBase,
   EditorRichTextBasicBase,
   EditorRichTextFullBase,
 } from './Editors.schema';
-import { withEditorDefaultStyles } from './Editors.token';
+import {
+  withEditorDefaultStyles,
+} from './Editors.token';
+import {
+  EditorClean,
+} from './EditorsClean';
 
 const EditorPlainText = flow(
+  withDesign({
+    Editor: replaceWith(EditorPlainTextBase),
+  }),
   withEditorDefaultStyles,
-)(EditorPlainTextBase);
+)(EditorClean);
 
 const EditorRichTextBasic = flow(
-  stylable,
+  withDesign({
+    Editor: replaceWith(EditorRichTextBasicBase),
+  }),
   withEditorDefaultStyles,
-)(EditorRichTextBasicBase);
+)(EditorClean);
 
 const EditorRichTextFull = flow(
-  stylable,
+  withDesign({
+    Editor: replaceWith(EditorRichTextFullBase),
+  }),
   withEditorDefaultStyles,
-)(EditorRichTextFullBase);
+)(EditorClean);
 
 export {
   EditorPlainText,

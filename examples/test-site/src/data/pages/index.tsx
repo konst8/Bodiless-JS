@@ -25,22 +25,18 @@ import {
   withEditorPlainText,
   withEditorRichTextBasic,
   withEditorRichTextFull,
-  withPlaceholder,
 } from '@canvasx/editors';
 
 const Plain1 = flow(
-  withPlaceholder('plain 1'),
-  withEditorPlainText(),
+  withEditorPlainText('plain_hoc', 'Plain HOC'),
 )(Div);
 
 const Basic1 = flow(
-  withPlaceholder('basic 1'),
-  withEditorRichTextBasic(),
+  withEditorRichTextBasic('basic_hoc', 'RTE Basic HOC'),
 )(Div);
 
 const Full1 = flow(
-  withPlaceholder('full 1'),
-  withEditorRichTextFull(),
+  withEditorRichTextFull('full_hoc', 'RTE Full HOC'),
 )(Div);
 
 const HomePage = (props: any) => (
@@ -48,9 +44,9 @@ const HomePage = (props: any) => (
     <EditorPlainText className="p-10" nodeKey="plain" placeholder="plain" />
     <EditorRichTextBasic className="p-10" nodeKey="basic" placeholder="basic" />
     <EditorRichTextFull className="p-10" nodeKey="full" placeholder="full" />
-    <Plain1 className="p-10" nodeKey="plain-hoc" placeholder="plain hoc" />
-    <Basic1 className="p-10" nodeKey="basic-hoc" placeholder="basic hoc" />
-    <Full1 className="p-10" nodeKey="full-hoc" placeholder="full hoc" />
+    <Plain1 className="p-10" />
+    <Basic1 className="p-10" />
+    <Full1 className="p-10" />
   </Page>
 );
 

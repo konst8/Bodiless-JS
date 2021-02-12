@@ -11,9 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { flow } from 'lodash';
 import { ComponentType as CT } from 'react';
+import { flow } from 'lodash';
 import { withChild, withNodeKey, WithNodeKeyProps } from '@bodiless/core';
 import { withPlaceholder } from '@bodiless/components';
 import {

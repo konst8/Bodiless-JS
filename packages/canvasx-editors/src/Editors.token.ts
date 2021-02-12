@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { addClasses } from '@bodiless/fclasses';
+import { addClasses, withDesign } from '@bodiless/fclasses';
 
 const asBold = addClasses('');
 const asItalic = addClasses('');
@@ -28,7 +28,10 @@ const asHeader3 = addClasses('');
 const asIndent = addClasses('');
 const asParagraph = addClasses('');
 
-const withEditorDefaultStyles = addClasses('flex-grow');
+const withEditorDefaultStyles = withDesign({
+  EditorWrapper: addClasses('overflow-hidden'),
+  Editor: addClasses('flex-grow'),
+});
 
 export {
   asBold,
