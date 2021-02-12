@@ -13,20 +13,44 @@
  */
 
 import React from 'react';
+import { flow } from 'lodash';
 import { graphql } from 'gatsby';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
+import { Div } from '@bodiless/fclasses';
 
 import {
   EditorPlainText,
   EditorRichTextBasic,
   EditorRichTextFull,
+  withEditorPlainText,
+  withEditorRichTextBasic,
+  withEditorRichTextFull,
+  withPlaceholder,
 } from '@canvasx/editors';
+
+const Plain1 = flow(
+  withPlaceholder('plain 1'),
+  withEditorPlainText(),
+)(Div);
+
+const Basic1 = flow(
+  withPlaceholder('basic 1'),
+  withEditorRichTextBasic(),
+)(Div);
+
+const Full1 = flow(
+  withPlaceholder('full 1'),
+  withEditorRichTextFull(),
+)(Div);
 
 const HomePage = (props: any) => (
   <Page {...props}>
     <EditorPlainText className="p-10" nodeKey="plain" placeholder="plain" />
     <EditorRichTextBasic className="p-10" nodeKey="basic" placeholder="basic" />
     <EditorRichTextFull className="p-10" nodeKey="full" placeholder="full" />
+    <Plain1 className="p-10" nodeKey="plain-hoc" placeholder="plain hoc" />
+    <Basic1 className="p-10" nodeKey="basic-hoc" placeholder="basic hoc" />
+    <Full1 className="p-10" nodeKey="full-hoc" placeholder="full hoc" />
   </Page>
 );
 

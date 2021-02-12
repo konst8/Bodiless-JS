@@ -16,25 +16,31 @@ import { flow } from 'lodash';
 import { ComponentType as CT } from 'react';
 import { withChild, withNodeKey, WithNodeKeyProps } from '@bodiless/core';
 import { withPlaceholder } from '@bodiless/components';
-import { addClasses, Div } from '@bodiless/fclasses';
+import {
+  EditorPlainText,
+  EditorRichTextBasic,
+  EditorRichTextFull,
+} from './Editors';
 
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
   placeholder?: string,
-) => (
+) => withChild(
   flow(
-    addClasses('overflow-hidden'),
-    withChild(flow(
-      addClasses('flex-grow'),
-      withChild(flow(
-        withPlaceholder(placeholder),
-        withNodeKey(nodeKey),
-      )(Editor)),
-    )(Div)),
-  )
+    withPlaceholder(placeholder),
+    withNodeKey(nodeKey),
+  )(Editor),
+  'Editor', // design key
 );
 
-export default withEditor;
+const withEditorPlainText = withEditor(EditorPlainText);
+const withEditorRichTextBasic = withEditor(EditorRichTextBasic);
+const withEditorRichTextFull = withEditor(EditorRichTextFull);
+
 export {
   withPlaceholder,
+  withEditor,
+  withEditorPlainText,
+  withEditorRichTextBasic,
+  withEditorRichTextFull,
 };

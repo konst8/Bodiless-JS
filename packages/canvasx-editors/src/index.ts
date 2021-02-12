@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './EditorsClean';
 export * from './Editors.schema';
 export * from './Editors.token';
+export * from './withEditor';
+export * from './Editors';

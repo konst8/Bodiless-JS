@@ -24,12 +24,11 @@ import {
   withDesign,
   replaceWith,
   P,
+  Div,
 } from '@bodiless/fclasses';
 import {
   asEditable as asBodilessEditable,
 } from '@bodiless/components';
-import withEditor from './withEditor';
-import { EditorClean } from './EditorsClean';
 
 const asIndent = flow(
   withKey('indent'),
@@ -41,6 +40,22 @@ const asParagraph = flow(
   replaceWith(P),
   asBlock,
 );
+
+const asEditorPlainText = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asBodilessEditable(
+  nodeKeys,
+  placeholder,
+  // Overrides to add auto-superscript.
+  () => ({
+    sanitizer: (html: string) => html
+      .split('')
+      .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
+      .join(''),
+  }),
+);
+
+const EditorPlainTextBase = flow(
+  asEditorPlainText(),
+)(Div);
 
 const basicSchema = {
   Bold: flow(),
@@ -63,47 +78,12 @@ const fullSchema = {
   H1: flow(),
 };
 
-const asEditorPlainText = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asBodilessEditable(
-  nodeKeys,
-  placeholder,
-  // Overrides to add auto-superscript.
-  () => ({
-    sanitizer: (html: string) => html
-      .split('')
-      .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
-      .join(''),
-  }),
-);
-
-const EditorPlainText = flow(
-  withDesign({
-    Editor: asEditorPlainText(),
-  }),
-)(EditorClean);
-
 const EditorRichTextBasicBase = withDesign(basicSchema)(RichText as any);
-const EditorRichTextBasic = flow(
-  withDesign({
-    Editor: replaceWith(EditorRichTextBasicBase),
-  }),
-)(EditorClean);
 
 const EditorRichTextFullBase = withDesign(fullSchema)(RichText as any);
-const EditorRichTextFull = flow(
-  withDesign({
-    Editor: replaceWith(EditorRichTextFullBase),
-  }),
-)(EditorClean);
-
-const withEditorPlainText = withEditor(EditorPlainText);
-const withEditorRichTextBasic = withEditor(EditorRichTextBasic);
-const withEditorRichTextFull = withEditor(EditorRichTextFull);
 
 export {
-  EditorPlainText,
-  EditorRichTextBasic,
-  EditorRichTextFull,
-  withEditorPlainText,
-  withEditorRichTextBasic,
-  withEditorRichTextFull,
+  EditorPlainTextBase,
+  EditorRichTextBasicBase,
+  EditorRichTextFullBase,
 };
