@@ -13,7 +13,9 @@
  */
 
 import flow from 'lodash/flow';
-import { WithNodeKeyProps } from '@bodiless/core';
+import {
+  WithNodeKeyProps,
+} from '@bodiless/core';
 import {
   asBlock,
   withButton,
@@ -27,6 +29,7 @@ import {
 } from '@bodiless/fclasses';
 import {
   asEditable,
+  UseEditableOverrides,
 } from '@bodiless/components';
 
 const asIndent = flow(
@@ -39,16 +42,21 @@ const asParagraph = flow(
   asBlock,
 );
 
-const asEditorPlain = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asEditable(
+const withSuperScriptSanitizer = () => ({
+  sanitizer: (html: string) => html
+    .split('')
+    .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
+    .join(''),
+});
+
+const asEditorPlain = (
+  nodeKeys?: WithNodeKeyProps,
+  placeholder?: string,
+  useOverrides?: UseEditableOverrides,
+) => asEditable(
   nodeKeys,
   placeholder,
-  // Overrides to add auto-superscript.
-  () => ({
-    sanitizer: (html: string) => html
-      .split('')
-      .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
-      .join(''),
-  }),
+  useOverrides || withSuperScriptSanitizer,
 );
 
 const identity = (val:any) => val;
@@ -94,6 +102,7 @@ const EditorBasic = withDesign(basicSchema)(StylableRichText);
 const EditorFull = withDesign(fullSchema)(StylableRichText);
 
 export {
+  withSuperScriptSanitizer,
   asEditorPlain,
   EditorBasic,
   EditorFull,

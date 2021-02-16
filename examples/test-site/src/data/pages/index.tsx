@@ -28,6 +28,10 @@ const Plain1 = flow(
   withEditorPlain('plain_hoc', 'Plain HOC'),
 )(Div);
 
+const Plain2 = flow(
+  withEditorPlain('plain_hoc_2', 'Plain HOC no overrides', () => ({})),
+)(Div);
+
 const Basic1 = flow(
   withEditorBasic('basic_hoc', 'RTE Basic HOC'),
 )(Div);
@@ -39,6 +43,7 @@ const Full1 = flow(
 const HomePage = (props: any) => (
   <Page {...props}>
     <Plain1 className="p-10" />
+    <Plain2 className="p-10" />
     <Basic1 className="p-10" />
     <Full1 className="p-10" />
   </Page>
