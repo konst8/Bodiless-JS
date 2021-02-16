@@ -51,35 +51,37 @@ const asEditorPlain = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asE
   }),
 );
 
+const identity = (val:any) => val;
+
 const basicSchema = {
-  Bold: flow(),
-  Italic: flow(),
-  Underline: flow(),
-  Link: flow(),
-  SuperScript: flow(),
-  AlignLeft: flow(),
-  AlignRight: flow(),
-  AlignJustify: flow(),
-  AlignCenter: flow(),
-  H2: flow(),
-  H3: flow(),
+  Bold: identity,
+  Italic: identity,
+  Underline: identity,
+  Link: identity,
+  SuperScript: identity,
+  AlignLeft: identity,
+  AlignRight: identity,
+  AlignJustify: identity,
+  AlignCenter: identity,
+  H2: identity,
+  H3: identity,
   paragraph: asParagraph,
-  // Indent: asIndent,
+  Indent: asIndent,
 };
 
 const fullSchema = {
-  Bold: flow(),
-  Italic: flow(),
-  Underline: flow(),
-  Link: flow(),
-  SuperScript: flow(),
-  AlignLeft: flow(),
-  AlignRight: flow(),
-  AlignJustify: flow(),
-  AlignCenter: flow(),
-  H1: flow(),
-  H2: flow(),
-  H3: flow(),
+  Bold: identity,
+  Italic: identity,
+  Underline: identity,
+  Link: identity,
+  SuperScript: identity,
+  AlignLeft: identity,
+  AlignRight: identity,
+  AlignJustify: identity,
+  AlignCenter: identity,
+  H1: identity,
+  H2: identity,
+  H3: identity,
   paragraph: asParagraph,
   Indent: asIndent,
 };
@@ -89,7 +91,6 @@ const StylableRichText = flow(
 )(RichText);
 
 const EditorBasic = withDesign(basicSchema)(StylableRichText);
-
 const EditorFull = withDesign(fullSchema)(StylableRichText);
 
 export {
