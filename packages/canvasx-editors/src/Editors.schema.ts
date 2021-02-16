@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import { flow } from 'lodash';
+import flow from 'lodash/flow';
 import { WithNodeKeyProps } from '@bodiless/core';
 import {
   asBlock,
@@ -24,11 +24,10 @@ import {
   withDesign,
   replaceWith,
   P,
-  Div,
   stylable,
 } from '@bodiless/fclasses';
 import {
-  asEditable as asBodilessEditable,
+  asEditable,
 } from '@bodiless/components';
 
 const asIndent = flow(
@@ -42,7 +41,7 @@ const asParagraph = flow(
   asBlock,
 );
 
-const asEditorPlainText = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asBodilessEditable(
+const asEditorPlain = (nodeKeys?: WithNodeKeyProps, placeholder?: string) => asEditable(
   nodeKeys,
   placeholder,
   // Overrides to add auto-superscript.
@@ -53,10 +52,6 @@ const asEditorPlainText = (nodeKeys?: WithNodeKeyProps, placeholder?: string) =>
       .join(''),
   }),
 );
-
-const EditorPlainTextBase = flow(
-  asEditorPlainText(),
-)(Div);
 
 const basicSchema = {
   Bold: flow(),
@@ -75,20 +70,32 @@ const basicSchema = {
 };
 
 const fullSchema = {
-  ...basicSchema,
+  Bold: flow(),
+  Italic: flow(),
+  Underline: flow(),
+  Link: flow(),
+  SuperScript: flow(),
+  AlignLeft: flow(),
+  AlignRight: flow(),
+  AlignJustify: flow(),
+  AlignCenter: flow(),
   H1: flow(),
+  H2: flow(),
+  H3: flow(),
+  paragraph: asParagraph,
+  Indent: asIndent,
 };
 
 const StylableRichText = flow(
   stylable,
 )(RichText);
 
-const EditorRichTextBasicBase = withDesign(basicSchema)(StylableRichText);
+const EditorBasic = withDesign(basicSchema)(StylableRichText);
 
-const EditorRichTextFullBase = withDesign(fullSchema)(StylableRichText);
+const EditorFull = withDesign(fullSchema)(StylableRichText);
 
 export {
-  EditorPlainTextBase,
-  EditorRichTextBasicBase,
-  EditorRichTextFullBase,
+  asEditorPlain,
+  EditorBasic,
+  EditorFull,
 };

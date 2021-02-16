@@ -14,4 +14,3 @@
 export * from './Editors.schema';
 export * from './Editors.token';
 export * from './withEditor';
-export * from './Editors';

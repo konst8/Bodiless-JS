@@ -12,14 +12,14 @@
  * limitations under the License.
  */
 import { ComponentType as CT } from 'react';
-import { flow } from 'lodash';
+import flow from 'lodash/flow';
 import { withChild, withNodeKey, WithNodeKeyProps } from '@bodiless/core';
 import { withPlaceholder } from '@bodiless/components';
 import {
-  EditorPlainText,
-  EditorRichTextBasic,
-  EditorRichTextFull,
-} from './Editors';
+  asEditorPlain,
+  EditorBasic,
+  EditorFull,
+} from './Editors.schema';
 
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
@@ -32,14 +32,14 @@ const withEditor = (Editor:CT<any>) => (
   'Editor', // design key
 );
 
-const withEditorPlainText = withEditor(EditorPlainText);
-const withEditorRichTextBasic = withEditor(EditorRichTextBasic);
-const withEditorRichTextFull = withEditor(EditorRichTextFull);
+const withEditorPlain = asEditorPlain;
+const withEditorBasic = withEditor(EditorBasic);
+const withEditorFull = withEditor(EditorFull);
 
 export {
   withPlaceholder,
   withEditor,
-  withEditorPlainText,
-  withEditorRichTextBasic,
-  withEditorRichTextFull,
+  withEditorPlain,
+  withEditorBasic,
+  withEditorFull,
 };

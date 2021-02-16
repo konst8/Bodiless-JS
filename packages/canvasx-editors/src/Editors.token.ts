@@ -11,10 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { addClasses, withDesign } from '@bodiless/fclasses';
+import { addClasses } from '@bodiless/fclasses';
 
-const asBold = addClasses('');
-const asItalic = addClasses('');
+const asBold = addClasses('font-bold');
+const withItalic = addClasses('italic');
 const asLink = addClasses('');
 const asUnderline = addClasses('');
 const asAlignLeft = addClasses('');
@@ -28,14 +28,9 @@ const asHeader3 = addClasses('');
 const asIndent = addClasses('');
 const asParagraph = addClasses('');
 
-const withEditorDefaultStyles = withDesign({
-  EditorWrapper: addClasses('overflow-hidden'),
-  Editor: addClasses('flex-grow'),
-});
-
 export {
   asBold,
-  asItalic,
+  withItalic,
   asLink,
   asUnderline,
   asAlignLeft,
@@ -48,5 +43,4 @@ export {
   asHeader3,
   asIndent,
   asParagraph,
-  withEditorDefaultStyles,
 };
