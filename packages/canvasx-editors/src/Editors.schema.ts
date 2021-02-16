@@ -16,7 +16,6 @@ import flow from 'lodash/flow';
 import { WithNodeKeyProps } from '@bodiless/core';
 import {
   asBlock,
-  withKey,
   withButton,
 } from '@bodiless/richtext';
 import { RichText } from '@bodiless/richtext-ui';
@@ -31,7 +30,6 @@ import {
 } from '@bodiless/components';
 
 const asIndent = flow(
-  withKey('indent'),
   withButton('format_indent_increase'),
   asBlock,
 );
@@ -66,7 +64,7 @@ const basicSchema = {
   H2: flow(),
   H3: flow(),
   paragraph: asParagraph,
-  Indent: asIndent,
+  // Indent: asIndent,
 };
 
 const fullSchema = {
