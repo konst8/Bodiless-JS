@@ -102,7 +102,6 @@ const EditorBasic = withDesign(basicSchema)(StylableRichText);
 const EditorFull = withDesign(fullSchema)(StylableRichText);
 
 export {
-  withSuperScriptSanitizer,
   asEditorPlain,
   EditorBasic,
   EditorFull,
