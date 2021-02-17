@@ -20,12 +20,10 @@ import {
   asBlock,
   withButton,
 } from '@bodiless/richtext';
-import { RichText } from '@bodiless/richtext-ui';
 import {
-  withDesign,
   replaceWith,
   P,
-  stylable,
+  withDesign,
 } from '@bodiless/fclasses';
 import {
   asEditable,
@@ -61,7 +59,7 @@ const asEditorPlain = (
 
 const identity = (val:any) => val;
 
-const basicSchema = {
+const withBasicEditorButtons = withDesign({
   Bold: identity,
   Italic: identity,
   Underline: identity,
@@ -75,9 +73,9 @@ const basicSchema = {
   H3: identity,
   paragraph: asParagraph,
   Indent: asIndent,
-};
+});
 
-const fullSchema = {
+const withFullEditorButtons = withDesign({
   Bold: identity,
   Italic: identity,
   Underline: identity,
@@ -92,17 +90,10 @@ const fullSchema = {
   H3: identity,
   paragraph: asParagraph,
   Indent: asIndent,
-};
-
-const StylableRichText = flow(
-  stylable,
-)(RichText);
-
-const EditorBasic = withDesign(basicSchema)(StylableRichText);
-const EditorFull = withDesign(fullSchema)(StylableRichText);
+});
 
 export {
   asEditorPlain,
-  EditorBasic,
-  EditorFull,
+  withBasicEditorButtons,
+  withFullEditorButtons,
 };
