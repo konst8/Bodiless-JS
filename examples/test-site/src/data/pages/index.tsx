@@ -16,7 +16,7 @@ import React from 'react';
 import flow from 'lodash/flow';
 import { graphql } from 'gatsby';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
-import { Div } from '@bodiless/fclasses';
+import { Div, withDesign } from '@bodiless/fclasses';
 
 import {
   withEditorPlain,
@@ -28,12 +28,21 @@ const Plain1 = flow(
   withEditorPlain('plain_hoc', 'Plain HOC'),
 )(Div);
 
+const extraSanitizer = () => ({
+  sanitizer: (html: string) => `${html} extra text`,
+});
+
 const Plain2 = flow(
-  withEditorPlain('plain_hoc_2', 'Plain HOC no overrides', () => ({})),
+  withEditorPlain('plain_hoc_2', 'Plain HOC extra overrides', extraSanitizer),
 )(Div);
 
 const Basic1 = flow(
   withEditorBasic('basic_hoc', 'RTE Basic HOC'),
+  withDesign({
+    Editor: withDesign({
+      Bold: flow(),
+    }),
+  }),
 )(Div);
 
 const Full1 = flow(

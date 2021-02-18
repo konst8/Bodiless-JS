@@ -15,10 +15,10 @@ import { ComponentType as CT } from 'react';
 import flow from 'lodash/flow';
 import { withChild, withNodeKey, WithNodeKeyProps } from '@bodiless/core';
 import { withPlaceholder } from '@bodiless/components';
-import { withDesign } from '@bodiless/fclasses';
 import {
   RichText,
-} from '@bodiless/richtext';
+} from '@bodiless/richtext-ui';
+import { stylable } from '@bodiless/fclasses';
 import {
   asEditorPlain,
   withBasicEditorButtons,
@@ -38,18 +38,22 @@ const withEditor = (Editor:CT<any>) => (
 
 const withEditorPlain = asEditorPlain;
 
+const EditorBasic = flow(
+  stylable,
+  withBasicEditorButtons,
+)(RichText);
+
 const withEditorBasic = flow(
-  withEditor(RichText),
-  withDesign({
-    Editor: withBasicEditorButtons,
-  }),
+  withEditor(EditorBasic),
 );
 
+const EditorFull = flow(
+  stylable,
+  withFullEditorButtons,
+)(RichText);
+
 const withEditorFull = flow(
-  withEditor(RichText),
-  withDesign({
-    Editor: withFullEditorButtons,
-  }),
+  withEditor(EditorFull),
 );
 
 export {

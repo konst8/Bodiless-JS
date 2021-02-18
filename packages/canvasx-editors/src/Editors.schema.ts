@@ -40,7 +40,9 @@ const asParagraph = flow(
   asBlock,
 );
 
-const withSuperScriptSanitizer = () => ({
+const identity = (val:any) => val;
+
+const superScriptSanitizer = () => ({
   sanitizer: (html: string) => html
     .split('')
     .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
@@ -50,14 +52,18 @@ const withSuperScriptSanitizer = () => ({
 const asEditorPlain = (
   nodeKeys?: WithNodeKeyProps,
   placeholder?: string,
-  useOverrides?: UseEditableOverrides,
-) => asEditable(
-  nodeKeys,
-  placeholder,
-  useOverrides || withSuperScriptSanitizer,
-);
-
-const identity = (val:any) => val;
+  useOverrides: UseEditableOverrides = identity,
+) => {
+  const finalUseOverrides = flow(
+    superScriptSanitizer,
+    useOverrides,
+  );
+  return asEditable(
+    nodeKeys,
+    placeholder,
+    finalUseOverrides,
+  );
+};
 
 const withBasicEditorButtons = withDesign({
   Bold: identity,

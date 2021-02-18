@@ -1,6 +1,6 @@
 {
   "name": "@canvasx/editors",
-  "version": "0.0.58",
+  "version": "0.0.59",
   "description": "",
   "author": "Konstantin Mishur <kmishur@its.jnj.com>",
   "license": "Apache-2.0",
@@ -27,10 +27,10 @@
     "lodash": "^4.17.19"
   },
   "dependencies": {
-    "@bodiless/core": "^0.0.68",
-    "@bodiless/components": "^0.0.68",
-    "@bodiless/fclasses": "^0.0.68",
-    "@bodiless/richtext": "^0.0.68",
-    "@bodiless/richtext-ui": "^0.0.68"
+    "@bodiless/core": "^0.0.69",
+    "@bodiless/components": "^0.0.69",
+    "@bodiless/fclasses": "^0.0.69",
+    "@bodiless/richtext": "^0.0.69",
+    "@bodiless/richtext-ui": "^0.0.69"
   }
 }
