@@ -16,7 +16,10 @@ import React from 'react';
 import flow from 'lodash/flow';
 import { graphql } from 'gatsby';
 import { Page } from '@bodiless/gatsby-theme-bodiless';
-import { Div, withDesign } from '@bodiless/fclasses';
+import {
+  Div,
+  withDesign,
+} from '@bodiless/fclasses';
 
 import {
   withEditorPlain,

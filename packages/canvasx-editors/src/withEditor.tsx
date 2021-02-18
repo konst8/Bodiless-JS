@@ -53,8 +53,7 @@ const withEditorBasicClean = flow(
 );
 
 const withEditorBasic = flow(
-  withEditorBasicClean,
-  withBasicTypography,
+  withEditor(EditorBasic),
 );
 
 const EditorFullClean = flow(
@@ -71,8 +70,7 @@ const withEditorFullClean = flow(
 );
 
 const withEditorFull = flow(
-  withEditorFullClean,
-  withFullTypography,
+  withEditor(EditorFull),
 );
 
 export {
