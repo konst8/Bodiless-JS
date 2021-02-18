@@ -11,6 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import flow from 'lodash/flow';
 import { addClasses, withDesign } from '@bodiless/fclasses';
 
 const asBold = addClasses('font-bold');
