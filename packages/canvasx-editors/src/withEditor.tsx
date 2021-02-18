@@ -24,6 +24,7 @@ import {
   withBasicEditorButtons,
   withFullEditorButtons,
 } from './Editors.schema';
+import { withBasicTypography, withFullTypography } from './Typography.token';
 
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
@@ -38,27 +39,51 @@ const withEditor = (Editor:CT<any>) => (
 
 const withEditorPlain = asEditorPlain;
 
-const EditorBasic = flow(
+const EditorBasicClean = flow(
   stylable,
   withBasicEditorButtons,
 )(RichText);
 
-const withEditorBasic = flow(
-  withEditor(EditorBasic),
+const EditorBasic = flow(
+  withBasicTypography,
+)(EditorBasicClean);
+
+const withEditorBasicClean = flow(
+  withEditor(EditorBasicClean),
 );
 
-const EditorFull = flow(
+const withEditorBasic = flow(
+  withEditorBasicClean,
+  withBasicTypography,
+);
+
+const EditorFullClean = flow(
   stylable,
   withFullEditorButtons,
 )(RichText);
 
+const EditorFull = flow(
+  withFullTypography,
+)(EditorFullClean);
+
+const withEditorFullClean = flow(
+  withEditor(EditorFullClean),
+);
+
 const withEditorFull = flow(
-  withEditor(EditorFull),
+  withEditorFullClean,
+  withFullTypography,
 );
 
 export {
   withEditor,
   withEditorPlain,
+  withEditorBasicClean,
+  withEditorFullClean,
   withEditorBasic,
   withEditorFull,
+  EditorBasicClean,
+  EditorFullClean,
+  EditorBasic,
+  EditorFull,
 };

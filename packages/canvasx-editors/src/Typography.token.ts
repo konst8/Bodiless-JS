@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { addClasses } from '@bodiless/fclasses';
+import { addClasses, withDesign } from '@bodiless/fclasses';
 
 const asBold = addClasses('font-bold');
 const withItalic = addClasses('italic');
@@ -28,6 +28,29 @@ const asHeader3 = addClasses('');
 const asIndent = addClasses('');
 const asParagraph = addClasses('');
 
+const withBasicTypography = withDesign({
+  Bold: asBold,
+  Italic: withItalic,
+  Underline: asUnderline,
+  Link: asLink,
+  SuperScript: asSuperScript,
+  AlignLeft: asAlignLeft,
+  AlignRight: asAlignRight,
+  AlignJustify: asAlignJustify,
+  AlignCenter: asAlignCenter,
+  H2: asHeader2,
+  H3: asHeader3,
+  paragraph: asParagraph,
+  Indent: asIndent,
+});
+
+const withFullTypography = flow(
+  withBasicTypography,
+  withDesign({
+    H1: asHeader1,
+  }),
+);
+
 export {
   asBold,
   withItalic,
@@ -43,4 +66,6 @@ export {
   asHeader3,
   asIndent,
   asParagraph,
+  withBasicTypography,
+  withFullTypography,
 };

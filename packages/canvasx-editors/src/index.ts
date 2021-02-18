@@ -11,5 +11,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './Editors.token';
+export * from './Typography.token';
 export * from './withEditor';
