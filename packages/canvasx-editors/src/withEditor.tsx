@@ -18,7 +18,7 @@ import { withPlaceholder } from '@bodiless/components';
 import {
   RichText,
 } from '@bodiless/richtext-ui';
-import { stylable } from '@bodiless/fclasses';
+import { stylable, asToken } from '@bodiless/fclasses';
 import {
   asEditorPlain,
 } from './Editors.schema';
@@ -32,12 +32,20 @@ import {
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
   placeholder?: string,
-) => withChild(
-  flow(
-    withPlaceholder(placeholder),
-    withNodeKey(nodeKey),
-  )(Editor),
-  'Editor', // design key
+) => asToken(
+  withChild(
+    flow(
+      withPlaceholder(placeholder),
+      withNodeKey(nodeKey),
+    )(Editor),
+    'Editor', // design key
+  ),
+  {
+    categories: {
+      Category: ['Taxonomy'],
+      Component: ['RichText'],
+    },
+  },
 );
 
 const withEditorPlain = asEditorPlain;
