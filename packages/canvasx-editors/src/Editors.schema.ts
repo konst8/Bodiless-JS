@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 /**
  * Copyright © 2021 Johnson & Johnson
  *
@@ -18,27 +19,8 @@ import {
   WithNodeKeyProps,
 } from '@bodiless/core';
 import {
-  asBlock,
-  withButton,
-} from '@bodiless/richtext';
-import {
-  replaceWith,
-  P,
-  withDesign,
-} from '@bodiless/fclasses';
-import {
   asEditable,
 } from '@bodiless/components';
-
-const asIndent = flow(
-  withButton('format_indent_increase'),
-  asBlock,
-);
-
-const asParagraph = flow(
-  replaceWith(P),
-  asBlock,
-);
 
 const superscriptSanitizer = (html: string) => html
   .split('')
@@ -69,41 +51,6 @@ const asEditorPlain = (
   );
 };
 
-const withBasicEditorButtons = withDesign({
-  Bold: identity,
-  Italic: identity,
-  Underline: identity,
-  Link: identity,
-  SuperScript: identity,
-  AlignLeft: identity,
-  AlignRight: identity,
-  AlignJustify: identity,
-  AlignCenter: identity,
-  H2: identity,
-  H3: identity,
-  paragraph: asParagraph,
-  Indent: asIndent,
-});
-
-const withFullEditorButtons = withDesign({
-  Bold: identity,
-  Italic: identity,
-  Underline: identity,
-  Link: identity,
-  SuperScript: identity,
-  AlignLeft: identity,
-  AlignRight: identity,
-  AlignJustify: identity,
-  AlignCenter: identity,
-  H1: identity,
-  H2: identity,
-  H3: identity,
-  paragraph: asParagraph,
-  Indent: asIndent,
-});
-
 export {
   asEditorPlain,
-  withBasicEditorButtons,
-  withFullEditorButtons,
 };

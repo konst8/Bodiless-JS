@@ -18,61 +18,62 @@ import { withPlaceholder } from '@bodiless/components';
 import {
   RichText,
 } from '@bodiless/richtext-ui';
-import { asToken, stylable } from '@bodiless/fclasses';
+import { stylable } from '@bodiless/fclasses';
 import {
   asEditorPlain,
+} from './Editors.schema';
+import {
   withBasicEditorButtons,
   withFullEditorButtons,
-} from './Editors.schema';
-import { withBasicTypography, withFullTypography } from './Typography.token';
+  withBasicTypography,
+  withFullTypography,
+} from './RichText.token';
 
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
   placeholder?: string,
-) => asToken(
-  withChild(
-    flow(
-      withPlaceholder(placeholder),
-      withNodeKey(nodeKey),
-    )(Editor),
-    'Editor', // design key
-  ),
+) => withChild(
+  flow(
+    withPlaceholder(placeholder),
+    withNodeKey(nodeKey),
+  )(Editor),
+  'Editor', // design key
 );
 
 const withEditorPlain = asEditorPlain;
 
-const EditorBasicClean = asToken(
+const EditorBasicClean = flow(
   stylable,
-  withBasicEditorButtons as any,
-)(RichText as any);
+  withBasicEditorButtons,
+)(RichText);
 
-const EditorBasic = asToken(
-  withBasicTypography as any,
-)(EditorBasicClean as any);
+const EditorBasic = flow(
+  withBasicTypography,
+)(EditorBasicClean);
 
-const withEditorBasicClean = asToken(
-  withEditor(EditorBasicClean) as any,
+const withEditorBasicClean = flow(
+  withEditor(EditorBasicClean),
 );
 
-const withEditorBasic = asToken(
-  withEditor(EditorBasic) as any,
+const withEditorBasic = flow(
+  withEditor(EditorBasic),
 );
 
-const EditorFullClean = asToken(
+const EditorFullClean = flow(
   stylable,
-  withFullEditorButtons as any,
-)(RichText as any);
+  withFullEditorButtons,
+)(RichText);
 
-const EditorFull = asToken(
+const EditorFull = flow(
   withFullTypography,
 )(EditorFullClean);
 
-const withEditorFullClean = asToken(
-  withEditor(EditorFullClean) as any,
+const withEditorFullClean = flow(
+  withEditor(EditorFullClean),
 );
 
-const withEditorFull = asToken(
-  withEditor(EditorFull) as any,
+const withEditorFull = flow(
+  withEditor(EditorFull),
 );
 
 export {
