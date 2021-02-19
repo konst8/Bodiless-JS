@@ -35,32 +35,151 @@ const withItalic = asToken(
   },
 );
 
-const asLink = addClasses('');
-const asUnderline = addClasses('');
-const asAlignLeft = addClasses('');
-const asAlignRight = addClasses('');
-const asAlignCenter = addClasses('');
-const asAlignJustify = addClasses('');
-const asSuperScript = addClasses('');
-const asHeader1 = addClasses('');
-const asHeader2 = addClasses('');
-const asHeader3 = addClasses('');
-const asIndent = addClasses('');
-const asParagraph = addClasses('');
+const withRichTextLinkStyle = asToken(
+  addClasses('underline'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Link', 'Font Color', 'Font Decoration', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withLinkStyle = asToken(
+  addClasses('underline'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Link', 'Font Color', 'Font Decoration', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const asUnderline = asToken(
+  addClasses('underline'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Font Decoration', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withTextAlignLeft = asToken(
+  addClasses('text-left'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Text Align', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withTextAlignRight = asToken(
+  addClasses('text-right'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Text Align', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withTextAlignCenter = asToken(
+  addClasses('text-center'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Text Align', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withTextAlignJustify = asToken(
+  addClasses('text-justify'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Text Align', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const asSuperScript = asToken(
+  addClasses(''),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const asHeader1 = asToken(
+  addClasses('text-2xl'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const asHeader2 = asToken(
+  addClasses('text-xl'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const asHeader3 = asToken(
+  addClasses('text-lg'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withIndent = asToken(
+  addClasses('pl-3'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
 
 export {
   asBold,
   withItalic,
-  asLink,
+  withRichTextLinkStyle,
+  withLinkStyle,
   asUnderline,
-  asAlignLeft,
-  asAlignRight,
-  asAlignCenter,
-  asAlignJustify,
+  withTextAlignLeft,
+  withTextAlignRight,
+  withTextAlignCenter,
+  withTextAlignJustify,
   asSuperScript,
   asHeader1,
   asHeader2,
   asHeader3,
-  asIndent,
-  asParagraph,
+  withIndent,
 };

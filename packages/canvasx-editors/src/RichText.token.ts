@@ -21,18 +21,17 @@ import {
 import {
   asBold,
   withItalic,
-  asLink,
+  withLinkStyle,
   asUnderline,
-  asAlignLeft,
-  asAlignRight,
-  asAlignCenter,
-  asAlignJustify,
+  withTextAlignLeft,
+  withTextAlignRight,
+  withTextAlignCenter,
+  withTextAlignJustify,
   asSuperScript,
   asHeader1,
   asHeader2,
   asHeader3,
-  asParagraph as asParagraphTypography,
-  asIndent as asIndentTypography,
+  withIndent,
 } from './Typography.token';
 
 const asIndent = flow(
@@ -82,16 +81,15 @@ const withBasicTypography = withDesign({
   Bold: asBold,
   Italic: withItalic,
   Underline: asUnderline,
-  Link: asLink,
+  Link: withLinkStyle,
   SuperScript: asSuperScript,
-  AlignLeft: asAlignLeft,
-  AlignRight: asAlignRight,
-  AlignJustify: asAlignJustify,
-  AlignCenter: asAlignCenter,
+  AlignLeft: withTextAlignLeft,
+  AlignRight: withTextAlignRight,
+  AlignJustify: withTextAlignJustify,
+  AlignCenter: withTextAlignCenter,
   H2: asHeader2,
   H3: asHeader3,
-  paragraph: asParagraphTypography,
-  Indent: asIndentTypography,
+  Indent: withIndent,
 });
 
 const withFullTypography = flow(
