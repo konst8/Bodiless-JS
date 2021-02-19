@@ -22,6 +22,7 @@ import {
 } from '@bodiless/fclasses';
 
 import {
+  EditorPlain,
   withEditorPlain,
   withEditorBasic,
   withEditorFull,
@@ -54,6 +55,7 @@ const Full1 = flow(
 
 const HomePage = (props: any) => (
   <Page {...props}>
+    <EditorPlain className="p-10" placeholder="Editor Plain" />
     <Plain1 className="p-10" />
     <Plain2 className="p-10" />
     <Basic1 className="p-10" />

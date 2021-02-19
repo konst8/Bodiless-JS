@@ -19,13 +19,23 @@ import {
   WithNodeKeyProps,
 } from '@bodiless/core';
 import {
+  Editable,
   asEditable,
 } from '@bodiless/components';
+import { addProps } from '@bodiless/fclasses';
 
 const superscriptSanitizer = (html: string) => html
   .split('')
   .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
   .join('');
+
+const EditorPlain = flow(
+  addProps({
+    useOverrides: () => ({
+      sanitizer: superscriptSanitizer,
+    }),
+  }),
+)(Editable);
 
 const asEditorPlain = (
   nodeKeys?: WithNodeKeyProps,
@@ -52,5 +62,6 @@ const asEditorPlain = (
 };
 
 export {
+  EditorPlain,
   asEditorPlain,
 };

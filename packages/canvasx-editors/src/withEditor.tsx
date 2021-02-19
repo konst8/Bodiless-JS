@@ -20,6 +20,7 @@ import {
 } from '@bodiless/richtext-ui';
 import { stylable, asToken } from '@bodiless/fclasses';
 import {
+  EditorPlain,
   asEditorPlain,
 } from './Editors.schema';
 import {
@@ -91,6 +92,7 @@ export {
   withEditorFullClean,
   withEditorBasic,
   withEditorFull,
+  EditorPlain,
   EditorBasicClean,
   EditorFullClean,
   EditorBasic,
