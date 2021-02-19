@@ -13,6 +13,7 @@
  */
 
 import flow from 'lodash/flow';
+import identity from 'lodash/identity';
 import {
   WithNodeKeyProps,
 } from '@bodiless/core';
@@ -27,7 +28,6 @@ import {
 } from '@bodiless/fclasses';
 import {
   asEditable,
-  UseEditableOverrides,
 } from '@bodiless/components';
 
 const asIndent = flow(
@@ -40,24 +40,28 @@ const asParagraph = flow(
   asBlock,
 );
 
-const identity = (val:any) => val;
-
-const superScriptSanitizer = () => ({
-  sanitizer: (html: string) => html
-    .split('')
-    .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
-    .join(''),
-});
+const superscriptSanitizer = (html: string) => html
+  .split('')
+  .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
+  .join('');
 
 const asEditorPlain = (
   nodeKeys?: WithNodeKeyProps,
   placeholder?: string,
-  useOverrides: UseEditableOverrides = identity,
+  useOverrides$?: any,
 ) => {
-  const finalUseOverrides = flow(
-    superScriptSanitizer,
-    useOverrides,
-  );
+  const finalUseOverrides = (props: any) => {
+    const useOverrides = useOverrides$ || (() => ({}));
+    const { sanitizer: sanitizerFromOptions = identity, ...rest } = useOverrides(props);
+    const sanitizer = flow(
+      superscriptSanitizer,
+      sanitizerFromOptions,
+    );
+    return {
+      sanitizer,
+      ...rest,
+    };
+  };
   return asEditable(
     nodeKeys,
     placeholder,
