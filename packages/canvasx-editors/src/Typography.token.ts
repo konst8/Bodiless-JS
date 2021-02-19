@@ -11,10 +11,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { addClasses } from '@bodiless/fclasses';
+import { addClasses, asToken } from '@bodiless/fclasses';
 
-const asBold = addClasses('font-bold');
-const withItalic = addClasses('italic');
+const asBold = asToken(
+  addClasses('font-bold'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Font Weight', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
+const withItalic = asToken(
+  addClasses('italic'),
+  {
+    categories: {
+      Category: ['Typography'],
+      Attribute: ['Font Style', 'Style'],
+      Component: ['Element'],
+    },
+  },
+);
+
 const asLink = addClasses('');
 const asUnderline = addClasses('');
 const asAlignLeft = addClasses('');

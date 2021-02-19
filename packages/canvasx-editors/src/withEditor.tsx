@@ -97,4 +97,6 @@ export {
   EditorFullClean,
   EditorBasic,
   EditorFull,
+  withBasicTypography,
+  withFullTypography,
 };
