@@ -18,7 +18,7 @@ import { withPlaceholder } from '@bodiless/components';
 import {
   RichText,
 } from '@bodiless/richtext-ui';
-import { stylable } from '@bodiless/fclasses';
+import { asToken, stylable } from '@bodiless/fclasses';
 import {
   asEditorPlain,
   withBasicEditorButtons,
@@ -29,48 +29,50 @@ import { withBasicTypography, withFullTypography } from './Typography.token';
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
   placeholder?: string,
-) => withChild(
-  flow(
-    withPlaceholder(placeholder),
-    withNodeKey(nodeKey),
-  )(Editor),
-  'Editor', // design key
+) => asToken(
+  withChild(
+    flow(
+      withPlaceholder(placeholder),
+      withNodeKey(nodeKey),
+    )(Editor),
+    'Editor', // design key
+  ),
 );
 
 const withEditorPlain = asEditorPlain;
 
-const EditorBasicClean = flow(
+const EditorBasicClean = asToken(
   stylable,
-  withBasicEditorButtons,
-)(RichText);
+  withBasicEditorButtons as any,
+)(RichText as any);
 
-const EditorBasic = flow(
-  withBasicTypography,
-)(EditorBasicClean);
+const EditorBasic = asToken(
+  withBasicTypography as any,
+)(EditorBasicClean as any);
 
-const withEditorBasicClean = flow(
-  withEditor(EditorBasicClean),
+const withEditorBasicClean = asToken(
+  withEditor(EditorBasicClean) as any,
 );
 
-const withEditorBasic = flow(
-  withEditor(EditorBasic),
+const withEditorBasic = asToken(
+  withEditor(EditorBasic) as any,
 );
 
-const EditorFullClean = flow(
+const EditorFullClean = asToken(
   stylable,
-  withFullEditorButtons,
-)(RichText);
+  withFullEditorButtons as any,
+)(RichText as any);
 
-const EditorFull = flow(
+const EditorFull = asToken(
   withFullTypography,
 )(EditorFullClean);
 
-const withEditorFullClean = flow(
-  withEditor(EditorFullClean),
+const withEditorFullClean = asToken(
+  withEditor(EditorFullClean) as any,
 );
 
-const withEditorFull = flow(
-  withEditor(EditorFull),
+const withEditorFull = asToken(
+  withEditor(EditorFull) as any,
 );
 
 export {
