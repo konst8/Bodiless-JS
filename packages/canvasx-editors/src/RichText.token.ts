@@ -13,7 +13,12 @@
  */
 import flow from 'lodash/flow';
 import identity from 'lodash/identity';
-import { withDesign, replaceWith, P } from '@bodiless/fclasses';
+import {
+  withDesign,
+  replaceWith,
+  P,
+  asToken,
+} from '@bodiless/fclasses';
 import {
   asBlock,
   withButton,
@@ -44,59 +49,89 @@ const asParagraph = flow(
   asBlock,
 );
 
-const withBasicEditorButtons = withDesign({
-  Bold: identity,
-  Italic: identity,
-  Underline: identity,
-  Link: identity,
-  SuperScript: identity,
-  AlignLeft: identity,
-  AlignRight: identity,
-  AlignJustify: identity,
-  AlignCenter: identity,
-  H2: identity,
-  H3: identity,
-  paragraph: asParagraph,
-  Indent: asIndent,
-});
+const withBasicEditorButtons = asToken(
+  withDesign({
+    Bold: identity,
+    Italic: identity,
+    Underline: identity,
+    Link: identity,
+    SuperScript: identity,
+    AlignLeft: identity,
+    AlignRight: identity,
+    AlignJustify: identity,
+    AlignCenter: identity,
+    H2: identity,
+    H3: identity,
+    paragraph: asParagraph,
+    Indent: asIndent,
+  }) as any,
+  {
+    categories: {
+      Category: ['Editor'],
+      Attribute: ['Basic'],
+    },
+  },
+);
 
-const withFullEditorButtons = withDesign({
-  Bold: identity,
-  Italic: identity,
-  Underline: identity,
-  Link: identity,
-  SuperScript: identity,
-  AlignLeft: identity,
-  AlignRight: identity,
-  AlignJustify: identity,
-  AlignCenter: identity,
-  H1: identity,
-  H2: identity,
-  H3: identity,
-  paragraph: asParagraph,
-  Indent: asIndent,
-});
+const withFullEditorButtons = asToken(
+  withDesign({
+    Bold: identity,
+    Italic: identity,
+    Underline: identity,
+    Link: identity,
+    SuperScript: identity,
+    AlignLeft: identity,
+    AlignRight: identity,
+    AlignJustify: identity,
+    AlignCenter: identity,
+    H1: identity,
+    H2: identity,
+    H3: identity,
+    paragraph: asParagraph,
+    Indent: asIndent,
+  }) as any,
+  {
+    categories: {
+      Category: ['Editor'],
+      Attribute: ['Full'],
+    },
+  },
+);
 
-const withBasicTypography = withDesign({
-  Bold: asBold,
-  Italic: withItalic,
-  Underline: asUnderline,
-  Link: withLinkStyle,
-  SuperScript: asSuperScript,
-  AlignLeft: withTextAlignLeft,
-  AlignRight: withTextAlignRight,
-  AlignJustify: withTextAlignJustify,
-  AlignCenter: withTextAlignCenter,
-  H2: asHeader2,
-  H3: asHeader3,
-  Indent: withIndent,
-});
+const withBasicTypography = asToken(
+  withDesign({
+    Bold: asBold,
+    Italic: withItalic,
+    Underline: asUnderline,
+    Link: withLinkStyle,
+    SuperScript: asSuperScript,
+    AlignLeft: withTextAlignLeft,
+    AlignRight: withTextAlignRight,
+    AlignJustify: withTextAlignJustify,
+    AlignCenter: withTextAlignCenter,
+    H2: asHeader2,
+    H3: asHeader3,
+    Indent: withIndent,
+  }) as any,
+  {
+    categories: {
+      Category: ['Editor'],
+      Attribute: ['Basic'],
+    },
+  },
+);
 
-const withFullTypography = flow(
+const withFullTypography = asToken(
   withBasicTypography,
   withDesign({
     H1: asHeader1,
-  }),
+  }) as any,
+  {
+    categories: {
+      Category: ['Editor'],
+      Attribute: ['Full'],
+    },
+  },
 );
 
 export {

@@ -43,7 +43,7 @@ const withEditor = (Editor:CT<any>) => (
   ),
   {
     categories: {
-      Category: ['Taxonomy'],
+      Category: ['Editor'],
       Component: ['RichText'],
     },
   },
