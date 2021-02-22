@@ -36,8 +36,10 @@ import {
   asHeader1,
   asHeader2,
   asHeader3,
-  withIndent,
 } from './Typography.token';
+import {
+  withIndent,
+} from './Spacing.token';
 
 const asIndent = flow(
   withButton('format_indent_increase'),
