@@ -56,8 +56,14 @@ const EditorBasicClean = flow(
   withBasicEditorButtons,
 )(RichText);
 
-const EditorBasic = flow(
-  withBasicTypography,
+const EditorBasic = asToken(
+  withBasicTypography as any,
+  {
+    categories: {
+      Category: ['Editor'],
+      Attribute: ['Basic'],
+    },
+  },
 )(EditorBasicClean);
 
 const withEditorBasicClean = flow(
@@ -73,8 +79,14 @@ const EditorFullClean = flow(
   withFullEditorButtons,
 )(RichText);
 
-const EditorFull = flow(
-  withFullTypography,
+const EditorFull = asToken(
+  withFullTypography as any,
+  {
+    categories: {
+      Category: ['Editor'],
+      Attribute: ['Full'],
+    },
+  },
 )(EditorFullClean);
 
 const withEditorFullClean = flow(
