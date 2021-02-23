@@ -14,11 +14,11 @@
 import { ComponentType as CT } from 'react';
 import flow from 'lodash/flow';
 import { withChild, withNodeKey, WithNodeKeyProps } from '@bodiless/core';
-import { withPlaceholder } from '@bodiless/components';
+import { UseEditableOverrides, withPlaceholder } from '@bodiless/components';
 import {
   RichText,
 } from '@bodiless/richtext-ui';
-import { stylable, asToken } from '@bodiless/fclasses';
+import { stylable, asToken, addPropsIf } from '@bodiless/fclasses';
 import {
   EditorPlain,
 } from './Editors.schema';
@@ -30,11 +30,20 @@ import {
 const withEditor = (Editor:CT<any>) => (
   nodeKey?: WithNodeKeyProps,
   placeholder?: string,
+  useOverrides?: UseEditableOverrides,
 ) => asToken(
   withChild(
     flow(
       withPlaceholder(placeholder),
       withNodeKey(nodeKey),
+      // Apply useOverreds only if it was passed - to prevent react warning on RTE:
+      // Warning: React does not recognize the `useOverrides` prop on a DOM element.
+      // If you intentionally want it to appear in the DOM as a custom attribute,
+      // spell it as lowercase `useoverrides` instead. If you accidentally passed it
+      // from a parent component, remove it from the DOM element.
+      addPropsIf(() => useOverrides !== undefined)({
+        useOverrides,
+      }),
     )(Editor),
     'Editor', // design key
   ),

@@ -26,17 +26,17 @@ const superscriptSanitizer = (html: string) => html
   .join('');
 
 const withAutoSuperscript = (Component: CT) => (props: any) => {
-  const { useOverrides = () => ({}), ...restProps } = props;
+  const { useOverrides = () => ({}), ...rest } = props;
   const { sanitizer: sanitizerFromOptions = identity, ...restOverridesProps } = useOverrides(props);
-  const finalSanitizer = flow(
+  const sanitizer = flow(
     superscriptSanitizer,
     sanitizerFromOptions,
   );
   const finalUseOverrides = () => ({
-    finalSanitizer,
+    sanitizer,
     ...restOverridesProps,
   });
-  return <Component {...restProps} useOverrides={finalUseOverrides} />;
+  return <Component {...rest} useOverrides={finalUseOverrides} />;
 };
 
 const EditorPlain = flow(
