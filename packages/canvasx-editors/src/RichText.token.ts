@@ -12,7 +12,6 @@
  * limitations under the License.
  */
 import flow from 'lodash/flow';
-import identity from 'lodash/identity';
 import {
   withDesign,
   replaceWith,
@@ -51,55 +50,6 @@ const asParagraph = flow(
   asBlock,
 );
 
-const withBasicEditorButtons = asToken(
-  withDesign({
-    Bold: identity,
-    Italic: identity,
-    Underline: identity,
-    Link: identity,
-    SuperScript: identity,
-    AlignLeft: identity,
-    AlignRight: identity,
-    AlignJustify: identity,
-    AlignCenter: identity,
-    H2: identity,
-    H3: identity,
-    paragraph: asParagraph,
-    Indent: asIndent,
-  }) as any,
-  {
-    categories: {
-      Category: ['Editor'],
-      Attribute: ['Basic'],
-    },
-  },
-);
-
-const withFullEditorButtons = asToken(
-  withDesign({
-    Bold: identity,
-    Italic: identity,
-    Underline: identity,
-    Link: identity,
-    SuperScript: identity,
-    AlignLeft: identity,
-    AlignRight: identity,
-    AlignJustify: identity,
-    AlignCenter: identity,
-    H1: identity,
-    H2: identity,
-    H3: identity,
-    paragraph: asParagraph,
-    Indent: asIndent,
-  }) as any,
-  {
-    categories: {
-      Category: ['Editor'],
-      Attribute: ['Full'],
-    },
-  },
-);
-
 const withBasicTypography = asToken(
   withDesign({
     Bold: asBold,
@@ -113,7 +63,11 @@ const withBasicTypography = asToken(
     AlignCenter: withTextAlignCenter,
     H2: asHeader2,
     H3: asHeader3,
-    Indent: withIndent,
+    paragraph: asParagraph,
+    Indent: flow(
+      asIndent,
+      withIndent,
+    ),
   }) as any,
   {
     categories: {
@@ -137,8 +91,6 @@ const withFullTypography = asToken(
 );
 
 export {
-  withBasicEditorButtons,
-  withFullEditorButtons,
   withBasicTypography,
   withFullTypography,
 };

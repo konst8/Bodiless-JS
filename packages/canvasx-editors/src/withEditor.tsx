@@ -24,8 +24,6 @@ import {
   asEditorPlain,
 } from './Editors.schema';
 import {
-  withBasicEditorButtons,
-  withFullEditorButtons,
   withBasicTypography,
   withFullTypography,
 } from './RichText.token';
@@ -53,8 +51,9 @@ const withEditorPlain = asEditorPlain;
 
 const EditorBasicClean = flow(
   stylable,
-  withBasicEditorButtons,
 )(RichText);
+
+const EditorFullClean = EditorBasicClean;
 
 const EditorBasic = asToken(
   withBasicTypography as any,
@@ -73,11 +72,6 @@ const withEditorBasicClean = flow(
 const withEditorBasic = flow(
   withEditor(EditorBasic),
 );
-
-const EditorFullClean = flow(
-  stylable,
-  withFullEditorButtons,
-)(RichText);
 
 const EditorFull = asToken(
   withFullTypography as any,
