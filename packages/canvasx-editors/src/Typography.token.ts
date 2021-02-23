@@ -127,8 +127,8 @@ const asHeader1 = asToken(
   addClasses('text-2xl'),
   {
     categories: {
-      Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color'],
+      Category: ['Typography', 'Header'],
+      Attribute: ['Font Size'],
       Component: ['Element'],
     },
   },
@@ -138,8 +138,8 @@ const asHeader2 = asToken(
   addClasses('text-xl'),
   {
     categories: {
-      Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color'],
+      Category: ['Typography', 'Header'],
+      Attribute: ['Font Size'],
       Component: ['Element'],
     },
   },
@@ -149,19 +149,8 @@ const asHeader3 = asToken(
   addClasses('text-lg'),
   {
     categories: {
-      Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color'],
-      Component: ['Element'],
-    },
-  },
-);
-
-const withIndent = asToken(
-  addClasses('pl-3'),
-  {
-    categories: {
-      Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color'],
+      Category: ['Typography', 'Header'],
+      Attribute: ['Font Size'],
       Component: ['Element'],
     },
   },
@@ -181,5 +170,4 @@ export {
   asHeader1,
   asHeader2,
   asHeader3,
-  withIndent,
 };
