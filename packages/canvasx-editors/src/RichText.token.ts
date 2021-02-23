@@ -40,6 +40,8 @@ import {
   withIndent,
 } from './Spacing.token';
 
+const { meta } = asToken;
+
 const asIndent = flow(
   withButton('format_indent_increase'),
   asBlock,
@@ -75,6 +77,8 @@ const withBasicTypography = asToken(
       Attribute: ['Basic'],
     },
   },
+  meta.term('Component')('RichText'),
+  meta.term('Category')('Typography'),
 );
 
 const withFullTypography = asToken(
@@ -88,6 +92,8 @@ const withFullTypography = asToken(
       Attribute: ['Full'],
     },
   },
+  meta.term('Component')('RichText'),
+  meta.term('Category')('Typography'),
 );
 
 export {
