@@ -18,7 +18,7 @@ const asBold = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Font Weight', 'Style'],
+      Attribute: ['Font Weight'],
       Component: ['Element'],
     },
   },
@@ -29,7 +29,7 @@ const withItalic = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Font Style', 'Style'],
+      Attribute: ['Font Style'],
       Component: ['Element'],
     },
   },
@@ -40,7 +40,7 @@ const withRichTextLinkStyle = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Link', 'Font Color', 'Font Decoration', 'Style'],
+      Attribute: ['Link', 'Font Color', 'Font Decoration'],
       Component: ['Element'],
     },
   },
@@ -51,7 +51,7 @@ const withLinkStyle = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Link', 'Font Color', 'Font Decoration', 'Style'],
+      Attribute: ['Link', 'Font Color', 'Font Decoration'],
       Component: ['Element'],
     },
   },
@@ -62,7 +62,7 @@ const asUnderline = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Font Decoration', 'Style'],
+      Attribute: ['Font Decoration'],
       Component: ['Element'],
     },
   },
@@ -73,7 +73,7 @@ const withTextAlignLeft = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Text Align', 'Style'],
+      Attribute: ['Text Align'],
       Component: ['Element'],
     },
   },
@@ -84,7 +84,7 @@ const withTextAlignRight = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Text Align', 'Style'],
+      Attribute: ['Text Align'],
       Component: ['Element'],
     },
   },
@@ -95,7 +95,7 @@ const withTextAlignCenter = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Text Align', 'Style'],
+      Attribute: ['Text Align'],
       Component: ['Element'],
     },
   },
@@ -106,7 +106,7 @@ const withTextAlignJustify = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Text Align', 'Style'],
+      Attribute: ['Text Align'],
       Component: ['Element'],
     },
   },
@@ -117,7 +117,7 @@ const asSuperScript = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['', 'Style'],
+      Attribute: [''],
       Component: ['Element'],
     },
   },
@@ -128,7 +128,7 @@ const asHeader1 = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Attribute: ['Header', 'Font Size', 'Font Color'],
       Component: ['Element'],
     },
   },
@@ -139,7 +139,7 @@ const asHeader2 = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Attribute: ['Header', 'Font Size', 'Font Color'],
       Component: ['Element'],
     },
   },
@@ -150,7 +150,7 @@ const asHeader3 = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Attribute: ['Header', 'Font Size', 'Font Color'],
       Component: ['Element'],
     },
   },
@@ -161,7 +161,7 @@ const withIndent = asToken(
   {
     categories: {
       Category: ['Typography'],
-      Attribute: ['Header', 'Font Size', 'Font Color', 'Style'],
+      Attribute: ['Header', 'Font Size', 'Font Color'],
       Component: ['Element'],
     },
   },
