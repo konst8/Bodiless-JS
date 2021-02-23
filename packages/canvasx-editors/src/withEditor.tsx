@@ -21,7 +21,6 @@ import {
 import { stylable, asToken } from '@bodiless/fclasses';
 import {
   EditorPlain,
-  asEditorPlain,
 } from './Editors.schema';
 import {
   withBasicTypography,
@@ -42,12 +41,13 @@ const withEditor = (Editor:CT<any>) => (
   {
     categories: {
       Category: ['Editor'],
-      Component: ['RichText'],
     },
   },
 );
 
-const withEditorPlain = asEditorPlain;
+const withEditorPlain = flow(
+  withEditor(EditorPlain),
+);
 
 const EditorBasicClean = flow(
   stylable,

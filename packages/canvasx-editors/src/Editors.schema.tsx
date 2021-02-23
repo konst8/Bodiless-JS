@@ -13,55 +13,36 @@
  * limitations under the License.
  */
 
+import React, { ComponentType as CT } from 'react';
 import flow from 'lodash/flow';
 import identity from 'lodash/identity';
 import {
-  WithNodeKeyProps,
-} from '@bodiless/core';
-import {
   Editable,
-  asEditable,
 } from '@bodiless/components';
-import { addProps } from '@bodiless/fclasses';
 
 const superscriptSanitizer = (html: string) => html
   .split('')
   .map(c => ('©®'.includes(c) ? `<sup>${c}</sup>` : c))
   .join('');
 
-const EditorPlain = flow(
-  addProps({
-    useOverrides: () => ({
-      sanitizer: superscriptSanitizer,
-    }),
-  }),
-)(Editable);
-
-const asEditorPlain = (
-  nodeKeys?: WithNodeKeyProps,
-  placeholder?: string,
-  useOverrides$?: any,
-) => {
-  const finalUseOverrides = (props: any) => {
-    const useOverrides = useOverrides$ || (() => ({}));
-    const { sanitizer: sanitizerFromOptions = identity, ...rest } = useOverrides(props);
-    const sanitizer = flow(
-      superscriptSanitizer,
-      sanitizerFromOptions,
-    );
-    return {
-      sanitizer,
-      ...rest,
-    };
-  };
-  return asEditable(
-    nodeKeys,
-    placeholder,
-    finalUseOverrides,
+const withAutoSuperscript = (Component: CT) => (props: any) => {
+  const { useOverrides = () => ({}), ...restProps } = props;
+  const { sanitizer: sanitizerFromOptions = identity, ...restOverridesProps } = useOverrides(props);
+  const finalSanitizer = flow(
+    superscriptSanitizer,
+    sanitizerFromOptions,
   );
+  const finalUseOverrides = () => ({
+    finalSanitizer,
+    ...restOverridesProps,
+  });
+  return <Component {...restProps} useOverrides={finalUseOverrides} />;
 };
+
+const EditorPlain = flow(
+  withAutoSuperscript,
+)(Editable);
 
 export {
   EditorPlain,
-  asEditorPlain,
 };
