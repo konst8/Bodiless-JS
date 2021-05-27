@@ -1,6 +1,6 @@
-# Contributing to Bodiless-JS
+# Contributing to BodilessJS
 
-Bodiless-JS is an open source project being actively developed at Johnson &
+BodilessJS is an open source project being actively developed at Johnson &
 Johnson. We welcome contributions from the community, and are committed to
 transparency.  
 
@@ -29,7 +29,7 @@ For bugs, the issue should clearly specify:
 - Artifacts (screenshots, video, logs)
 - Execution (version, OS, browser, important libraries)
 
-Anyone can create an issue in the Bodiless-JS project.
+Anyone can create an issue in the BodilessJS project.
 
 For features, the issue should clearly specify:
 - The high level description of the feature expressed as a user story
@@ -40,7 +40,7 @@ For features, the issue should clearly specify:
 Once an issue is created, it will be reviewed by the Bodiless product team who will determine
 whether or not it should be accepted for development.  The team may request further details or
 suggest alterations in the requirements. Once a decision is made, the issue will be given one
-of the following dispositions:
+of the following dispositions by setting the labels:
 
 - "won't fix": The issue will not be addressed, and associated pull requests will not be considered.
 - "accepted": The issue is accepted for development, and pull requests are welcome. Capacity for
@@ -49,6 +49,21 @@ of the following dispositions:
 - "priority": The issue is accepted for development and will be prioritized by the core team.  Pull
   requests are welcome, but the issue will likely be assigned a developer from the core team and be
   included in an upcoming sprint.
+- "help wanted": The issue is accepted for develop but it is NOT prioritized by
+  the core team. Pull requests are welcome.  
+
+In addition each label will be set on the issue to help with additional categorizing. 
+- "bug": Issue with current behavior.
+- "enhancement": Feature enhancement.
+- "documentation": Documentation change/request/addition.
+- "testing enhancement": Automation story enhancements.
+- "windows": Bug specific to Windows platform.
+
+Additional labels that can be used as needed:
+- "duplicate": Duplicate of another issue or bug.
+- "invalid": This doesn't seem right.
+- "question": Further information is requested. Submitter should respond with more information/clarifications.
+- "dependencies": Pull requests that update a dependency file.
 
 ## Commits
 
@@ -75,7 +90,7 @@ All work must be submitted in the form of a pull request to the master branch.
 - Unless explicitly stated in the associated issue, all pull requests must
   - Include relevant unit and integration tests
   - Include relevant documentation updates.
-  - Adhere to our [Coding Standards](Development/Release/Quality).
+  - Adhere to our [Coding Standards](../Development/Release/Quality).
 - There is no need to rebase a Pull Request branch, when merging in changes from other branches
 
 ## Merging Pull Request
@@ -123,7 +138,7 @@ When not included omit the parenthesis around it.
 
 ### Squash commit title: reference
 
-**Required value**. [The reference]([reference](https://help.github.com/en/github/writing-on-github/autolinked-references-and-urls#issues-and-pull-requests)) 
+**Required value**. [The reference](https://help.github.com/en/github/writing-on-github/autolinked-references-and-urls#issues-and-pull-requests)
 to the Pull Request merged.
 
 ### Squash commit title examples
@@ -142,19 +157,23 @@ depr(popcorn): Deprecate the popcorn feature as replaced by the chips feature (#
 
 ### Squash commit description
 
-The squash commit description is a free-form field that describes all the changes in the pull request. 
-Usually a pull request description can be reused as a squash commit description.
+The squash commit description is a free-form field that describes all the
+changes in the pull request. Usually a pull request description can be reused as
+a squash commit description.
 
 #### Issue reference
 
-Squash commit description must refer the issue it fixes or closes, and use any of the 
-[GitHub keywords for closing issues](https://help.github.com/en/github/managing-your-work-on-github/closing-issues-using-keywords) 
+Squash commit description must refer the issue it fixes or closes, and use any
+of the
+[GitHub keywords for closing issues](https://help.github.com/en/github/managing-your-work-on-github/closing-issues-using-keywords)
 followed by the issue reference, e.g. `Fixes #12345` or `Closes #12345`.
 
 #### Breaking changes
 
-If the pull request contains a breaking change, then the description must contain line `BREAKING CHANGE:` with a space or two newlines.
-The text after colon in this line or after two newlines will describe the breaking change.
+If the pull request contains a breaking change, then the footer must conclude
+with a line which begins with `BREAKING CHANGE:` with a space or two newlines.
+The text after colon in this line or after two newlines will describe the
+breaking change.
 
 #### Examples
 
@@ -175,15 +194,16 @@ Fixes #431, #496
 
 BREAKING CHANGE:
 
-The old file storage format for the somefeature is incompatible with the new implementation.
-You will need to delete the old storage files.
+The old file storage format for the somefeature is incompatible with the new
+implementation. You will need to delete the old storage files.
 ```
 
 ## Releases
 
-While we adhere to the principles of [Semantic Versioning](https://semver.org/),
-please note that we are currently in ["Major Version Zero"](https://semver.org/#spec-item-4)
-status, meaning that *stability or backwards compatibility is not guaranteed.*,
+While we adhere to the principles of
+[Semantic Versioning](https://semver.org/), please note that we are currently in
+["Major Version Zero"](https://semver.org/#spec-item-4) status, meaning that
+*stability or backwards compatibility is not guaranteed.*,
 
 During this phase:
 
@@ -196,3 +216,7 @@ During this phase:
   milestones on our roadmap.
 
 Once we achieve a stable major release (1.0.0), future versions will follow SemVer standards.
+
+Please see
+[our documentation](https://johnsonandjohnson.github.io/Bodiless-JS/#/Development/Release/)
+for more information on releases.
